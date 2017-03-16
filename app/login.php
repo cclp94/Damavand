@@ -10,4 +10,9 @@ $password = basename($_POST["password"]);
 
 // Else return error
 //header('Location:' .URL, TRUE, 302);
+
+function redirect($target){
+    header("Location: ../".$target.".php"); /* Redirect browser */
+    exit();
+}
 ?>
