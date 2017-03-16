@@ -38,6 +38,11 @@ nav ul li{
     padding-bottom: 7px;
     padding-top: 7px;
 }
+
+nav ul li:last-child{
+    float: right;
+}
+
 nav ul li a{
     padding-left: 15px;
     padding-right: 15px;
