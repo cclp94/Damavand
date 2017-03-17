@@ -9,6 +9,7 @@ body{
 
 #main-container{
     background-color: white;
+    box-shadow: 3px 3px 11px 2px rgba(156, 154, 154, 0.2);
 }
 
 .text-pad{
@@ -58,6 +59,7 @@ nav ul li a:hover{
 /* Content section */
 #content{
     min-height: 435px;
+    padding: 20px;
     
 }
 
@@ -79,14 +81,14 @@ footer{
 
 .copyright-container{
     position: relative;
-    height: 170px;
+    height: 140px;
     text-align: center;
 }
 
 .copyright-container span{
     display: block;
     position: absolute;
-    bottom: 50px;
+    bottom: 28px;
 }
 
 .footer-logo{

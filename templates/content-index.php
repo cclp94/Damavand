@@ -1,6 +1,5 @@
 <?php
 echo '
-<section id="content">
     <div class="row">
         <div id="main-text" class="col-md-8">
             <h1>Damavand Contruction</h1>
@@ -32,13 +31,12 @@ echo '
             <div id="login-form">
                 <h3>Login</h3>
                 <form method="post" action="./app/login.php">
-                    <input class="form-control" type="text" name="username" placeholder="User"/></br>
-                    <input class="form-control" type="password" name="password" placeholder="Password"/></br>
+                    <input class="form-control" type="text" name="username" placeholder="User" required/></br>
+                    <input class="form-control" type="password" name="password" placeholder="Password" required/></br>
                     <input  class="form-control" type="submit" value="Login"/>
                 </form>
             </div>
         </div>
     </div>
-</section>
 ';
 ?>

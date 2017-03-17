@@ -9,7 +9,7 @@
             <?php include './templates/header.php';?>
             <!-- GET CONTENT DEPENDING ON SESSION -->
             <section id="content">
-                <?php include './templates/content-index.php';?>
+                <?php include './templates/content-register.php';?>
             </section>
             <?php include './templates/footer.php';?>
         </div>
