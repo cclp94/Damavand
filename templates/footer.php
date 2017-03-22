@@ -1,5 +1,3 @@
-<?php
-echo '
 <footer class="row">
     <div class="col-md-3 text-pad">
         <p>
@@ -14,5 +12,3 @@ echo '
         <img class="fit" src="./img/logobw.png"/>
     </div>
 </footer>
-';
-?>

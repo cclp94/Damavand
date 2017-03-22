@@ -1,5 +1,4 @@
-<?php
-echo '
+
  <!-- ====== JS SCRIPTS ====== -->
 <script src="./js/jquery-3.1.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
@@ -8,5 +7,3 @@ echo '
 <link rel="stylesheet" href="./css/bootstrap-theme.min.css"/>
 <link rel="stylesheet" href="./css/style.css"/>
 <!-- ========================= -->
-';
-?>
