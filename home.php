@@ -23,6 +23,7 @@
             <?php include './templates/nav-home.php';?>
             <!-- GET CONTENT DEPENDING ON SESSION -->
             <section id="content">
+                <?php include './templates/content-home.php'; ?>
             </section>
             <?php include './templates/footer.php';?>
         </div>
