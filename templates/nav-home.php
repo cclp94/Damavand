@@ -3,7 +3,7 @@
         <ul>
             <li><a href="index.php">Home</a></li>
             <?php if($user->permission){?>
-                <li><a href="#">Employees</a></li>
+                <li><a href="employees.php">Employees</a></li>
                 <li><a href="#">Clients</a></li>
             <?php }else{ ?>
                 <li><a href="info.php">My information</a></li>
