@@ -1,6 +1,6 @@
 <?php
     // Get employees
-    $employees = null;
+    $employees = [Employee::mockEmployee()];
 ?>
 
 <div class="row">
@@ -31,7 +31,8 @@
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
                 if(isset($employees)){
-                    showProjectPreviews();
+                    echo 'Yay!';
+                    showEmployeePreviews();
                 }else{
                     echo '<a class="add-project" href="#">Add your first employee!</a>';
                 }
@@ -46,30 +47,24 @@
                     </div>
                 </div>
             <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label text-center">Username</label>
+                    <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="username" placeholder="User" required/></br>
+                        <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" placeholder="0123456789" required/></br>
                     </div>
             </div>
             <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label text-center">Password</label>
+                    <label for="title" class="col-sm-2 control-label text-center">Title</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="password" placeholder="Password" required/></br>
+                        <input class="form-control" type="text" name="title" placeholder="Title" required/></br>
                     </div>
             </div>
             <div class="form-group">
-                    <label for="passwordConfirm" class="col-sm-2 control-label text-center">Confirm Password</label>
+                    <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="passwordConfirm" placeholder="Confirm Password" required/></br>
+                        <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
             </div>
-            <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label text-center">Email</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="email" name="email" placeholder="Email" required/></br>
-                    </div>
-            </div>
-                <input  class="btn btn-primary btn-lg center-block" type="submit" value="Register"/>
+                <input  class="btn btn-primary btn-lg center-block" type="submit" value="Add Employee"/>
             </form>
         </div>
     </div>
@@ -77,12 +72,14 @@
 
 <?php
 
-function showProjectPreviews(){
-    foreach($projects as $project){
-        echo '<div class="project"><a href="./project.php?id='.$project->id;
-        echo '<h1 class="project-title">'.$project->title.'</h1>';
-        echo '<span class="project-creator>'.$project->creator.'</span>';
-        echo '</a></div>';
+function showEmployeePreviews(){
+    global $employees;
+    foreach((array) $employees as $employee){
+        //echo '<div class="employee-name"><a href="./employee.php?id='.$employee->name;
+        //echo($employee->name);
+        echo $employee->name;
+        //echo '<span class="project-creator>'.$project->creator.'</span>';
+        //echo '</a></div>';
     }
 }
 
