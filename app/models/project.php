@@ -5,7 +5,7 @@ require_once './employee.php';
         var $projectID, $name, $supervisor, $startDate, $endDate,$deadline, $budget, $client;
 
         function Project($id, $name, $supervisor, $startDate, $endDate, $deadline, $budget, $client){
-            $this->id = $id;
+            $this->projectId = $id;
             $this->name = $name;
             $this->supervisor = $supervisor;
             $this->startDate = $startDate;
@@ -21,7 +21,7 @@ require_once './employee.php';
 
         public static function getProjectMock($id){
             // Get project from db
-            return new Project($id, "Mock Project", )
+            return new Project($id, "Mock Project", new Employee(), "2017-01-01", null, "2017-10-04", 100000, new Client());
         }
     }
 

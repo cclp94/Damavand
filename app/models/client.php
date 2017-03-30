@@ -1,27 +1,23 @@
 <?php
-require_once './supervisor.php';
-require_once './employee.php';
-    class Project{
-        var $id, $name, $address, $contactNumber, $contact;
+    class Client{
+        var $id, $name, $address, $contactNumber, $contactName, $contactAddress;
 
-        function Project($id, $name, $supervisor, $startDate, $endDate, $deadline, $budget, $client){
+        function Client($id, $name, $address, $contactNumber, $contactName, $contactAddress){
             $this->id = $id;
             $this->name = $name;
-            $this->supervisor = $supervisor;
-            $this->startDate = $startDate;
-            $this->endDate = $endDate;
-            $this->deadline = $deadline;
-            $this->budget = $budget;
-            $this->client = $client;
+            $this->address = $address;
+            $this->contactNumber = $contactNumber;
+            $this->contactName = $contactName;
+            $this->contactAddress = $contactAddress;
         }
 
-        public static function getProject($id){
+        public static function getClient($id){
             // Get project from db
         }
 
-        public static function getProjectMock($id){
+        public static function getClientMock($id){
             // Get project from db
-            return new Project($id, "Mock Project", )
+            return new Client($id, "Damavand", "5342 ave concordia", "514-555-5555", "Joe Doe", "5341 ave concordia");
         }
     }
 

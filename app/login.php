@@ -1,6 +1,6 @@
 <?php
 session_start();
-require './models/user.php';
+require_once './models/user.php';
 define('URL', 'http://localhost:3000/');
 $username = basename($_POST["username"]);
 $password = basename($_POST["password"]);

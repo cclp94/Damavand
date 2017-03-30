@@ -9,9 +9,11 @@
             <li role="presentation" class="active ">
                 <a href="#project-list" aria-controls="project-list" role="tab" data-toggle="tab">Projects</a>
             </li>
-            <li role="presentation">
-                <a href="#project-add" aria-controls="project-add" role="tab" data-toggle="tab">Add Project</a>
-            </li>
+            <?php if($user->permission){?>
+                <li role="presentation">
+                    <a href="#project-add" aria-controls="project-add" role="tab" data-toggle="tab">Add Project</a>
+                </li>
+            <?php }?>
         </ul>
     </div>
     <div class="col-md-3">
@@ -32,8 +34,10 @@
             <?php
                 if(isset($projects)){
                     showProjectPreviews();
-                }else{
+                }elseif($user->permission){
                     echo '<a class="add-project" href="#">Add your first project!</a>';
+                }else{
+                    echo '<strong>You don\'t have any projects yet</strong>';
                 }
             ?>
         </div>
