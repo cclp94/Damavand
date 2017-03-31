@@ -10,6 +10,42 @@
     }
 ?>
 
+<?php
+    if (isset($employee)) {
+?>
+
+<form method="post" action="./app/register.php">
+    <div class="form-group">
+        <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="employeeName" placeholder="<?php echo $employee->name ?>" required/></br>
+        </div>
+    </div>
+    <div class="form-group">
+            <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" placeholder=<?php echo $employee->SIN ?> required/></br>
+            </div>
+    </div>
+    <div class="form-group">
+            <label for="title" class="col-sm-2 control-label text-center">Title</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" name="title" placeholder="<?php echo $employee->title ?>" required/></br>
+            </div>
+    </div>
+    <div class="form-group">
+            <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" name="wage" placeholder="<?php echo number_format($employee->wage, 2) ?>" required/></br>
+            </div>
+    </div>
+    <input  class="btn btn-primary btn-lg center-block" type="submit" value="Update Employee"/>
+</form>
+
+<?php
+    } else {
+?>
+
 <div class="row">
     <div class="col-md-9">
         <ul class="nav nav-tabs" role="tablist">
@@ -36,40 +72,10 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
-                if (isset($SIN)) { ?>
-                    <form method="post" action="./app/register.php">
-                        <div class="form-group">
-                            <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" name="employeeName" placeholder="<?php echo $employee->name ?>" required/></br>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" placeholder=<?php echo $employee->SIN ?> required/></br>
-                                </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="title" class="col-sm-2 control-label text-center">Title</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="text" name="title" placeholder="<?php echo $employee->title ?>" required/></br>
-                                </div>
-                        </div>
-                        <div class="form-group">
-                                <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
-                                <div class="col-sm-10">
-                                    <input class="form-control" type="number" name="wage" placeholder="<?php echo number_format($employee->wage, 2) ?>" required/></br>
-                                </div>
-                        </div>
-                            <input  class="btn btn-primary btn-lg center-block" type="submit" value="Update Employee"/>
-                        </form>
-                <?} else {
-                    if (isset($employees)) {
-                        displayEmployeeTable();
-                    } else {
-                        echo '<a class="add-project" href="#">Add your first employee!</a>';
-                    }
+                if (isset($employees)) {
+                    displayEmployeeTable();
+                } else {
+                    echo '<a class="add-project" href="#">Add your first employee!</a>';
                 }
             ?>
         </div>
@@ -104,6 +110,10 @@
         </div>
     </div>
 </div>
+
+<?php
+    }
+?>
 
 <?php
 function displayEmployeeTable(){
