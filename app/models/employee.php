@@ -9,11 +9,11 @@
             $this->wage = $wage;
         }
 
-        public static function getEmployee($SIN){
+        public static function get($SIN){
             // Get project from db
         }
 
-        public static function mockEmployee(){
+        public static function mock(){
             return new Employee(123456789, "Billy Bob", "Janitor", 15.00);
         }
     }
