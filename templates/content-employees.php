@@ -1,6 +1,9 @@
 <?php
-    // Get employees
-    $employees = [Employee::mockEmployee()];
+    // Get employees - MOCK
+    $employees = [];
+    for ($i = 0; $i < 5; ++$i){
+        $employees[] = Employee::mockEmployee();
+    }
 ?>
 
 <div class="row">
@@ -24,15 +27,13 @@
                                      echo 's'; ?>
              </strong>
         </div>
-    <!-- total costs with projects -->
     </div>
     <!-- Tab panes -->
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
                 if(isset($employees)){
-                    echo 'Yay!';
-                    showEmployeePreviews();
+                    displayEmployeeTable();
                 }else{
                     echo '<a class="add-project" href="#">Add your first employee!</a>';
                 }
@@ -72,15 +73,35 @@
 
 <?php
 
-function showEmployeePreviews(){
+function displayEmployeeTable(){
     global $employees;
-    foreach((array) $employees as $employee){
-        //echo '<div class="employee-name"><a href="./employee.php?id='.$employee->name;
-        //echo($employee->name);
-        echo $employee->name;
-        //echo '<span class="project-creator>'.$project->creator.'</span>';
-        //echo '</a></div>';
+    echo
+       '<table style="width:100%">
+            <tr>
+                <th>SIN</th>
+                <th>Name</th>
+                <th>Title</th>
+                <th>Wage</th>
+            </tr>';
+    foreach($employees as $employee){
+        echo '<tr>';
+        echo tableCell('<a href="./employee.php?SIN='.$employee->SIN.'">'.$employee->SIN.'</a>');
+        echo tableCell($employee->name);
+        echo tableCell($employee->title);
+        echo tableCell('$'.number_format($employee->wage, 2));
+        echo '</tr>';
+        //echo '<div class="employee"><a href="./employee.php?SIN='.$employee->SIN.'">';
+        //echo span("employee-sin", $employee->SIN);
+        //echo span("employee-name", $employee->name);
+        //echo span("employee-title", $employee->title);
+        //echo span("employee-wage", $employee->wage);
+        
     }
+    echo '</table>';
+}
+
+function tableCell($content){
+    return '<td>'.$content.'</td>';
 }
 
 ?>
