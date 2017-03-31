@@ -75,14 +75,13 @@
 
 function displayEmployeeTable(){
     global $employees;
-    echo
-       '<table style="width:100%">
-            <tr>
-                <th>SIN</th>
-                <th>Name</th>
-                <th>Title</th>
-                <th>Wage</th>
-            </tr>';
+    echo '<table style="width:100%">';
+    echo '  <tr>';
+    echo '      <th>SIN</th>';
+    echo '      <th>Name</th>';
+    echo '      <th>Title</th>';
+    echo '      <th>Wage</th>';
+    echo '  </tr>';
     foreach($employees as $employee){
         echo '<tr>';
         echo tableCell('<a href="./employee.php?SIN='.$employee->SIN.'">'.$employee->SIN.'</a>');
@@ -90,12 +89,6 @@ function displayEmployeeTable(){
         echo tableCell($employee->title);
         echo tableCell('$'.number_format($employee->wage, 2));
         echo '</tr>';
-        //echo '<div class="employee"><a href="./employee.php?SIN='.$employee->SIN.'">';
-        //echo span("employee-sin", $employee->SIN);
-        //echo span("employee-name", $employee->name);
-        //echo span("employee-title", $employee->title);
-        //echo span("employee-wage", $employee->wage);
-        
     }
     echo '</table>';
 }
