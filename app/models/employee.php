@@ -21,12 +21,25 @@
             return $employees;
         }
 
-        public static function get($SIN){
+        public static function get($SIN) {
             return Employee::mock();
         }
 
-        public static function mock(){
+        public static function mock() {
             return new Employee(123456789, "Bort", "Janitor", 15.00);
+        }
+
+        public static function getDB() {
+            $servername = "rsc353_4.encs.concordia.ca";
+            $username = "rsc353_4";
+            $password = "aardvark";
+            $db_name = "rsc353_4";
+
+            $conn = mysqli_connect($servername, $username, $password, $db_name);
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            echo "Connected successfully!";
         }
     }
 ?>

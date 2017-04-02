@@ -1,4 +1,5 @@
 <?php
+    Employee::getDB();
     $SIN = $_GET['SIN'];
     if ($SIN == Employee::mock()->SIN) {
         $employee = Employee::mock();
