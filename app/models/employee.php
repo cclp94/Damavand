@@ -1,5 +1,5 @@
 <?php
-    require_once __ROOT_.'/app/connection.php';
+    require_once __ROOT__.'/app/connection.php';
 
     class Employee{
         var $SIN, $name, $title, $wage;
