@@ -14,6 +14,39 @@
             // foreach SIN
             //      list += get(SIN)
             //      return list
+            if (!function_exists(mysqli_connect)) {
+                return Employee::getAllMock();
+            }
+
+            $servername = "rsc353_4.encs.concordia.ca";
+            $username = "rsc353_4";
+            $password = "aardvark";
+            $db_name = "rsc353_4";
+
+            $conn = mysqli_connect($servername, $username, $password, $db_name);
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            echo "Connected successfully!";
+
+            $sql = "SELECT *  FROM Employee";
+            $result = $conn->query($sql);
+            $employees = [];
+            while ($row = $result->fetch_assoc()) {
+                $SIN = $row["sin"];
+                $name = $row["name"];
+                $title = $row["title"];
+                $wage = $row["wage"];
+
+                $emp = new Employee($SIN, $name, $wage, $title);
+                var_dump($emp);
+                $employees[] = $emp;
+            }
+
+            return $employees;
+        }
+
+        public static function getAllMock() {
             $employees = [];
             for ($i = 0; $i < 10; ++$i){
                 $employees[] = Employee::get(i);
