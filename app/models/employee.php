@@ -17,15 +17,12 @@
             }
 
             $conn = connect();
-            $conn = connect();
 
-            $sql = "SELECT *  FROM Employee";
+            $sql = "SELECT * FROM Employee";
             $result = $conn->query($sql);
             $employees = [];
             while ($row = $result->fetch_assoc()) {
-                $emp = Employee::fromRow($row);
-                var_dump($emp);
-                $employees[] = $emp;
+                $employees[] = Employee::fromRow($row);
             }
 
             return $employees;
@@ -49,7 +46,11 @@
         }
 
         public static function get($SIN) {
-            return Employee::mock();
+            $conn = connect();
+            $sql = "SELECT * FROM Employee WHERE SIN = " . $SIN . ";";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            return Employee::fromRow($row);
         }
 
         public static function mock() {
