@@ -1,8 +1,8 @@
 <?php
     Employee::getDB();
     $SIN = $_GET['SIN'];
-    if ($SIN == Employee::mock()->SIN) {
-        $employee = Employee::mock();
+    if (isset($SIN)) {
+        $employee = Employee::get($SIN);
     }
     // Get employees - MOCK
     $employees = Employee::getAll();
