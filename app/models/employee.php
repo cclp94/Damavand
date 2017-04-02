@@ -1,4 +1,6 @@
 <?php
+    require_once '/app/connection.php';
+    
     class Employee{
         var $SIN, $name, $title, $wage;
 
@@ -10,10 +12,6 @@
         }
 
         public static function getAll() {
-            // To be replaced with database call
-            // foreach SIN
-            //      list += get(SIN)
-            //      return list
             if (!function_exists(mysqli_connect)) {
                 return Employee::getAllMock();
             }
@@ -27,23 +25,26 @@
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
             }
-            echo "Connected successfully!";
 
             $sql = "SELECT *  FROM Employee";
             $result = $conn->query($sql);
             $employees = [];
             while ($row = $result->fetch_assoc()) {
-                $SIN = $row["sin"];
-                $name = $row["name"];
-                $title = $row["title"];
-                $wage = $row["wage"];
-
-                $emp = new Employee($SIN, $name, $title, $wage);
+                $emp = Employee::fromRow($row);
                 var_dump($emp);
                 $employees[] = $emp;
             }
 
             return $employees;
+        }
+
+        public static function fromRow($row) {
+            $SIN = $row["sin"];
+            $name = $row["name"];
+            $title = $row["title"];
+            $wage = $row["wage"];
+
+            return new Employee($SIN, $name, $title, $wage);
         }
 
         public static function getAllMock() {
