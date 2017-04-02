@@ -43,7 +43,8 @@
 
             $sql = "SELECT *  FROM Employee";
             $result = $conn->query($sql);
-            var_dump($result);
+            $row = $result->fetch_assoc();
+            var_dump($row);
         }
     }
 ?>
