@@ -79,7 +79,7 @@
         <div role="tabpanel" class="tab-pane fade" id="employee-add">
             <form method="post" action="./app/add-employee.php">
                 <div class="form-group">
-                    <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
+                    <label for="name" class="col-sm-2 control-label text-center">Employee Name</label>
                     <div class="col-sm-10">
                         <input class="form-control" type="text" name="name" placeholder="Employee Name" required/></br>
                     </div>
