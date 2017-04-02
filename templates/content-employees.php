@@ -77,31 +77,31 @@
             ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="employee-add">
-            <form method="post" action="./app/register.php">
+            <form method="post" action="./app/add-employee.php">
                 <div class="form-group">
                     <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="employeeName" placeholder="Employee Name" required/></br>
+                        <input class="form-control" type="text" name="name" placeholder="Employee Name" required/></br>
                     </div>
                 </div>
-            <div class="form-group">
+                <div class="form-group">
                     <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
                     <div class="col-sm-10">
                         <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" placeholder="0123456789" required/></br>
                     </div>
-            </div>
-            <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label for="title" class="col-sm-2 control-label text-center">Title</label>
                     <div class="col-sm-10">
                         <input class="form-control" type="text" name="title" placeholder="Title" required/></br>
                     </div>
-            </div>
-            <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
                     <div class="col-sm-10">
                         <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
-            </div>
+                </div>
                 <input  class="btn btn-primary btn-lg center-block" type="submit" value="Add Employee"/>
             </form>
         </div>
