@@ -40,6 +40,10 @@
                 die("Connection failed: " . $conn->connect_error);
             }
             echo "Connected successfully!";
+
+            $sql = "SELECT *  FROM Employee";
+            $result = $conn->query($sql);
+            var_dump($result);
         }
     }
 ?>
