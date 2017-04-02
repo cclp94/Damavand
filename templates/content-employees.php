@@ -1,5 +1,4 @@
 <?php
-    Employee::getDB();
     $SIN = $_GET['SIN'];
     if (isset($SIN)) {
         $employee = Employee::get($SIN);
