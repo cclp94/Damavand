@@ -4,10 +4,7 @@
         $employee = Employee::mock();
     }
     // Get employees - MOCK
-    $employees = [];
-    for ($i = 0; $i < 5; ++$i){
-        $employees[] = Employee::mock();
-    }
+    $employees = Employee::getAll();
 ?>
 
 <?php
@@ -18,25 +15,25 @@
     <div class="form-group">
         <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
         <div class="col-sm-10">
-            <input class="form-control" type="text" name="employeeName" placeholder="<?php echo $employee->name ?>" required/></br>
+            <input class="form-control" type="text" name="employeeName" value="<?php echo $employee->name ?>" required/></br>
         </div>
     </div>
     <div class="form-group">
             <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
             <div class="col-sm-10">
-                <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" placeholder=<?php echo $employee->SIN ?> required/></br>
+                <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" value=<?php echo $employee->SIN ?> required/></br>
             </div>
     </div>
     <div class="form-group">
             <label for="title" class="col-sm-2 control-label text-center">Title</label>
             <div class="col-sm-10">
-                <input class="form-control" type="text" name="title" placeholder="<?php echo $employee->title ?>" required/></br>
+                <input class="form-control" type="text" name="title" value="<?php echo $employee->title ?>" required/></br>
             </div>
     </div>
     <div class="form-group">
             <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
             <div class="col-sm-10">
-                <input class="form-control" type="number" name="wage" placeholder="<?php echo number_format($employee->wage, 2) ?>" required/></br>
+                <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
             </div>
     </div>
     <input  class="btn btn-primary btn-lg center-block" type="submit" value="Update Employee"/>
@@ -118,13 +115,6 @@
 <?php
 function displayEmployeeTable(){
     global $employees;
-    // echo '<table style="width:100%">';
-    // echo '  <tr>';
-    // echo '      <th>SIN</th>';
-    // echo '      <th>Name</th>';
-    // echo '      <th>Title</th>';
-    // echo '      <th>Wage</th>';
-    // echo '  </tr>';
     ?><table style="width:100%">
        <tr>
            <th>SIN</th>

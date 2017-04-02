@@ -1,7 +1,7 @@
 <?php
     class Client{
         var $id, $name, $address, $contactNumber, $contactName, $contactAddress;
-
+        
         function Client($id, $name, $address, $contactNumber, $contactName, $contactAddress){
             $this->id = $id;
             $this->name = $name;
