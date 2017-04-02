@@ -38,7 +38,7 @@
                 $title = $row["title"];
                 $wage = $row["wage"];
 
-                $emp = new Employee($SIN, $name, $wage, $title);
+                $emp = new Employee($SIN, $name, $title, $wage);
                 var_dump($emp);
                 $employees[] = $emp;
             }
