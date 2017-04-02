@@ -1,5 +1,5 @@
 <?php
-    require_once '/app/connection.php';
+    require_once '../connection.php';
 
     class Employee{
         var $SIN, $name, $title, $wage;
