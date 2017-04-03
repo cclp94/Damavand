@@ -33,7 +33,7 @@
                 if(isset($employees)){
                     showProjectPreviews();
                 }else{
-                    echo '<a class="add-project" href="#">Add your first employee!</a>';
+                    echo '<a class="add-employee" href="#">Add your first employee!</a>';
                 }
             ?>
         </div>
