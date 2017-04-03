@@ -77,7 +77,7 @@
             ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="employee-add">
-            <form method="post" action="./app/add-employee.php">
+            <form method="post" action="employees.php">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label text-center">Employee Name</label>
                     <div class="col-sm-10">
