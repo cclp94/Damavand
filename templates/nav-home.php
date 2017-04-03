@@ -2,7 +2,7 @@
     <nav>
         <ul>
             <li><a href="index.php">Home</a></li>
-            <?php if($user->permission){?>
+            <?php if($user->isAdmin()){?>
                 <li><a href="employees.php">Employees</a></li>
                 <li><a href="#">Clients</a></li>
             <?php }else{ ?>

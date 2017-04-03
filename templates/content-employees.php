@@ -6,13 +6,11 @@
         $employees = Employee::getAll();
     }
     if ($_POST['submit']) {
-        echo "Submitting...";
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
         $wage = $_POST['wage'];
         (new Employee($SIN, $name, $title, $wage))->put();
-        header("Refresh:0");
     }
 ?>
 
@@ -131,7 +129,7 @@ function displayEmployeeTable(){
            <th>Title</th>
            <th>Wage</th>
     </tr><?php
-    foreach($employees as $employee){
+    foreach(Employee::getAll() as $employee){
         echo '<tr>';
         echo tableCell('<a href="employees.php?SIN='.$employee->SIN.'">'.$employee->SIN.'</a>');
         echo tableCell($employee->name);

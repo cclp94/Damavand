@@ -8,7 +8,7 @@ $password = basename($_POST["password"]);
 
 // If successful 
 //TODO create user session and send to next page
-$user = User::getUserMock($username, $password);
+$user = User::getUser($username, $password);
 
 $_SESSION['action'] = 'login';
 

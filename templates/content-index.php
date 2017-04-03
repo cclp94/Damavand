@@ -34,7 +34,7 @@
                 <input class="form-control" type="password" name="password" placeholder="Password" required/></br>
                 <input  class="form-control" type="submit" value="Login"/>
             </form>
-            <span style="color: red;">'<? echo $error;?>'</span>
+            <span style="color: red;">'<? echo hash("md5", "root"); echo $error;?>'</span>
         </div>
     </div>
 </div>
