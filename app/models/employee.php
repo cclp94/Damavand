@@ -20,6 +20,8 @@
                    . $this->wage . ');';
             if ($conn->query($sql) == TRUE) {
                 echo "New employee created!";
+            } else {
+                echo "Error " . $sql . ": ". $conn->error;
             }
         }
 
