@@ -2,9 +2,12 @@
     $SIN = $_GET['SIN'];
     if (isset($SIN)) {
         $employee = Employee::get($SIN);
+    } else {
+        $employees = Employee::getAll();
     }
-    // Get employees - MOCK
-    $employees = Employee::getAll();
+    if ($_GET['submit']) {
+        var_dump($_GET['submit']);
+    }
 ?>
 
 <?php
