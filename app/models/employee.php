@@ -13,11 +13,12 @@
 
         function put() {
             $conn = connect();
-            $sql = "INSERT INTO Employee value("
-                    . $this->SIN . ", "
-                    . $this->name . ", "
-                    . $this->title . ", "
-                    . $this->wage . ");";
+            //$sql = "INSERT INTO Employee VALUE("
+            //        . $this->SIN . ", "
+             //       . $this->name . ", "
+               //     . $this->title . ", "
+                 //   . $this->wage . ");";
+                 $sql = 'INSERT INTO Employee VALUE(13, "Test", "Tester", 9)';
             echo $conn->query($sql);
         }
 
