@@ -105,7 +105,7 @@
                         <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
                 </div>
-                <input  class="btn btn-primary btn-lg center-block" type="submit" value="Add Employee"/>
+                <input  class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
             </form>
         </div>
     </div>
