@@ -11,6 +11,16 @@
             $this->wage = $wage;
         }
 
+        function put() {
+            $conn = connect();
+            $sql = "INSERT INTO Employee value("
+                    . $this->SIN . ", "
+                    . $this->name . ", "
+                    . $this->title . ", "
+                    . $this->wage . ";";
+            $conn->query($sql);
+        }
+
         public static function getAll() {
             if (!function_exists(mysqli_connect)) {
                 return Employee::getAllMock();

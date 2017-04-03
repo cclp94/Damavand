@@ -6,8 +6,11 @@
         $employees = Employee::getAll();
     }
     if ($_POST['submit']) {
-        //$name = 
-        echo "ok";
+        $SIN = $_POST['SIN'];
+        $name = $_POST['name'];
+        $title = $_POST['title'];
+        $wage = $_POST['eage'];
+        (new Employee($SIN, $name, $title, $wage)).put();
     }
 ?>
 
