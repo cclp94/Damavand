@@ -1,6 +1,55 @@
 <?php
-    // Get employees
-    $employees = null;
+    $SIN = $_GET['SIN'];
+    if (isset($SIN)) {
+        $employee = Employee::get($SIN);
+    } else {
+        $employees = Employee::getAll();
+    }
+    if ($_POST['submit']) {
+        echo "Submitting...";
+        $SIN = $_POST['SIN'];
+        $name = $_POST['name'];
+        $title = $_POST['title'];
+        $wage = $_POST['wage'];
+        (new Employee($SIN, $name, $title, $wage))->put();
+        header("Refresh:0");
+    }
+?>
+
+<?php
+    if (isset($employee)) {
+?>
+
+<form method="post" action="./app/register.php">
+    <div class="form-group">
+        <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
+        <div class="col-sm-10">
+            <input class="form-control" type="text" name="employeeName" value="<?php echo $employee->name ?>" required/></br>
+        </div>
+    </div>
+    <div class="form-group">
+            <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" value=<?php echo $employee->SIN ?> required/></br>
+            </div>
+    </div>
+    <div class="form-group">
+            <label for="title" class="col-sm-2 control-label text-center">Title</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" name="title" value="<?php echo $employee->title ?>" required/></br>
+            </div>
+    </div>
+    <div class="form-group">
+            <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
+            </div>
+    </div>
+    <input  class="btn btn-primary btn-lg center-block" type="submit" value="Update Employee"/>
+</form>
+
+<?php
+    } else {
 ?>
 
 <div class="row">
@@ -24,66 +73,77 @@
                                      echo 's'; ?>
              </strong>
         </div>
-    <!-- total costs with projects -->
     </div>
     <!-- Tab panes -->
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
-                if(isset($employees)){
-                    showProjectPreviews();
-                }else{
+                if (isset($employees)) {
+                    displayEmployeeTable();
+                } else {
                     echo '<a class="add-employee" href="#">Add your first employee!</a>';
                 }
             ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="employee-add">
-            <form method="post" action="./app/register.php">
+            <form method="post" action="employees.php">
                 <div class="form-group">
-                    <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
+                    <label for="name" class="col-sm-2 control-label text-center">Employee Name</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="employeeName" placeholder="Employee Name" required/></br>
+                        <input class="form-control" type="text" name="name" placeholder="Employee Name" required/></br>
                     </div>
                 </div>
-            <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label text-center">Username</label>
+                <div class="form-group">
+                    <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="username" placeholder="User" required/></br>
+                        <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" placeholder="0123456789" required/></br>
                     </div>
-            </div>
-            <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label text-center">Password</label>
+                </div>
+                <div class="form-group">
+                    <label for="title" class="col-sm-2 control-label text-center">Title</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="password" placeholder="Password" required/></br>
+                        <input class="form-control" type="text" name="title" placeholder="Title" required/></br>
                     </div>
-            </div>
-            <div class="form-group">
-                    <label for="passwordConfirm" class="col-sm-2 control-label text-center">Confirm Password</label>
+                </div>
+                <div class="form-group">
+                    <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="passwordConfirm" placeholder="Confirm Password" required/></br>
+                        <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
-            </div>
-            <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label text-center">Email</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="email" name="email" placeholder="Email" required/></br>
-                    </div>
-            </div>
-                <input  class="btn btn-primary btn-lg center-block" type="submit" value="Register"/>
+                </div>
+                <input  class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
             </form>
         </div>
     </div>
 </div>
 
 <?php
-
-function showProjectPreviews(){
-    foreach($projects as $project){
-        echo '<div class="project"><a href="./project.php?id='.$project->id;
-        echo '<h1 class="project-title">'.$project->title.'</h1>';
-        echo '<span class="project-creator>'.$project->creator.'</span>';
-        echo '</a></div>';
     }
+?>
+
+<?php
+function displayEmployeeTable(){
+    global $employees;
+    ?><table style="width:100%">
+       <tr>
+           <th>SIN</th>
+           <th>Name</th>
+           <th>Title</th>
+           <th>Wage</th>
+    </tr><?php
+    foreach($employees as $employee){
+        echo '<tr>';
+        echo tableCell('<a href="employees.php?SIN='.$employee->SIN.'">'.$employee->SIN.'</a>');
+        echo tableCell($employee->name);
+        echo tableCell($employee->title);
+        echo tableCell('$'.number_format($employee->wage, 2));
+        echo '</tr>';
+    }
+    echo '</table>';
+}
+
+function tableCell($content){
+    return '<td>'.$content.'</td>';
 }
 
 ?>
