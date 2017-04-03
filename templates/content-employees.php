@@ -6,6 +6,7 @@
         $employees = Employee::getAll();
     }
     if ($_POST['submit']) {
+        echo "Submitting...";
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];

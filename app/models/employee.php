@@ -17,8 +17,8 @@
                     . $this->SIN . ", "
                     . $this->name . ", "
                     . $this->title . ", "
-                    . $this->wage . ";";
-            $conn->query($sql);
+                    . $this->wage . ");";
+            echo $conn->query($sql);
         }
 
         public static function getAll() {
