@@ -10,7 +10,7 @@
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
-        $wage = $_POST['eage'];
+        $wage = $_POST['wage'];
         (new Employee($SIN, $name, $title, $wage))->put();
     }
 ?>
