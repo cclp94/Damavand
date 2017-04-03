@@ -13,13 +13,14 @@
 
         function put() {
             $conn = connect();
-            //$sql = "INSERT INTO Employee VALUE("
-            //        . $this->SIN . ", "
-             //       . $this->name . ", "
-               //     . $this->title . ", "
-                 //   . $this->wage . ");";
-                 $sql = 'INSERT INTO Employee VALUE(13, "Test", "Tester", 9)';
-            echo $conn->query($sql);
+            $sql = 'INSERT INTO Employee VALUE('
+                   . $this->SIN . ', "'
+                   . $this->name . '", "'
+                   . $this->title . '", '
+                   . $this->wage . ');';
+            if ($conn->query($sql) == TRUE) {
+                echo "New employee created!";
+            }
         }
 
         public static function getAll() {
