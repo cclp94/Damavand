@@ -5,7 +5,8 @@
     } else {
         $employees = Employee::getAll();
     }
-    if (basename($_POST['submit'])) {
+    if ($_POST['submit']) {
+        //$name = 
         echo "ok";
     }
 ?>
