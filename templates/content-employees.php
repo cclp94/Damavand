@@ -5,16 +5,20 @@
     } else {
         $employees = Employee::getAll();
     }
-    if ($_POST['submit'] || $_POST['update']) {
+    if ($_POST['submit'] || $_POST['update'] || $_POST['delete']) {
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
         $wage = $_POST['wage'];
         
+        $employee = new Employee($SIN, $name, $title, $wage);
+
         if ($_POST['submit']) {
-            (new Employee($SIN, $name, $title, $wage))->put();
-        } else {
-            Employee::get($SIN)->update();
+            $employee->put();
+        } else if ($_POST['update']) {
+            $employee->update();
+        } else if ($_POST['delete']) {
+            Employee::delete($SIN);
         }
     }
 ?>
@@ -25,9 +29,9 @@
 
 <form method="post" action="employees.php">
     <div class="form-group">
-        <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
+        <label for="name" class="col-sm-2 control-label text-center">Employee Name</label>
         <div class="col-sm-10">
-            <input class="form-control" type="text" name="employeeName" value="<?php echo $employee->name ?>" required/></br>
+            <input class="form-control" type="text" name="name" value="<?php echo $employee->name ?>" required/></br>
         </div>
     </div>
     <div class="form-group">
@@ -48,7 +52,10 @@
                 <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
             </div>
     </div>
-    <input  class="btn btn-primary btn-lg center-block" type="update" name="update" value="Update Employee"/>
+    <div class = "text-center">
+        <input class="btn btn-primary btn-lg" type="submit" name="update" value="Update Employee"/>
+        <input class="btn btn-primary btn-lg" type="submit" name="delete" value="Delete Employee"/>
+    </div>
 </form>
 
 <?php
@@ -114,7 +121,7 @@
                         <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
                 </div>
-                <input  class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
+                <input class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
             </form>
         </div>
     </div>

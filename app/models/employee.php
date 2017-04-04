@@ -13,11 +13,7 @@
 
         function put() {
             $conn = connect();
-            $sql = 'INSERT INTO Employee VALUE('
-                   . $this->SIN . ', "'
-                   . $this->name . '", "'
-                   . $this->title . '", '
-                   . $this->wage . ');';
+            $sql = "INSERT INTO Employee VALUE($this->SIN, '$this->name', '$this->title', $this->wage);";
             if ($conn->query($sql) == TRUE) {
                 echo "New employee created!";
             } else {
@@ -27,13 +23,24 @@
 
         function update() {
             $conn = connect();
-            $sql = 'UPDATE Employee SET '
-                    . 'name="'  . $this->name  . '", '
-                    . 'title="' . $this->title . '", '
-                    . 'wage='   . $this->wage  . ' '
-                    . 'WHERE sin=' . $this->SIN . ';';
+            $sql = "UPDATE Employee
+                    SET name='$this->name',
+                        title='$this->title',
+                        wage=$this->wage 
+                    WHERE sin=$this->SIN;";
             if ($conn->query($sql) == TRUE) {
                 echo "Employee updated!";
+            } else {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+        }
+
+        public static function delete($SIN) {
+            $conn = connect();
+            $sql = "DELETE FROM Employee
+                    WHERE sin=$SIN;";
+            if ($conn->query($sql) == TRUE) {
+                echo "Employee deleted!";
             } else {
                 echo "Error " . $sql . ": ". $conn->error;
             }
@@ -75,7 +82,7 @@
 
         public static function get($SIN) {
             $conn = connect();
-            $sql = "SELECT * FROM Employee WHERE SIN = " . $SIN . ";";
+            $sql = "SELECT * FROM Employee WHERE SIN = $SIN;";
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             return Employee::fromRow($row);
