@@ -53,8 +53,8 @@
             </div>
     </div>
     <div class = "row center-block">
-        <input class="btn btn-primary btn-lg" type="submit" name="update" value="Update Employee"/>
-        <input class="btn btn-primary btn-lg" type="submit" name="delete" value="Delete Employee"/>
+        <input class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Employee"/>
+        <input class="btn btn-primary btn-lg center-block" type="submit" name="delete" value="Delete Employee"/>
     </div>
 </form>
 
