@@ -5,7 +5,7 @@
     } else {
         $employees = Employee::getAll();
     }
-    if ($_POST['submit'] || $_POST['update'] || $_POST['delete']) {
+    if ($_POST['add'] || $_POST['update'] || $_POST['delete']) {
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
@@ -13,7 +13,7 @@
         
         $employee = new Employee($SIN, $name, $title, $wage);
 
-        if ($_POST['submit']) {
+        if ($_POST['add']) {
             $employee->put();
         } else if ($_POST['update']) {
             $employee->update();
@@ -121,7 +121,7 @@
                         <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
                 </div>
-                <input class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
+                <input class="btn btn-primary btn-lg center-block" type="submit" name = "add" value="Add Employee"/>
             </form>
         </div>
     </div>
