@@ -1,6 +1,14 @@
 <?php
-    // Get projects and their creators
-    $projects = null;
+    $projects = Project::getAll();
+    if(isset($_POST["add"])){
+        $name = $_POST['name'];
+        $startDate = $_POST['startDate'];
+        $deadline = $_POST['deadline'];
+        $budget = $_POST['budget'];
+        $clientId = $_POST['client'];
+        $supervisorId = $_POST['supervisor'];
+        (new Project(null, $name, $supervisorId, $startDate, null, $deadline, $budget, $clientId))->put();
+    }
 ?>
 
 <div class="row">
@@ -42,38 +50,56 @@
             ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="project-add">
-            <form method="post" action="./app/register.php">
+            <form method="post" action="./home.php">
                 <div class="form-group">
                     <label for="projectName" class="col-sm-2 control-label text-center">Project Name</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="projectName" placeholder="Project Name" required/></br>
+                        <input class="form-control" type="text" name="name" placeholder="Project Name" required/></br>
                     </div>
                 </div>
             <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label text-center">Username</label>
+                    <label for="startDate" class="col-sm-2 control-label text-center">Start Date</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="username" placeholder="User" required/></br>
+                        <input class="form-control" type="date" name="startDate" placeholder="" required/></br>
                     </div>
             </div>
             <div class="form-group">
-                    <label for="password" class="col-sm-2 control-label text-center">Password</label>
+                    <label for="passwordConfirm" class="col-sm-2 control-label text-center">Deadline</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="password" placeholder="Password" required/></br>
+                        <input class="form-control" type="date" name="deadline" required/></br>
                     </div>
             </div>
             <div class="form-group">
-                    <label for="passwordConfirm" class="col-sm-2 control-label text-center">Confirm Password</label>
+                    <label for="email" class="col-sm-2 control-label text-center">Budget</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="passwordConfirm" placeholder="Confirm Password" required/></br>
+                        <input class="form-control" type="number" name="budget" placeholder="100,000" required/></br>
                     </div>
             </div>
+
             <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label text-center">Email</label>
+                    <label for="email" class="col-sm-2 control-label text-center">Supervisor</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="email" name="email" placeholder="Email" required/></br>
+                        <select name = "supervisor" class="form-control">
+                            <option value="none" selected>None</option>
+                            <?php foreach(Employee::getAll() as $employee){ ?>
+                                <option value = "<?php echo $employee->SIN; ?>"><?php echo $employee->name . " - " . $employee->title; ?> </option>
+                            <?php } ?>
+                        </select><br/>
                     </div>
             </div>
-                <input  class="btn btn-primary btn-lg center-block" type="submit" value="Register"/>
+
+            <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label text-center">Client</label>
+                    <div class="col-sm-10">
+                        <select name = "client" class="form-control">
+                            <option value="none" selected>None</option>
+                            <?php foreach(Client::getAll() as $client){ ?>
+                                <option value = "<?php echo $client->id; ?>"><?php echo $client->name . " - " . $client->contactName; ?> </option>
+                            <?php } ?>
+                        </select><br/>
+                    </div>
+            </div>
+                <input  class="btn btn-primary btn-lg center-block" type="submit" name="add" value="Create"/>
             </form>
         </div>
     </div>
@@ -82,10 +108,10 @@
 <?php
 
 function showProjectPreviews(){
-    foreach($projects as $project){
-        echo '<div class="project"><a href="./project.php?id='.$project->id;
-        echo '<h1 class="project-title">'.$project->title.'</h1>';
-        echo '<span class="project-creator>'.$project->creator.'</span>';
+    foreach(Project::getAll() as $project){
+        echo '<div class="project"><a href="./project.php?id='.$project->projectId.'" >';
+        echo '<h1 class="project-title">'.$project->name.'</h1>';
+        echo '<span class="project-creator">'.$project->supervisor->name.'</span>';
         echo '</a></div>';
     }
 }

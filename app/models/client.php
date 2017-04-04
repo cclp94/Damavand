@@ -121,6 +121,7 @@
         }
 
         function update($client){
+            // TODO: Update only what was changed
             $conn = connect();
             // Update address
             $sql = "UPDATE Address"
