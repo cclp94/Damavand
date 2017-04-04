@@ -45,7 +45,14 @@ require_once 'client.php';
         }
 
         public static function getProject($id){
-            // Get project from db
+            $conn = connect();
+            $sql = "SELECT projectId, Project.name as projectName, startDate, endDate, deadLine, budget, sin, Employee.name as supervisorName, title, wage, Client.clientId, Client.name as clientName, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName "
+                  ."FROM Project, Employee, Client "
+                  ."WHERE Project.projectId = ". $id ." AND (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
+                  ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            return Project::fromRow($row);
         }
 
         public static function getProjectMock($id){

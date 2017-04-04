@@ -1,6 +1,9 @@
 <?php
+    if(isset($_GET['id'])){
+        $project = Project::getProject($_GET['id']);
+    }
     $projects = Project::getAll();
-    if(isset($_POST["add"])){
+    if(isset($_POST["edit"])){
         $name = $_POST['name'];
         $startDate = $_POST['startDate'];
         $deadline = $_POST['deadline'];
@@ -15,11 +18,14 @@
     <div class="col-md-9">
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active ">
-                <a href="#project-list" aria-controls="project-list" role="tab" data-toggle="tab">Projects</a>
+                <a href="#project-list" aria-controls="project-list" role="tab" data-toggle="tab">Tasks</a>
             </li>
             <?php if($user->isAdmin()){?>
+            <li role="presentation">
+                    <a href="#project-add" aria-controls="project-add" role="tab" data-toggle="tab">Create Task</a>
+                </li>
                 <li role="presentation">
-                    <a href="#project-add" aria-controls="project-add" role="tab" data-toggle="tab">Add Project</a>
+                    <a href="#project-add" aria-controls="project-add" role="tab" data-toggle="tab">Edit Project Info</a>
                 </li>
             <?php }?>
         </ul>
