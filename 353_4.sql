@@ -34,7 +34,7 @@ VALUES
 ('autogen','(950) 204-4549',18,'Modesta Birkland','(317) 349-9023',18,'mbirkland'),
 ('plazio','(262) 136-1265',19,'Nathalie Dunagan','(549) 272-0422',19,'ndunagan'),
 ('tavu','(697) 289-4376',20,'Williams Valencia','(449) 171-1053',20,'wvalencia'),
-('octonoodle','(708) 490-0358',20,'Ema Tea','(915) 222-6281',20,'etea'),
+('octonoodle','(708) 490-0358',20,'Ema Tea','(915) 222-6281',20,'etea');
 
 INSERT INTO Employee (sin, name, title, wage)
 VALUES
@@ -58,7 +58,7 @@ VALUES
 (338501523,'Forrest Bush','Chief Markets Associate',53.40)
 (280638262,'Susan Thornton','District Accountability Engineer',22.30)
 (224334295,'Lydia Hicks','Internal Brand Officer',29.40)
-(544383505,'Annie Burke','Chief Applications Planner',22.50)
+(544383505,'Annie Burke','Chief Applications Planner',22.50);
 
 INSERT INTO Payments
 VALUES
