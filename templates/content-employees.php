@@ -52,8 +52,8 @@
                 <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
             </div>
     </div>
-    <input class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Employee"/>
-    <input class="btn btn-primary btn-lg center-block" type="submit" name="delete" value="Delete Employee"/>
+    <input class="btn btn-primary btn-lg" type="submit" name="update" value="Update Employee"/>
+    <input class="btn btn-primary btn-lg" type="submit" name="delete" value="Delete Employee"/>
 </form>
 
 <?php

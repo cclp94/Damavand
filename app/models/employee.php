@@ -40,7 +40,7 @@
             $sql = "DELETE FROM Employee
                     WHERE sin=$SIN;";
             if ($conn->query($sql) == TRUE) {
-                echo "Employee updated!";
+                echo "Employee deleted!";
             } else {
                 echo "Error " . $sql . ": ". $conn->error;
             }
