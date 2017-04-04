@@ -3,31 +3,42 @@
     if (isset($id)) {
         $client = Client::getClient($id);
     } else {
-        echo "get all";
         $clients = Client::getAll();
     }
-    if ($_POST['submit']) {
+    $newClient = null;
+    if(isset($_POST)){
+        $id = (isset($_POST['id']) ? $_POST['id'] : null);
         $name = $_POST['companyName'];
         $phoneNumber = $_POST['companyNumber'];
         
+        $companyId = (isset($_POST['companyId']) ? $_POST['companyId'] : null);
         $companyCivic = $_POST['companyCivic'];
         $companyStreet = $_POST['companyStreet'];
         $companyCity = $_POST['companyCity'];
         $companyCountry = $_POST['companyCountry'];
         $companyPostal = $_POST['companyPostal'];
-        $address = new Address(null, $companyCivic, $companyStreet, $companyCity, $companyCountry, $companyPostal);
-        
+        $address = new Address($companyId, $companyCivic, $companyStreet, $companyCity, $companyCountry, $companyPostal);
+
         $contactName = $_POST['contactName'];
         $contactNumber = $_POST['contactNumber'];
 
+        $contactId = (isset($_POST['contactId']) ? $_POST['contactId'] : null);
         $contactCivic = $_POST['contactCivic'];
         $contactStreet = $_POST['contactStreet'];
         $contactCity = $_POST['contactCity'];
         $contactCountry = $_POST['contactCountry'];
-        $contactAddress = new Address(null, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactPostal);
+        $contactPostal = $_POST['contactPostal'];
+        $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactPostal);
+
+        $newClient= new Client($id, $name, $address, $phoneNumber, $contactNumber, $contactName, $contactAddress, null);
         
-        (new Client(null, $name, $address, $phoneNumber, $contactNumber, $contactName, $contactAddress, null))->put();
+        if ($_POST['add']) {
+            $newClient->put();
+        }elseif($_POST['update']){
+            $newClient->update($client);
+        }
     }
+    
 ?>
 
 <?php
@@ -35,6 +46,7 @@
 ?>
 
 <form method="post" action="./clients.php">
+    <input type="hidden" name="id" value="<?php echo $client->id;?>">
     <div class="form-group">
         <label for="companyName" class="col-sm-2 control-label text-center">Company Name</label>
         <div class="col-sm-10">
@@ -48,6 +60,7 @@
         </div>
     </div>
     <label class="col-sm-12 control-label">Business Address</label><br/>
+    <input type="hidden" name="companyId"  value="<?php echo $client->address->id;?>"/>
     <div class="form-group row">
             <div class="col-md-2 col-md-push-1">
                 <input class="form-control" type="number" name="companyCivic" placeholder="1234" value="<?php echo $client->address->civic;?>" required/></br>
@@ -62,7 +75,7 @@
                 <input class="form-control" type="text" name="companyCountry" placeholder="Country" value="<?php echo $client->address->country;?>" required/></br>
             </div>
             <div class="col-md-3 col-md-push-1">
-                <input class="form-control" type="text" name="companyPostal" placeholder="Postal Code" value="<?php echo $client->address->postalCode;?>" required/></br>
+                <input class="form-control" type="text" name="companyPostal" placeholder="Postal Code" value="<?php echo $client->address->postal;?>" required/></br>
             </div>
     </div>
     <div class="form-group">
@@ -78,6 +91,8 @@
             </div>
     </div>
     <label class="col-sm-12 control-label">Contact Address</label><br/>
+        <input type="hidden" name="contactId"  value="<?php echo $client->contactAddress->id;?>"/>
+
     <div class="form-group row">
             <div class="col-md-2 col-md-push-1">
                 <input class="form-control" type="number" name="contactCivic" placeholder="1234" value="<?php echo $client->contactAddress->civic;?>" required/></br>
@@ -92,10 +107,10 @@
                 <input class="form-control" type="text" name="contactCountry" placeholder="Country" value="<?php echo $client->contactAddress->country;?>" required/></br>
             </div>
             <div class="col-md-3 col-md-push-1">
-                <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" value="<?php echo $client->contactAddress->postalCode;?>" required/></br>
+                <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" value="<?php echo $client->contactAddress->postal;?>" required/></br>
             </div>
     </div>
-        <input  class="btn btn-primary btn-lg center-block" type="submit" value="Update Client"/>
+        <input  class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Client"/>
 </form>
 
 <?php
@@ -128,7 +143,7 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="client-list">
             <?php
-                if (isset($employees)) {
+                if (isset($clients)) {
                     displayClientTable();
                 } else {
                     echo '<a class="add-client" href="#">Add your first client!</a>';
@@ -197,7 +212,7 @@
                             <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" required/></br>
                         </div>
                 </div>
-                    <input  class="btn btn-primary btn-lg center-block" type="submit" value="Save"/>
+                    <input  class="btn btn-primary btn-lg center-block" name="add" type="submit" value="Save"/>
             </form>
         </div>
     </div>
