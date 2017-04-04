@@ -12,7 +12,7 @@
         $title = $_POST['title'];
         $wage = $_POST['wage'];
         (new Employee($SIN, $name, $title, $wage))->put();
-        //header("Refresh:0");
+        header("Refresh:0");
     }
 ?>
 
