@@ -11,10 +11,12 @@
         $title = $_POST['title'];
         $wage = $_POST['wage'];
         
+        $employee = new Employee($SIN, $name, $title, $wage);
+
         if ($_POST['submit']) {
-            (new Employee($SIN, $name, $title, $wage))->put();
+            $employee->put();
         } else {
-            Employee::get($SIN)->update();
+            $employee->update();
         }
     }
 ?>
