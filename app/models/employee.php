@@ -35,6 +35,17 @@
             }
         }
 
+        public static function delete($SIN) {
+            $conn = connect();
+            $sql = "DELETE FROM Employee
+                    WHERE sin=$SIN;";
+            if ($conn->query($sql) == TRUE) {
+                echo "Employee updated!";
+            } else {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+        }
+
         public static function getAll() {
             if (!function_exists(mysqli_connect)) {
                 return Employee::getAllMock();

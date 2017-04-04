@@ -5,7 +5,7 @@
     } else {
         $employees = Employee::getAll();
     }
-    if ($_POST['submit'] || $_POST['update']) {
+    if ($_POST['submit'] || $_POST['update'] || $_POST['delete']) {
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
@@ -15,8 +15,10 @@
 
         if ($_POST['submit']) {
             $employee->put();
-        } else {
+        } else if ($_POST['update']) {
             $employee->update();
+        } else if ($_POST['delete']) {
+            Employee::delete($SIN);
         }
     }
 ?>
@@ -51,6 +53,7 @@
             </div>
     </div>
     <input class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Employee"/>
+    <input class="btn btn-primary btn-lg center-block" type="submit" name="delete" value="Delete Employee"/>
 </form>
 
 <?php
