@@ -59,3 +59,27 @@ VALUES
 (280638262,'Susan Thornton','District Accountability Engineer',22.30)
 (224334295,'Lydia Hicks','Internal Brand Officer',29.40)
 (544383505,'Annie Burke','Chief Applications Planner',22.50)
+
+INSERT INTO Payments
+VALUES
+
+INSERT INTO Permits
+VALUES
+
+INSERT INTO PreReq
+VALUES
+
+INSERT INTO Project
+VALUES
+
+INSERT INTO Purchase
+VALUES
+
+INSERT INTO PurchasedFor
+VALUES
+
+INSERT INTO Task
+VALUES
+
+INSERT INTO Users
+VALUES
