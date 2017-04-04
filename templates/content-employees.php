@@ -25,9 +25,9 @@
 
 <form method="post" action="employees.php">
     <div class="form-group">
-        <label for="employeeName" class="col-sm-2 control-label text-center">Employee Name</label>
+        <label for="name" class="col-sm-2 control-label text-center">Employee Name</label>
         <div class="col-sm-10">
-            <input class="form-control" type="text" name="employeeName" value="<?php echo $employee->name ?>" required/></br>
+            <input class="form-control" type="text" name="name" value="<?php echo $employee->name ?>" required/></br>
         </div>
     </div>
     <div class="form-group">
@@ -48,7 +48,7 @@
                 <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
             </div>
     </div>
-    <input  class="btn btn-primary btn-lg center-block" type="update" name="update" value="Update Employee"/>
+    <input class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Employee"/>
 </form>
 
 <?php
@@ -114,7 +114,7 @@
                         <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
                 </div>
-                <input  class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
+                <input class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
             </form>
         </div>
     </div>
