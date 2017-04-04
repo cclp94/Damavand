@@ -25,6 +25,20 @@
             }
         }
 
+        function update() {
+            $conn = connect();
+            $sql = 'UPDATE Employee SET '
+                    . 'name="'  . $this->name  . '", '
+                    . 'title="' . $this->title . '", '
+                    . 'wage='   . $this->wage  . ' '
+                    . 'WHERE sin=' . $this->SIN . ';';
+            if ($conn->query($sql) == TRUE) {
+                echo "Employee updated!";
+            } else {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+        }
+
         public static function getAll() {
             if (!function_exists(mysqli_connect)) {
                 return Employee::getAllMock();

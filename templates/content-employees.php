@@ -5,12 +5,17 @@
     } else {
         $employees = Employee::getAll();
     }
-    if ($_POST['submit']) {
+    if ($_POST['submit'] || $_POST['update']) {
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
         $wage = $_POST['wage'];
-        (new Employee($SIN, $name, $title, $wage))->put();
+        
+        if ($_POST['submit']) {
+            (new Employee($SIN, $name, $title, $wage))->put();
+        } else {
+            Employee::get($SIN)->update();
+        }
     }
 ?>
 
@@ -43,7 +48,7 @@
                 <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
             </div>
     </div>
-    <input  class="btn btn-primary btn-lg center-block" type="submit" value="Update Employee"/>
+    <input  class="btn btn-primary btn-lg center-block" type="update" name="update" value="Update Employee"/>
 </form>
 
 <?php
