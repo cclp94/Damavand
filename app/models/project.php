@@ -21,7 +21,7 @@ require_once 'client.php';
             $name = $row['projectName'];
             $startDate = $row['startDate'];
             $endDate = $row['endDate'];
-            $deadline = $row['deadline'];
+            $deadline = $row['deadLine'];
             $budget = $row['budget'];
             $row['name'] = $row['clientName'];
             $client = Client::fromRow($row);
@@ -72,6 +72,19 @@ require_once 'client.php';
                    . ");";
             if ($conn->query($sql) == TRUE) {
                 echo "New Project created!";
+            } else {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+        }
+
+        function update(){
+            $conn = connect();
+            $sql = "UPDATE Project"
+            ." SET name = '".$this->name."', startDate = '". $this->startDate . "', deadLine = '". $this->deadline . "', budget = " . $this->budget . ", clientId = " . $this->client . ", supervisorSin = ". $this->supervisor . " "
+            ." WHERE projectId = ".$this->projectId.";";
+
+            if ($conn->query($sql) == TRUE) {
+                echo "Project updated!";
             } else {
                 echo "Error " . $sql . ": ". $conn->error;
             }
