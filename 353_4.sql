@@ -8,9 +8,9 @@ VALUES (855, 'Rocky Cape', 'Rockland', 'Prince Edward Island', 'Canada', 'C2C-7M
 	), (2187, 'Silent Dale Manor', 'Big Pine', 'Quebec', 'Canada', 'G4Y-0X2'), (532, 'Round Hickory End', 'Smithfield', 'New Brunswick', 'Canada', 'E2Q-0L3');
 
 INSERT INTO Assigned (taskId, employeeSin, hours)
-VALUES (1186, 789172194, 45), (1172, 731111008, 59), (1563, 816246358, 28), (1602, 719071995, 44), (1685, 238418911, 57), (1830, 537611024, 51), (587, 520323339, 64), (885, 212023980, 12), (996, 212724661, 19
-	), (178, 278466928, 32), (405, 717753201, 23), (703, 610583414, 16), (774, 202605296, 68), (1442, 445337145, 65), (314, 522975110, 73), (1321, 629076619, 68), (1942, 795119915, 56), (687, 412569594, 75
-	), (1266, 597248715, 39), (328, 697086514, 62);
+VALUES (1, 789172194, 45), (2, 731111008, 59), (3, 816246358, 28), (4, 719071995, 44), (5, 238418911, 57), (6, 537611024, 51), (7, 520323339, 64), (8, 212023980, 12), (9, 212724661, 19
+	), (10, 278466928, 32), (11, 717753201, 23), (12, 610583414, 16), (13, 202605296, 68), (14, 445337145, 65), (15, 522975110, 73), (16, 629076619, 68), (17, 795119915, 56), (19, 412569594, 75
+	), (20, 597248715, 39), (21, 697086514, 62);
 
 INSERT INTO Client (name, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName)
 VALUES
@@ -60,26 +60,69 @@ VALUES
 (224334295,'Lydia Hicks','Internal Brand Officer',29.40)
 (544383505,'Annie Burke','Chief Applications Planner',22.50);
 
-INSERT INTO Payments
+INSERT INTO Payments (purchaseId, date, amount)
 VALUES
 
-INSERT INTO Permits
+INSERT INTO Permits (taskId,type, dateValidStart, dateValidEnd,cost)
+VALUES
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',),
+(,'','','',);
+
+INSERT INTO PreReq (taskPredessorId,taskSuccessorId)
 VALUES
 
-INSERT INTO PreReq
+INSERT INTO Project (name,startDate,endDate,deadLine,budget,clientId,supervisorSin)
 VALUES
 
-INSERT INTO Project
+INSERT INTO Purchase (item, quantity, unitType, purchaseDate, deliveryDate, supplierName, price)
 VALUES
 
-INSERT INTO Purchase
+INSERT INTO PurchasedFor (purchaseId, taskId)
 VALUES
 
-INSERT INTO PurchasedFor
+INSERT INTO Task (name, estimateTime, estimatedCost, startDate, endDate, description, projectId)
 VALUES
 
-INSERT INTO Task
+INSERT INTO Users (userName, password, permission)
 VALUES
+('abugg','123456','manager'),
+('mcahn','123456','client'),
+('rcolon','123456','client'),
+('dhanneman','123456','client'),
+('lschuck','123456','manager'),
+('cmork','123456','client'),
+('eshankles','123456','client'),
+('areinbold','123456','client'),
+('tboland','123456','client'),
+('rsmiddy','123456','manager'),
+('ytatro','123456','client'),
+('ztheroux','123456','client'),
+('ddepasquale','123456','manager'),
+('glozoya','123456','client'),
+('esale','123456','client'),
+('thenrich','123456','manager'),
+('calbanese','123456','client'),
+('mbirkland','123456','manager'),
+('ndunagan','123456','client'),
+('wvalencia','123456','client'),
+('etea','123456','manager');
 
-INSERT INTO Users
-VALUES
