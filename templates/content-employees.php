@@ -23,45 +23,6 @@
     }
 ?>
 
-<?php
-    if (isset($employee)) {
-?>
-
-<form method="post" action="employees.php">
-    <div class="form-group">
-        <label for="name" class="col-sm-2 control-label text-center">Employee Name</label>
-        <div class="col-sm-10">
-            <input class="form-control" type="text" name="name" value="<?php echo $employee->name ?>" required/></br>
-        </div>
-    </div>
-    <div class="form-group">
-            <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" value=<?php echo $employee->SIN ?> required/></br>
-            </div>
-    </div>
-    <div class="form-group">
-            <label for="title" class="col-sm-2 control-label text-center">Title</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="title" value="<?php echo $employee->title ?>" required/></br>
-            </div>
-    </div>
-    <div class="form-group">
-            <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
-            </div>
-    </div>
-    <div class = "text-center">
-        <input class="btn btn-primary btn-lg" type="submit" name="update" value="Update Employee"/>
-        <input class="btn btn-primary btn-lg" type="submit" name="delete" value="Delete Employee"/>
-    </div>
-</form>
-
-<?php
-    } else {
-?>
-
 <div class="row">
     <div class="col-md-9">
         <ul class="nav nav-tabs" role="tablist">
@@ -88,11 +49,15 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
+            if (isset($employee)) {
+                include 'edit-employee.php';
+            } else {
                 if (isset($employees)) {
                     displayEmployeeTable();
                 } else {
                     echo '<a class="add-employee" href="#">Add your first employee!</a>';
                 }
+            }
             ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="employee-add">
@@ -126,10 +91,6 @@
         </div>
     </div>
 </div>
-
-<?php
-    }
-?>
 
 <?php
 function displayEmployeeTable(){
