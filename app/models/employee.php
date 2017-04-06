@@ -63,6 +63,21 @@
             return $employees;
         }
 
+        public static function getBy($attribute, $value) {
+            $conn = connect();
+
+            $sql = "SELECT *
+                    FROM Employee
+                    WHERE $attribute='$value'";
+            $result = $conn->query($sql);
+            $employees = [];
+            while ($row = $result->fetch_assoc()) {
+                $employees[] = Employee::fromRow($row);
+            }
+
+            return $employees;
+        }
+
         public static function fromRow($row) {
             $SIN = $row["sin"];
             $name = $row["name"];

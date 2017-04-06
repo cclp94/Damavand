@@ -2,10 +2,14 @@
     $SIN = $_GET['SIN'];
     if (isset($SIN)) {
         $employee = Employee::get($SIN);
-    } else {
-        $employees = Employee::getAll();
     }
-    if ($_POST['submit'] || $_POST['update'] || $_POST['delete']) {
+    $employees = Employee::getAll();
+    $attribute = $_POST['attribute'];
+    $value = $_POST['value'];
+    if (isset($attribute) && isset($value)) {
+        $employees = Employee::getBy($attribute, $value);
+    }
+    if ($_POST['add'] || $_POST['update'] || $_POST['delete']) {
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
@@ -13,7 +17,7 @@
         
         $employee = new Employee($SIN, $name, $title, $wage);
 
-        if ($_POST['submit']) {
+        if ($_POST['add']) {
             $employee->put();
         } else if ($_POST['update']) {
             $employee->update();
@@ -21,45 +25,6 @@
             Employee::delete($SIN);
         }
     }
-?>
-
-<?php
-    if (isset($employee)) {
-?>
-
-<form method="post" action="employees.php">
-    <div class="form-group">
-        <label for="name" class="col-sm-2 control-label text-center">Employee Name</label>
-        <div class="col-sm-10">
-            <input class="form-control" type="text" name="name" value="<?php echo $employee->name ?>" required/></br>
-        </div>
-    </div>
-    <div class="form-group">
-            <label for="SIN" class="col-sm-2 control-label text-center">SIN</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="number" min="0" max = "9999999999" name="SIN" value=<?php echo $employee->SIN ?> required/></br>
-            </div>
-    </div>
-    <div class="form-group">
-            <label for="title" class="col-sm-2 control-label text-center">Title</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="text" name="title" value="<?php echo $employee->title ?>" required/></br>
-            </div>
-    </div>
-    <div class="form-group">
-            <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
-            </div>
-    </div>
-    <div class = "text-center">
-        <input class="btn btn-primary btn-lg" type="submit" name="update" value="Update Employee"/>
-        <input class="btn btn-primary btn-lg" type="submit" name="delete" value="Delete Employee"/>
-    </div>
-</form>
-
-<?php
-    } else {
 ?>
 
 <div class="row">
@@ -88,10 +53,10 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
-                if (isset($employees)) {
-                    displayEmployeeTable();
+                if (isset($employee)) {
+                    include 'edit-employee.php';
                 } else {
-                    echo '<a class="add-employee" href="#">Add your first employee!</a>';
+                    include 'display-employees.php';
                 }
             ?>
         </div>
@@ -121,15 +86,11 @@
                         <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
                     </div>
                 </div>
-                <input class="btn btn-primary btn-lg center-block" type="submit" name = "submit" value="Add Employee"/>
+                <input class="btn btn-primary btn-lg center-block" type="submit" name = "add" value="Add Employee"/>
             </form>
         </div>
     </div>
 </div>
-
-<?php
-    }
-?>
 
 <?php
 function displayEmployeeTable(){
@@ -139,17 +100,25 @@ function displayEmployeeTable(){
            <th>SIN</th>
            <th>Name</th>
            <th>Title</th>
-           <th>Wage</th>
+           <th>Wage ($/hr)</th>
     </tr><?php
-    foreach(Employee::getAll() as $employee){
+    foreach($employees as $employee){
         echo '<tr>';
-        echo tableCell('<a href="employees.php?SIN='.$employee->SIN.'">'.$employee->SIN.'</a>');
-        echo tableCell($employee->name);
-        echo tableCell($employee->title);
-        echo tableCell('$'.number_format($employee->wage, 2));
+        echo sinLink($employee, $employee->SIN);
+        echo sinLink($employee, $employee->name);
+        echo sinLink($employee, $employee->title);
+        echo sinLink($employee, number_format($employee->wage, 2));
+        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->SIN</a>");
+        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->name</a>");
+        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->title</a>");
+        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>" . number_format($employee->wage, 2) . "</a>");
         echo '</tr>';
     }
     echo '</table>';
+}
+
+function sinLink($employee, $content) {
+    return tableCell("<a href='employees.php?SIN=$employee->SIN'>$content</a>");
 }
 
 function tableCell($content){
