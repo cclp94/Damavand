@@ -2,7 +2,7 @@
     if(isset($_GET['id'])){
         $project = Project::getProject($_GET['id']);
     }
-    $projects = Project::getAll();
+    $tasks = Task::getAll();
     if(isset($_POST["edit"])){
         $id = $_POST['projectId'];
         $name = $_POST['name'];
@@ -12,6 +12,17 @@
         $clientId = $_POST['client'];
         $supervisorId = $_POST['supervisor'];
         (new Project($id, $name, $supervisorId, $startDate, null, $deadline, $budget, $clientId))->update();
+    }elseif(isset($_POST["add"])){
+        $projectId = $_POST['projectId'];
+        $name = $_POST['name'];
+        $startDate = $_POST['startDate'];
+        $endDate = $_POST['endDate'];
+        $estimatedTime = $_POST['estimatedTime'];
+        $estimatedCost = $_POST['estimatedCost'];
+        $predecessorTasks = $_POST['predecessors'];
+        $successorTasks = $_POST['successors'];
+        $description = $_POST['description'];
+        (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $predecessorTasks, $successorTasks))->put();
     }
 ?>
 
@@ -34,8 +45,8 @@
     <div class="col-md-3">
     <!-- Number of projects -->
         <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($projects); ?></span>
-            <strong>Project<?php if(count($projects) == 1)
+            <span class="n-projects-number"><?php echo count($tasks); ?></span>
+            <strong>Project<?php if(count($tasks) == 1)
                                      echo '';
                                   else
                                      echo 's'; ?>
@@ -47,46 +58,54 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="task-list">
             <?php
-                if(isset($projects)){
-                    showProjectPreviews();
+                if(isset($tasks) && count($tasks) > 0){
+                    showTaskPreviews();
                 }elseif($user->isAdmin()){
-                    echo '<a class="add-project" href="#">Add your first project!</a>';
+                    echo '<a class="add-task" href="#">Add your first Task!</a>';
                 }else{
                     echo '<strong>You don\'t have any projects yet</strong>';
                 }
             ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="task-add">
-            <form method="post" action="./project-view.php">
+            <form method="post" action="./project-view.php?id=<?php echo $project->projectId;?>">
+                <input type="hidden" name="add" />
+                <input type="hidden" name = "projectId" value="<?php echo $project->projectId; ?>" />
                 <div class="form-group">
-                    <label for="projectName" class="col-sm-2 control-label text-center">Project Name</label>
+                    <label for="name" class="col-sm-2 control-label text-center">Task Name</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="name" placeholder="Project Name" required/></br>
+                        <input class="form-control" type="text" name="name" placeholder="Task Name" required/></br>
                     </div>
                 </div>
             <div class="form-group">
                     <label for="startDate" class="col-sm-2 control-label text-center">Start Date</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="date" name="startDate" placeholder="" required/></br>
+                        <input class="form-control" type="date" name="startDate" placeholder=""/></br>
                     </div>
             </div>
             <div class="form-group">
-                    <label for="passwordConfirm" class="col-sm-2 control-label text-center">Deadline</label>
+                    <label for="endDate" class="col-sm-2 control-label text-center">End Date</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="date" name="deadline" required/></br>
+                        <input class="form-control" type="date" name="endDate"/></br>
                     </div>
             </div>
             <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label text-center">Budget</label>
+                    <label for="email" class="col-sm-2 control-label text-center">Estimated Time(days)</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="number" name="budget" placeholder="100,000" required/></br>
+                        <input class="form-control" type="number" name="estimatedTime" placeholder="365" required/></br>
                     </div>
             </div>
-
             <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label text-center">Supervisor</label>
+                    <label for="email" class="col-sm-2 control-label text-center">Estimated Cost</label>
                     <div class="col-sm-10">
-                        <select name = "supervisor" class="form-control">
+                        <input class="form-control" type="number" name="estimatedCost" placeholder="100,000" required/></br>
+                    </div>
+            </div>
+            <!--
+            <div class="form-group">
+                    <label for="email" class="col-sm-2 control-label text-center">Assigned Employees (Can select multiple)</label>
+                    <div class="col-sm-10">
+                        <select name = "supervisor[]" class="form-control" multiple>
                             <option value="none" selected>None</option>
                             <?php foreach(Employee::getAll() as $employee){ ?>
                                 <option value = "<?php echo $employee->SIN; ?>"><?php echo $employee->name . " - " . $employee->title; ?> </option>
@@ -94,16 +113,29 @@
                         </select><br/>
                     </div>
             </div>
-
+            -->
             <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label text-center">Client</label>
-                    <div class="col-sm-10">
-                        <select name = "client" class="form-control">
-                            <option value="none" selected>None</option>
-                            <?php foreach(Client::getAll() as $client){ ?>
+                    <label for="predecessors[]" class="col-sm-2 control-label text-center">Predecessor Tasks</label>
+                    <div class="col-sm-4">
+                        <select name = "predecessors[]" class="form-control" multiple>
+                            <?php foreach(Task::getAll() as $pre){ ?>
+                                <option value = "<?php echo $pre->id; ?>"><?php echo $pre->name; ?> </option>
+                            <?php } ?>
+                        </select><br/>
+                    </div>
+                    <label for="successors[]" class="col-sm-2 control-label text-center">Successor Tasks</label>
+                    <div class="col-sm-4">
+                        <select name = "successors[]" class="form-control" multiple>
+                            <?php foreach(Task::getAll() as $client){ ?>
                                 <option value = "<?php echo $client->id; ?>"><?php echo $client->name . " - " . $client->contactName; ?> </option>
                             <?php } ?>
                         </select><br/>
+                    </div>
+            </div>
+            <div class="form-group">
+                    <label for="description" class="col-sm-2 control-label text-center">Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="description" rows="3"></textarea><br/>
                     </div>
             </div>
                 <input  class="btn btn-primary btn-lg center-block" type="submit" name="add" value="Create"/>
@@ -169,11 +201,22 @@
 
 <?php
 
-function showProjectPreviews(){
-    foreach(Project::getAll() as $project){
-        echo '<div class="project"><a href="./project-view.php?id='.$project->projectId.'" >';
-        echo '<h1 class="project-title">'.$project->name.'</h1>';
-        echo '<span class="project-creator">'.$project->supervisor->name.'</span>';
+function showTaskPreviews(){
+    foreach(Task::getAll() as $task){
+        echo '<div class="project"><a href="./project-view.php?id='.$task->id.'" >';
+        echo '<h1 class="project-title">'.$task->name.'</span></h1>';
+        echo '<p class="project-creator">Predecessor Tasks: ';
+        foreach($task->predecessorTasks as $preId){
+            $preTask = Task::getTaskById($preId);
+            echo '<a href="./task.php?id='.$preTask->id.'">'.$preTask->name.'</a>';
+        }
+        echo '</p>';
+        echo '<p class="project-creator">Successor Tasks: ';
+        foreach($task->successorTasks as $sucId){
+            $sucTask = Task::getTaskById($sucId);
+            echo '<a href="./task.php?id='.$sucTask->id.'">'.$sucTask->name.'</a>';
+        }
+        echo '</p>';
         echo '</a></div>';
     }
 }

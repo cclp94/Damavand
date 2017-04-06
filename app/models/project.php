@@ -89,6 +89,14 @@ require_once 'client.php';
                 echo "Error " . $sql . ": ". $conn->error;
             }
         }
+
+        function getNumberOfTasks(){
+            $conn = connect();
+            $sql = "Select COUNT(*) from Task where projectId = ".$this->projectId.";";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            return $row['COUNT(*)'];
+        }
     }
 
 
