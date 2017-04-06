@@ -2,8 +2,12 @@
     $SIN = $_GET['SIN'];
     if (isset($SIN)) {
         $employee = Employee::get($SIN);
-    } else {
-        $employees = Employee::getAll();
+    }
+    $employees = Employee::getAll();
+    $attribute = $_POST['attribute'];
+    $value = $_POST['value'];
+    if (isset($attribute) && isset($value)) {
+        $employees = Employee::getBy($attribute, $value);
     }
     if ($_POST['add'] || $_POST['update'] || $_POST['delete']) {
         $SIN = $_POST['SIN'];
@@ -49,15 +53,11 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
-            if (isset($employee)) {
-                include 'edit-employee.php';
-            } else {
-                if (isset($employees)) {
-                    displayEmployeeTable();
+                if (isset($employee)) {
+                    include 'edit-employee.php';
                 } else {
-                    echo '<a class="add-employee" href="#">Add your first employee!</a>';
+                    include 'display-employees.php';
                 }
-            }
             ?>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="employee-add">
@@ -100,14 +100,15 @@ function displayEmployeeTable(){
            <th>SIN</th>
            <th>Name</th>
            <th>Title</th>
-           <th>Wage</th>
+           <th>Wage ($/hr)</th>
     </tr><?php
-    foreach(Employee::getAll() as $employee){
+    foreach($employees as $employee){
         echo '<tr>';
-        echo tableCell('<a href="employees.php?SIN='.$employee->SIN.'">'.$employee->SIN.'</a>');
-        echo tableCell($employee->name);
-        echo tableCell($employee->title);
-        echo tableCell('$'.number_format($employee->wage, 2));
+        echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->SIN</a>");
+        echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->name</a>");
+        echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->title</a>");
+        echo tableCell("<a href='employees.php?SIN=$employee->SIN'>" . number_format($employee->wage, 2) . "</a>");
+        //echo tableCell('$'.number_format($employee->wage, 2));
         echo '</tr>';
     }
     echo '</table>';
