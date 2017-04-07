@@ -16,8 +16,9 @@
         $companyStreet = $_POST['companyStreet'];
         $companyCity = $_POST['companyCity'];
         $companyCountry = $_POST['companyCountry'];
+        $companyProvince = $_POST['companyProvince'];
         $companyPostal = $_POST['companyPostal'];
-        $address = new Address($companyId, $companyCivic, $companyStreet, $companyCity, $companyCountry, $companyPostal);
+        $address = new Address($companyId, $companyCivic, $companyStreet, $companyCity, $companyCountry, $companyProvince, $companyPostal);
 
         $contactName = $_POST['contactName'];
         $contactNumber = $_POST['contactNumber'];
@@ -27,8 +28,9 @@
         $contactStreet = $_POST['contactStreet'];
         $contactCity = $_POST['contactCity'];
         $contactCountry = $_POST['contactCountry'];
+        $contactProvince = $_POST['contactProvince'];
         $contactPostal = $_POST['contactPostal'];
-        $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactPostal);
+        $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactProvince, $contactPostal);
 
         $newClient= new Client($id, $name, $address, $phoneNumber, $contactNumber, $contactName, $contactAddress, null);
         
@@ -75,6 +77,9 @@
                 <input class="form-control" type="text" name="companyCountry" placeholder="Country" value="<?php echo $client->address->country;?>" required/></br>
             </div>
             <div class="col-md-3 col-md-push-1">
+                <input class="form-control" type="text" name="companyProvince" placeholder="Province" value="<?php echo $client->address->province;?>" required/></br>
+            </div>
+            <div class="col-md-3 col-md-push-1">
                 <input class="form-control" type="text" name="companyPostal" placeholder="Postal Code" value="<?php echo $client->address->postal;?>" required/></br>
             </div>
     </div>
@@ -105,6 +110,9 @@
             </div>
             <div class="col-md-3 col-md-push-1">
                 <input class="form-control" type="text" name="contactCountry" placeholder="Country" value="<?php echo $client->contactAddress->country;?>" required/></br>
+            </div>
+            <div class="col-md-3 col-md-push-1">
+                <input class="form-control" type="text" name="contactProvince" placeholder="Province" value="<?php echo $client->contactAddress->province;?>" required/></br>
             </div>
             <div class="col-md-3 col-md-push-1">
                 <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" value="<?php echo $client->contactAddress->postal;?>" required/></br>
@@ -179,6 +187,9 @@
                             <input class="form-control" type="text" name="companyCountry" placeholder="Country" required/></br>
                         </div>
                         <div class="col-md-3 col-md-push-1">
+                            <input class="form-control" type="text" name="companyProvince" placeholder="Province" required/></br>
+                        </div>
+                        <div class="col-md-3 col-md-push-1">
                             <input class="form-control" type="text" name="companyPostal" placeholder="Postal Code" required/></br>
                         </div>
                 </div>
@@ -207,6 +218,9 @@
                         </div>
                         <div class="col-md-3 col-md-push-1">
                             <input class="form-control" type="text" name="contactCountry" placeholder="Country" required/></br>
+                        </div>
+                        <div class="col-md-3 col-md-push-1">
+                            <input class="form-control" type="text" name="contactProvince" placeholder="Province" required/></br>
                         </div>
                         <div class="col-md-3 col-md-push-1">
                             <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" required/></br>

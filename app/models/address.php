@@ -1,13 +1,14 @@
 <?php
     class Address{
-        var $id, $civic, $street, $city, $country, $postal;
+        var $id, $civic, $street, $city, $country, $province, $postal;
         
-        function Address($id, $civicNumber, $street, $city, $country, $postalCode){
+        function Address($id, $civicNumber, $street, $city, $country, $province, $postalCode) {
             $this->id = $id;
             $this->civic = $civicNumber;
             $this->street = $street;
             $this->city = $city;
             $this->country = $country;
+            $this->province = $province;
             $this->postal = $postalCode;
         }
 
@@ -17,11 +18,11 @@
 
         public static function getAddressMock($id){
             // Get project from db
-            return new Client($id, 1234, "ave concordia", "Montreal", "Canada", "H3A 2K9");
+            return new Address($id, 1234, "ave concordia", "Montreal", "Canada", "QC", "H3A 2K9");
         }
 
         function toString(){
-            return $this->civic . " " . $this->street . ", ". $this->city . ",  " . $this->country . " - ". $this->postal;
+            return "$this->civic $this->street, $this->city, $this->country, $this->province - $this->postal";
         }
     }
 

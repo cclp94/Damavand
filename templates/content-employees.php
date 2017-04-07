@@ -108,10 +108,6 @@ function displayEmployeeTable(){
         echo sinLink($employee, $employee->name);
         echo sinLink($employee, $employee->title);
         echo sinLink($employee, number_format($employee->wage, 2));
-        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->SIN</a>");
-        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->name</a>");
-        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>$employee->title</a>");
-        // echo tableCell("<a href='employees.php?SIN=$employee->SIN'>" . number_format($employee->wage, 2) . "</a>");
         echo '</tr>';
     }
     echo '</table>';

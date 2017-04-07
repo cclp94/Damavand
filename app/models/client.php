@@ -20,13 +20,13 @@
             $sql = "SELECT clientId, name, businessPhoneNumber, Address1.addressId as businessAId,"
                   ." Address1.civicNumber as businessCivic, Address1.street as businessStreet,"
                   ." Address1.city as businessCity, Address1.country as businessCountry,"
-                  ." Address1.postalCode as businessPostal,"
+                  ." Address1.province as businessProvince, Address1.postalCode as businessPostal,"
                   ."contactName, contactPhoneNumber, Address2.addressId as contactId,"
                   ." Address2.civicNumber as contactCivic, Address2.street as contactStreet,"
                   ." Address2.city as contactCity, Address2.country as contactCountry,"
-                  ." Address2.postalCode as contactPostal, userName "
+                  ." Address2.province as contactProvince, Address2.postalCode as contactPostal, userName "
                   ."FROM Client, Address as Address1, Address as Address2 "
-                  ."WHERE Client.clientId = ".$id." AND Client.businessAddressId = Address1.addressId AND "
+                  ."WHERE Client.clientId = $id AND Client.businessAddressId = Address1.addressId AND "
                   ."Client.contactAddressId = Address2.addressId ;";
             $result = $conn->query($sql);
 
@@ -44,8 +44,9 @@
             $businessStreet = $row["businessStreet"];
             $businessCity = $row["businessCity"];
             $businessCountry = $row["businessCountry"];
+            $businessProvince = $row["businessProvince"];
             $businessPostal = $row["businessPostal"];
-            $businessAddress = new Address($businessAId, $businessCivic, $businessStreet, $businessCity, $businessCountry, $businessPostal);
+            $businessAddress = new Address($businessAId, $businessCivic, $businessStreet, $businessCity, $businessCountry, $businessProvince, $businessPostal);
 
             $contactName = $row["contactName"];
             $contactPhoneNumber = $row["contactPhoneNumber"];
@@ -55,8 +56,9 @@
             $contactStreet = $row["contactStreet"];
             $contactCity = $row["contactCity"];
             $contactCountry = $row["contactCountry"];
+            $contactProvince = $row["contactProvince"];
             $contactPostal = $row["contactPostal"];
-            $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactPostal);
+            $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactProvince, $contactPostal);
 
             $userName = $row["userName"];
             return new Client($clientId, $name, $businessAddress, $businessPhoneNumber, $contactPhoneNumber, $contactName, $contactAddress, $userName);
@@ -67,11 +69,11 @@
             $sql = "SELECT clientId, name, businessPhoneNumber, Address1.addressId as businessAId,"
                   ." Address1.civicNumber as businessCivic, Address1.street as businessStreet,"
                   ." Address1.city as businessCity, Address1.country as businessCountry,"
-                  ." Address1.postalCode as businessPostal,"
+                  ." Address1.province as businessProvince, Address1.postalCode as businessPostal,"
                   ."contactName, contactPhoneNumber, Address2.addressId as contactId,"
                   ." Address2.civicNumber as contactCivic, Address2.street as contactStreet,"
                   ." Address2.city as contactCity, Address2.country as contactCountry,"
-                  ." Address2.postalCode as contactPostal, userName "
+                  ." Address2.province as contactProvince, Address2.postalCode as contactPostal, userName "
                   ."FROM Client, Address as Address1, Address as Address2 "
                   ."WHERE Client.businessAddressId = Address1.addressId AND "
                   ."Client.contactAddressId = Address2.addressId ;";
@@ -90,11 +92,12 @@
 
         function put(){
             $conn = connect();
-            $sql = 'INSERT INTO Address(civicNumber, street, city, country, postalCode) VALUE('
+            $sql = 'INSERT INTO Address(civicNumber, street, city, country, province, postalCode) VALUE('
                    . $this->address->civic . ', "'
                    . $this->address->street . '", "'
                    . $this->address->city . '", "'
                    . $this->address->country . '", "'
+                   . $this->address->province . '", "'
                    . $this->address->postal . '");';
             $conn->query($sql);
             $addressId = $conn->insert_id;
@@ -103,6 +106,7 @@
                    . $this->contactAddress->street . '", "'
                    . $this->contactAddress->city . '", "'
                    . $this->contactAddress->country . '", "'
+                   . $this->contactAddress->province . '", "'
                    . $this->contactAddress->postal . '");';
             $conn->query($sql);
             $contactAddressId = $conn->insert_id;
@@ -125,11 +129,11 @@
             $conn = connect();
             // Update address
             $sql = "UPDATE Address"
-            ." SET civicNumber = ".$this->address->civic.", street = '". $this->address->street . "', city = '". $this->address->city . "', country = '" . $this->address->country . "', postalCode = '" . $this->address->postal ."'"
+            ." SET civicNumber = ".$this->address->civic.", street = '". $this->address->street . "', city = '". $this->address->city . "', country = '" . $this->address->country . "', province = '" . $this->address->province . "', postalCode = '" . $this->address->postal ."'"
             ." WHERE addressId = ".$this->address->id.";";
             $conn->query($sql);
             $sql = "UPDATE Address"
-            ." SET civicNumber = ".$this->contactAddress->civic.", street = '". $this->contactAddress->street . "', city = '". $this->contactAddress->city . "', country = '" . $this->contactAddress->country . "', postalCode = '" . $this->contactAddress->postal . "'"
+            ." SET civicNumber = ".$this->contactAddress->civic.", street = '". $this->contactAddress->street . "', city = '". $this->contactAddress->city . "', country = '" . $this->contactAddress->country . "', province = '" . $this->contactAddress->province . "', postalCode = '" . $this->contactAddress->postal . "'"
             ." WHERE addressId = ".$this->contactAddress->id.";";
             $conn->query($sql);
 
@@ -144,6 +148,4 @@
             }
         }
     }
-
-
 ?>
