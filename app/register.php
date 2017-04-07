@@ -5,7 +5,7 @@ $username = basename($_POST["username"]);
 $password = basename($_POST["password"]);
 $email = basename($_POST["email"]);
 // TODO add user to db
-
+(new User($username, $password, 0))->put();
 // If successful 
 //TODO create user session and send to next page
 

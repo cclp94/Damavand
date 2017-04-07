@@ -19,6 +19,18 @@
                 return null;
         }
 
+        function put() {
+            $conn = connect();
+            $hash = md5($this->password);
+            $permission = $this->permission == 0 ? 'client': 'manager';
+            $sql = "INSERT INTO User VALUE('$this->userName', '$hash', '$permission');";
+            if ($conn->query($sql) == TRUE) {
+                echo "New user created!";
+            } else {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+        }
+
         public static function getUser($userName, $password){
             $conn = connect();
             $sql = "SELECT * FROM Users WHERE userName = '" . $userName . "' AND password = '". hash("md5", $password) ."';";
