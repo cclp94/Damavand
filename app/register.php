@@ -1,4 +1,5 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/app/models/user.php';
 define('URL', 'http://localhost:3000/');
 $companyName = basename($_POST["companyName"]);
 $username = basename($_POST["username"]);

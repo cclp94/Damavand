@@ -23,7 +23,7 @@
             $conn = connect();
             $hash = md5($this->password);
             $permission = $this->permission == 0 ? 'client': 'manager';
-            $sql = "INSERT INTO User VALUE('$this->userName', '$hash', '$permission');";
+            $sql = "INSERT INTO Users VALUE('$this->userName', '$hash', '$permission');";
             if ($conn->query($sql) == TRUE) {
                 echo "New user created!";
             } else {
