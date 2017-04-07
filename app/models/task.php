@@ -1,9 +1,9 @@
 <?php
     require_once 'employee.php';
     class Task{
-        var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $predecessorTasks, $successorTasks;
+        var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase;
 
-        function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $predecessorTasks, $successorTasks){
+        function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase){
             $this->id = $id; 
             $this->name = $name; 
             $this->estTime = $estTime; 
@@ -13,13 +13,12 @@
             $this->endDate = $endDate; 
             $this->projectId = $projectId; 
             $this->employees = $employees; 
-            $this->predecessorTasks = $predecessorTasks; 
-            $this->successorTasks = $successorTasks;
+            $this->phase = $phase;
         }
 
         public static function getAll(){
             $conn = connect();
-            $sql = "Select * from Task;";
+            $sql = "Select * from Task order by phase;";
             $result = $conn->query($sql);
             $tasks = [];
             while ($result && $row = $result->fetch_assoc()) {
@@ -38,9 +37,8 @@
             $endDate = $row['endDate']; 
             $projectId = $row['projectId'];
             $employees = Task::getEmployeesForTask($id); 
-            $predecessorTasks = Task::getPredecessorTasks($id); 
-            $successorTasks = Task::getSuccessorTasks($id);
-            return new Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $predecessorTasks, $successorTasks);
+            $phase = $row['phase'];
+            return new Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase);
         }
 
         public static function getEmployeesForTask($id){
@@ -54,28 +52,6 @@
             return $employees;
         }
 
-        public static function getPredecessorTasks($id){
-            $conn = connect();
-            $sql = "SELECT * FROM PreReq WHERE taskSuccessorId = ".$id.";";
-            $conn->query($sql);
-            $tasks = [];
-            while ($result && $row = $result->fetch_assoc()) {
-                $tasks[] = $row['taskPredecessorId'];
-            }
-            return $tasks;
-        }
-
-        public static function getSuccessorTasks($id){
-            $conn = connect();
-            $sql = "SELECT * FROM PreReq WHERE taskPredecessorId = ".$id.";";
-            $conn->query($sql);
-            $tasks = [];
-            while ($result && $row = $result->fetch_assoc()) {
-                $tasks[] = $row['taskSuccessorId'];
-            }
-            return $tasks;
-        }
-
         public static function getTaskById($id){
             $conn = connect();
             $sql = "Select * from Task WHERE taskId = ".$id.";";
@@ -86,28 +62,21 @@
 
         function put(){
             $conn = connect();
-            $sql = "INSERT INTO Task(name, startDate, endDate, estimatedTime, estimatedCost, description, projectId) VALUE('"
+            $sql = "INSERT INTO Task(name, startDate, endDate, estimatedTime, estimatedCost, description, projectId, isActive, phase) VALUE('"
                    . $this->name . "', "
                    . ($this->startDate ? "'".$this->startDate."', " : "NULL, ")
                    . ($this->endDate ? "'".$this->endDate."', ": "NULL, ")
                    . $this->estTime . ", "
                    . $this->estCost . ", '"
                    . $this->description . "', "
-                   . $this->projectId
+                   . $this->projectId . ", "
+                   . "1, "
+                   . $this->phase
                    . ");";
             if ($conn->query($sql) == TRUE) {
                 echo "New Task created!";
             } else {
                 echo "Error " . $sql . ": ". $conn->error;
-            }
-            // INSERT PreReq ENTRY WITH PREDECESSORS AND SUCCESSORS
-            foreach($this->predecessorTasks as $pre){
-                $sql = "INSERT INTO PreReq VALUE(".$pre.", ".$this->id.");";
-                $conn->query($sql);
-            }
-            foreach($this->successorTasks as $suc){
-                $sql = "INSERT INTO PreReq VALUE(".$this->id.", ".$suc.");";
-                $conn->query($sql);
             }
         }
 
