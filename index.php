@@ -19,7 +19,7 @@
 <html>
     <head>
        <?php include './templates/head.php';?>
-        <title>Damavandoo</title>
+        <title>Damavand</title>
     </head>
     <body>
         <div id="main-container" class="container">
