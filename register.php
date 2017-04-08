@@ -7,6 +7,7 @@
     <body>
         <div id="main-container" class="container">
             <?php include './templates/header.php';?>
+            <?php include './templates/nav-index.php';?>
             <!-- GET CONTENT DEPENDING ON SESSION -->
             <section id="content">
                 <?php include './templates/content-register.php';?>

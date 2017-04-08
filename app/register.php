@@ -5,8 +5,10 @@ $companyName = basename($_POST["companyName"]);
 $username = basename($_POST["username"]);
 $password = basename($_POST["password"]);
 $email = basename($_POST["email"]);
+$permission = $_POST["permission"] == "manager" ? 1 : 0;
+
 // TODO add user to db
-(new User($username, $password, 0))->put();
+(new User($username, $password, $permission))->put();
 // If successful 
 //TODO create user session and send to next page
 
