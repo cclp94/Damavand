@@ -107,5 +107,33 @@
             $sql = "DELETE FROM Assigned WHERE taskId = ".$this->id." AND employeeSin = ".$SIN.";";
             $conn->query($sql);
         }
+        
+        function isComplete() {
+            return $endDate != NULL;
+        }
+
+        static function completeCount() {
+            $conn = connect();
+            $sql = "SELECT COUNT(*) WHERE endDate IS NOT NULL;";
+            //return $conn->query($sql)->fetch_assoc();
+            return (int) $conn->query($sql);
+        }
+
+        static function getAllComplete() {
+            $conn = connect();
+            $sql = "Select * from Task order by phase where endDate is not null;";
+            $result = $conn->query($sql);
+            $tasks = [];
+            while ($result && $row = $result->fetch_assoc()) {
+                $tasks[] = Task::fromRow($row);
+            }
+            return $tasks;
+        }
+
+        static function estimatedTimeOfComplete() {
+            $conn = connect();
+            $sql = "Select sum(estimatedTime) from Task having endDate is not null;";
+            return (int) $conn->query($sql);
+        }
     }
 ?>
