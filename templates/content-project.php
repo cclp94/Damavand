@@ -60,7 +60,7 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="task-list">
             <?php
-                if(isset($tasks) && count($tasks) > 0){
+                if(count(Task::getAll()) > 0){
                     showTaskPreviews();
                 }elseif($user->isAdmin()){
                     echo '<a class="add-task" href="#">Add your first Task!</a>';
@@ -119,7 +119,7 @@
             <div class="form-group">
                     <label for="phase" class="col-sm-2 control-label text-center">Project Phase</label>
                     <div class="col-sm-10">
-                        <input type="number" name="phase" placeholder="1"/> <br/>
+                        <input type="number" name="phase" value="1" placeholder="1" required/> <br/>
                     </div>
             </div>
             <div class="form-group">

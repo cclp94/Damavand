@@ -74,9 +74,9 @@
                    . $this->phase
                    . ");";
             if ($conn->query($sql) == TRUE) {
-                echo "New Task created!";
+                echo '<div class="alert alert-success" role="alert">New Task created!</div>';
             } else {
-                echo "Error " . $sql . ": ". $conn->error;
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
 
