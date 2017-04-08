@@ -107,5 +107,16 @@
             $sql = "DELETE FROM Assigned WHERE taskId = ".$this->id." AND employeeSin = ".$SIN.";";
             $conn->query($sql);
         }
+        
+        function isComplete() {
+            return $endDate != NULL;
+        }
+
+        static function completeCount() {
+            $conn = connect();
+            $sql = "SELECT COUNT(*) WHERE endDate IS NOT NULL;";
+            //return $conn->query($sql)->fetch_assoc();
+            return (int) $conn->query($sql);
+        }
     }
 ?>

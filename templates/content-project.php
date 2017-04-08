@@ -34,14 +34,17 @@
             <li role="presentation" class="active ">
                 <a href="#task-list" aria-controls="task-list" role="tab" data-toggle="tab">Tasks</a>
             </li>
-            <?php if($user->isAdmin()){?>
+            <?php if($user->isAdmin()) { ?>
             <li role="presentation">
-                    <a href="#task-add" aria-controls="task-add" role="tab" data-toggle="tab">Create Task</a>
-                </li>
-                <li role="presentation">
-                    <a href="#project-edit" aria-controls="project-edit" role="tab" data-toggle="tab">Edit Project Info</a>
-                </li>
-            <?php }?>
+                <a href="#task-add" aria-controls="task-add" role="tab" data-toggle="tab">Create Task</a>
+            </li>
+            <li role="presentation">
+                <a href="#project-edit" aria-controls="project-edit" role="tab" data-toggle="tab">Edit Project Info</a>
+            </li>
+            <?php } ?>
+            <li role="presentation">
+                <a href="#report" aria-controls="report" role="tab" data-toggle="tab">Report</a>
+            </li>
         </ul>
     </div>
     <div class="col-md-3">
@@ -186,7 +189,21 @@
                 <input  class="btn btn-primary btn-lg center-block" type="submit" name="add" value="Create"/>
             </form>
         </div>
+        <div role="tabpanel" class="tab-pane fade in active" id="report">
+            <?php include './app/report.php'; ?>
+        </div>
     </div>
+    <div role="tabpanel" class="tab-pane fade in active" id="task-list">
+            <?php
+                if(isset($tasks) && count($tasks) > 0){
+                    showTaskPreviews();
+                }elseif($user->isAdmin()){
+                    echo '<a class="add-task" href="#">Add your first Task!</a>';
+                }else{
+                    echo '<strong>You don\'t have any projects yet</strong>';
+                }
+            ?>
+        </div>
 </div>
 
 <?php
