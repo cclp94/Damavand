@@ -126,5 +126,15 @@ require_once 'client.php';
             $sql = "Select sum(actualCost) from Task having endDate is not null and projectID = $projectID;";
             return (float) $conn->query($sql);
         }
+
+        function latestPhase() {
+        $conn = connect();
+        $sql = "SELECT MAX(phase) ".
+               "FROM Task ".
+               "GROUP BY projectID, endDate ".
+               "HAVING projectID = $projectID ".
+               "AND endDate IS NOT NULL;";
+        return (int) $conn->query($sql);
+        }
     }
 ?>
