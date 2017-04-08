@@ -86,10 +86,10 @@
         </ul>
     </div>
     <div class="col-md-3">
-    <!-- Number of projects -->
-        <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($tasks); ?></span>
-            <strong>Project<?php if(count($tasks) == 1)
+    <!-- Number of tasks -->
+        <div class="n-Tasks">
+            <span class="n-tasks-number"><?php echo count($tasks); ?></span>
+            <strong>Task<?php if(count($tasks) == 1)
                                      echo '';
                                   else
                                      echo 's'; ?>

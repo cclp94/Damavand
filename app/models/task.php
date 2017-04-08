@@ -62,21 +62,13 @@
 
         function put(){
             $conn = connect();
-            $sql = "INSERT INTO Task(name, startDate, endDate, estimatedTime, estimatedCost, description, projectId, isActive, phase) VALUE('"
-                   . $this->name . "', "
-                   . ($this->startDate ? "'".$this->startDate."', " : "NULL, ")
-                   . ($this->endDate ? "'".$this->endDate."', ": "NULL, ")
-                   . $this->estTime . ", "
-                   . $this->estCost . ", '"
-                   . $this->description . "', "
-                   . $this->projectId . ", "
-                   . "1, "
-                   . $this->phase
-                   . ");";
+            $sql = "INSERT INTO Task(name, startDate, endDate, estimatedTime, estimatedCost, description, projectId, phase) " .
+                   "VALUE('$this->name', '$this->startDate', '$this->endDate', $this->estTime, $this->estCost, '$this->description', " .
+                   "$this->projectId, $this->phase);";
             if ($conn->query($sql) == TRUE) {
-                echo '<div class="alert alert-success" role="alert">New Task created!</div>';
+                echo "New Task created!";
             } else {
-                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
+                echo "Error " . $sql . ": ". $conn->error;
             }
         }
 
@@ -116,6 +108,4 @@
             $conn->query($sql);
         }
     }
-
-
 ?>
