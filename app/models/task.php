@@ -135,5 +135,17 @@
             $sql = "Select sum(estimatedTime) from Task having endDate is not null;";
             return (int) $conn->query($sql);
         }
+
+        static function estimatedCostOfComplete() {
+            $conn = connect();
+            $sql = "Select sum(estimatedCost) from Task having endDate is not null;";
+            return (int) $conn->query($sql);
+        }
+
+        static function actualCostOfComplete() {
+            $conn = connect();
+            $sql = "Select sum(actualCost) from Task having endDate is not null;";
+            return (int) $conn->query($sql);
+        }
     }
 ?>
