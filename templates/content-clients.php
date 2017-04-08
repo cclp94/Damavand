@@ -32,7 +32,9 @@
         $contactPostal = $_POST['contactPostal'];
         $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactProvince, $contactPostal);
 
-        $newClient= new Client($id, $name, $address, $phoneNumber, $contactNumber, $contactName, $contactAddress, null);
+        $username = $_POST['username'];
+
+        $newClient= new Client($id, $name, $address, $phoneNumber, $contactNumber, $contactName, $contactAddress, $username);
         
         if ($_POST['add']) {
             $newClient->put();
@@ -118,7 +120,13 @@
                 <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" value="<?php echo $client->contactAddress->postal;?>" required/></br>
             </div>
     </div>
-        <input  class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Client"/>
+    <label class="col-sm-12 control-label">User Name</label><br/>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="username" placeholder="<?php echo $client->userName; ?>" value = "<?php echo $client->userName; ?>"/><br/>
+                    </div>
+                </div>
+    <input  class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Client"/>
 </form>
 
 <?php
@@ -226,7 +234,13 @@
                             <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" required/></br>
                         </div>
                 </div>
-                    <input  class="btn btn-primary btn-lg center-block" name="add" type="submit" value="Save"/>
+                <label class="col-sm-12 control-label">User Name</label><br/>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" name="username" placeholder="User Name"/><br/>
+                    </div>
+                </div>
+                <input  class="btn btn-primary btn-lg center-block" name="add" type="submit" value="Save"/>
             </form>
         </div>
     </div>

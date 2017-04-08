@@ -110,13 +110,13 @@
                    . $this->contactAddress->postal . '");';
             $conn->query($sql);
             $contactAddressId = $conn->insert_id;
-            $sql = "INSERT INTO Client(name, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId) VALUE('"
+            $sql = "INSERT INTO Client(name, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName) VALUE('"
                    . $this->name . "', '"
                    . $this->phoneNumber . "', '"
                    . $addressId . "', '"
                    . $this->contactName . "', '"
                    . $this->contactNumber . "', "
-                   . $contactAddressId . ");";
+                   . $contactAddressId . ", '$this->userName');";
             if ($conn->query($sql) == TRUE) {
                 echo "New Client created!";
             } else {
@@ -138,7 +138,7 @@
             $conn->query($sql);
 
             $sql = "UPDATE Client"
-            ." SET name = '".$this->name."', businessPhoneNumber = '". $this->phoneNumber . "', contactName = '". $this->contactName . "', contactPhoneNumber = '" . $this->contactNumber . "'"
+            ." SET name = '".$this->name."', businessPhoneNumber = '". $this->phoneNumber . "', contactName = '". $this->contactName . "', contactPhoneNumber = '" . $this->contactNumber . "', userName = '" . $this->userName . "'"
             ." WHERE clientId = ".$this->id.";";
 
             if ($conn->query($sql) == TRUE) {
