@@ -253,7 +253,7 @@
 <?php
 function displayClientTable(){
     global $employees;
-    ?><table style="width:100%">
+    ?><table class="table table-striped" style="width:100%">
        <tr>
            <th>Name</th>
            <th>Business Phone</th>

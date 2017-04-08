@@ -110,7 +110,7 @@
 function showProjectPreviews(){
     foreach(Project::getAll() as $project){
         echo '<div class="project"><a href="./project-view.php?id='.$project->projectId.'" >';
-        echo '<h1 class="project-title">'.$project->name.'<span class="badge">'.$project->getNumberOfTasks().'</h1>';
+        echo '<h1 class="project-title">'.$project->name.'<span class="badge pull-right">'.$project->getNumberOfTasks().'</h1>';
         echo '<span class="project-creator"><strong>Supervisor: </strong>'.$project->supervisor->name.' </span>';
         echo '<span class="project-creator"><strong>Client: </strong>'.$project->client->name.'</span>';
         echo '</a></div>';

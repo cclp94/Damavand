@@ -95,7 +95,7 @@
 <?php
 function displayEmployeeTable(){
     global $employees;
-    ?><table style="width:100%">
+    ?><table class="table table-striped" style="width:100%">
        <tr>
            <th>SIN</th>
            <th>Name</th>

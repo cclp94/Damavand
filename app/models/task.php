@@ -30,7 +30,7 @@
         public static function fromRow($row){
             $id = $row['taskId'];
             $name = $row['name']; 
-            $estTime = $$row['estimatedTime']; 
+            $estTime = $row['estimatedTime'];
             $estCost = $row['estimatedCost']; 
             $description =  $row['description'];
             $startDate = $row['startDate']; 
@@ -80,9 +80,39 @@
             }
         }
 
+        function update(){
+            $conn = connect();
+            $sql = "UPDATE Task"
+                ." SET name = '".$this->name. 
+                "', startDate = ".($this->startDate ? "'".$this->startDate."'" : "NULL"). 
+                ", endDate = ".($this->endDate ? "'".$this->endDate."'": "NULL").
+                ", estimatedTime = ".$this->estTime.
+                ", estimatedCost = ".$this->estCost.
+                ", description =  '".$this->description.
+                "', phase = ".$this->phase." WHERE taskId = ".$this->id.";";
+            if ($conn->query($sql) == TRUE) {
+                echo "Task updated!";
+            } else {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+
+        }
+
         function assignEmployee($SIN, $hours){
             $conn = connect();
             $sql = "INSERT INTO Assigned VALUE(".$this->id.", ".$SIN.", ".$hours.");";
+            $conn->query($sql);
+        }
+
+        function updateEmployeeAssignment($SIN, $hours){
+            $conn = connect();
+            $sql = "UPDATE Assigned SET hours = $hours WHERE taskId = $this->id AND employeeSin = $SIN;";
+            $conn->query($sql);
+        }
+
+        function deassignEmployee($SIN){
+            $conn = connect();
+            $sql = "DELETE FROM Assigned WHERE taskId = ".$this->id." AND employeeSin = ".$SIN.";";
             $conn->query($sql);
         }
     }

@@ -24,7 +24,10 @@
         (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $phase))->put();
     }
 ?>
-
+<ol class="breadcrumb">
+  <li><a href="home.php">Home</a></li>
+  <li class="active"><?php echo $project->name ?></li>
+</ol>
 <div class="row">
     <div class="col-md-9">
         <ul class="nav nav-tabs" role="tablist">
@@ -190,7 +193,7 @@
 
 function showTaskPreviews(){
     foreach(Task::getAll() as $task){
-        echo '<div class="project"><a href="./project-view.php?id='.$task->id.'" >';
+        echo '<div class="project"><a href="./task-view.php?id='.$task->id.'" >';
         echo '<h1 class="project-title">'.$task->name.'</span></h1>';
         echo '<p class="project-creator">Project Phase: '.$task->phase;
         echo '</p>';

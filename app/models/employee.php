@@ -106,5 +106,15 @@
         public static function mock() {
             return new Employee(123456789, "Bort", "Janitor", 15.00);
         }
+
+        function isAssignedToTask($taskId){
+            $conn = connect();
+            $sql = "SELECT * FROM Assigned WHERE employeeSin = $this->SIN AND taskId = $taskId;";
+            $result = $conn->query($sql);
+            if($result && $row = $result->fetch_assoc()){
+                return $row['hours'];
+            }
+            return null;
+        }
     }
 ?>
