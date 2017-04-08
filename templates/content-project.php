@@ -2,7 +2,7 @@
     if(isset($_GET['id'])){
         $project = Project::getProject($_GET['id']);
     }
-    $tasks = Task::getAll();
+    $tasks = Task::getAll($project->projectId);
     if(isset($_POST["edit"])){
         $id = $_POST['projectId'];
         $name = $_POST['name'];
@@ -64,7 +64,7 @@
         <div role="tabpanel" class="tab-pane fade in active" id="task-list">
             <?php
                 if(isset($tasks) && count($tasks) > 0){
-                    showTaskPreviews();
+                    showTaskPreviews($project->projectId);
                 }elseif($user->isAdmin()){
                     echo '<a class="add-task" href="#">Add your first Task!</a>';
                 }else{
@@ -184,8 +184,8 @@
 
 <?php
 
-function showTaskPreviews(){
-    foreach(Task::getAll() as $task){
+function showTaskPreviews($projectId){
+    foreach(Task::getAll($projectId) as $task){
         echo '<div class="project"><a href="./task-view.php?id='.$task->id.'" >';
         echo '<h1 class="project-title">'.$task->name.'</span></h1>';
         echo '<p class="project-creator">Project Phase: '.$task->phase;

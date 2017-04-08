@@ -44,6 +44,23 @@ require_once 'client.php';
             return $projects;
         }
 
+        public static function getProjectsForUser($user){
+            if($user->isAdmin())
+                return Project::getAll();
+
+            $conn = connect();
+            $sql = "SELECT projectId, Project.name as projectName, startDate, endDate, deadLine, budget, sin, Employee.name as supervisorName, title, wage, Client.clientId, Client.name as clientName, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName "
+                  ."FROM Project, Employee, Client, (SELECT clientId FROM Client, Users WHERE Client.userName = '$user->userName' AND Client.userName = Users.userName) as userClient "
+                  ."WHERE (userClient.clientId = Project.clientId) AND (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
+                  ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
+            $result = $conn->query($sql);
+            $projects = [];
+            while ($result && $row = $result->fetch_assoc()) {
+                $projects[] = Project::fromRow($row);
+            }
+            return $projects;
+        }
+
         public static function getProject($id){
             $conn = connect();
             $sql = "SELECT projectId, Project.name as projectName, startDate, endDate, deadLine, budget, sin, Employee.name as supervisorName, title, wage, Client.clientId, Client.name as clientName, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName "

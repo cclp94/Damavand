@@ -16,9 +16,9 @@
             $this->phase = $phase;
         }
 
-        public static function getAll(){
+        public static function getAll($projectId){
             $conn = connect();
-            $sql = "Select * from Task order by phase;";
+            $sql = "Select * from Task where projectId = $projectId order by phase;";
             $result = $conn->query($sql);
             $tasks = [];
             while ($result && $row = $result->fetch_assoc()) {
@@ -63,7 +63,7 @@
         function put(){
             $conn = connect();
             $sql = "INSERT INTO Task(name, startDate, endDate, estimatedTime, estimatedCost, description, projectId, phase) " .
-                   "VALUE('$this->name', '$this->startDate', '$this->endDate', $this->estTime, $this->estCost, '$this->description', " .
+                   "VALUE('$this->name', ".($this->startDate ? "'".$this->startDate."'" : "NULL").", ".($this->endDate ? "'".$this->endDate."'" : "NULL").", $this->estTime, $this->estCost, '$this->description', " .
                    "$this->projectId, $this->phase);";
             if ($conn->query($sql) == TRUE) {
                 echo "New Task created!";

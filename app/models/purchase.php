@@ -31,9 +31,9 @@
             return new Purchase($id, $taskId, $item, $quantity, $unitType, $purchaseDate, $deliveryDate, $supplierName, $price, $amountOwed);
         }
 
-        public static function getAll(){
+        public static function getAll($taskId){
             $conn = connect();
-            $sql = "SELECT * FROM Purchase;";
+            $sql = "SELECT * FROM Purchase WHERE taskId = $taskId";
             $result = $conn->query($sql);
             $purchases = [];
             while ($result && $row = $result->fetch_assoc()) {

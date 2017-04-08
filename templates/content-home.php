@@ -1,5 +1,5 @@
 <?php
-    $projects = Project::getAll();
+    $projects = Project::getProjectsForUser($user);
     if(isset($_POST["add"])){
         $name = $_POST['name'];
         $startDate = $_POST['startDate'];
@@ -40,8 +40,8 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="project-list">
             <?php
-                if(isset($projects)){
-                    showProjectPreviews();
+                if(count($projects) > 0){
+                    showProjectPreviews($user);
                 }elseif($user->isAdmin()){
                     echo '<a class="add-project" href="#">Add your first project!</a>';
                 }else{
@@ -107,8 +107,8 @@
 
 <?php
 
-function showProjectPreviews(){
-    foreach(Project::getAll() as $project){
+function showProjectPreviews($user){
+    foreach(Project::getProjectForUser($user) as $project){
         echo '<div class="project"><a href="./project-view.php?id='.$project->projectId.'" >';
         echo '<h1 class="project-title">'.$project->name.'<span class="badge pull-right">'.$project->getNumberOfTasks().'</h1>';
         echo '<span class="project-creator"><strong>Supervisor: </strong>'.$project->supervisor->name.' </span>';

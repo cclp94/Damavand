@@ -64,7 +64,9 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Purchases<span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="purchases">
                     <li role="presentation" ><a href="#purchase-list" aria-controls="purchase-list" role="tab" data-toggle="tab">List Purchases</a></li>
-                    <li role="presentation"><a href="#purchase-add" aria-controls="purchase-add" role="tab" data-toggle="tab">Add Purchase</a></li>
+                    <?php if($user->isAdmin()){?>
+                        <li role="presentation"><a href="#purchase-add" aria-controls="purchase-add" role="tab" data-toggle="tab">Add Purchase</a></li>
+                    <?php }?>
                 </ul>
             </li>
             <li class="dropdown">
@@ -72,13 +74,15 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="permits">
                     <li role="presentation"><a href="#permit-list" aria-controls="permit-list" role="tab" data-toggle="tab">List Permits</a></li>
-                    <li role="presentation"><a href="#permit-add" aria-controls="permit-add" role="tab" data-toggle="tab">Add Permit</a></li>
+                    <?php if($user->isAdmin()){?>
+                        <li role="presentation"><a href="#permit-add" aria-controls="permit-add" role="tab" data-toggle="tab">Add Permit</a></li>
+                    <?php }?>
                 </ul>
             </li>
+            <li role="presentation">
+                <a href="#assign-employee" aria-controls="assign-employee" role="tab" data-toggle="tab">Assign Employees</a>
+            </li>
             <?php if($user->isAdmin()){?>
-                <li role="presentation">
-                    <a href="#assign-employee" aria-controls="assign-employee" role="tab" data-toggle="tab">Assign Employees</a>
-                </li>
                 <li role="presentation">
                     <a href="#task-edit" aria-controls="task-edit" role="tab" data-toggle="tab">Edit Task Info</a>
                 </li>
@@ -102,8 +106,8 @@
     <div class="tab-content col-md-9">
         <div role="tabpanel" class="tab-pane fade in active" id="purchase-list">
             <?php
-                if(count(Purchase::getAll()) > 0){
-                    showPurchasePreviews();
+                if(count(Purchase::getAll($task->id)) > 0){
+                    showPurchasePreviews($task->id);
                 }elseif($user->isAdmin()){
                     echo '<a class="add-task" href="#">Add your first Purchase!</a>';
                 }else{
@@ -275,10 +279,11 @@
                             echo $hours;
                         else
                             echo "0";
-                     ?>"></td>
+                     ?>" <?php if(!$user->isAdmin()) echo 'disabled';?>></td>
                 </tr>
             <?php } ?>
            </table>
+           <?php if($user->isAdmin()){?>
            <div class="center-block col-md-12 text-center">
                 <button form="employee-assign-form" id="assign" type="submit" name = "assign" class="btn btn-primary btn-lg">Assign</button>
                 <button form="employee-assign-form" id= "desassign" type="submit" name="deassign" class="btn btn-default btn-lg">Desassign</button>
@@ -286,14 +291,15 @@
             <form id="employee-assign-form" method="post" action="./task-view.php?id=<?php echo $task->id;?>">
 
             </form>
+           <? } ?>
         </div>
     </div>
 </div>
 
 <?php
 
-function showPurchasePreviews(){
-    foreach(Purchase::getAll() as $purchase){
+function showPurchasePreviews($taskId){
+    foreach(Purchase::getAll($taskId) as $purchase){
         echo '<div class="project"><a href="./purchase-view.php?id='.$purchase->id.'" >';
         echo '<span class="pull-right text-center"><strong>Amount Owed:</strong></br>'.$purchase->amountOwed.'</span>';
         echo '<h1 class="project-title">'.$purchase->item.' </span></h1>';
