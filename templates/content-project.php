@@ -19,10 +19,9 @@
         $endDate = $_POST['endDate'];
         $estimatedTime = $_POST['estimatedTime'];
         $estimatedCost = $_POST['estimatedCost'];
-        $predecessorTasks = $_POST['predecessors'];
-        $successorTasks = $_POST['successors'];
+        $phase = $_POST['phase'];
         $description = $_POST['description'];
-        (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $predecessorTasks, $successorTasks))->put();
+        (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $phase))->put();
     }
 ?>
 
@@ -115,21 +114,9 @@
             </div>
             -->
             <div class="form-group">
-                    <label for="predecessors[]" class="col-sm-2 control-label text-center">Predecessor Tasks</label>
-                    <div class="col-sm-4">
-                        <select name = "predecessors[]" class="form-control" multiple>
-                            <?php foreach(Task::getAll() as $pre){ ?>
-                                <option value = "<?php echo $pre->id; ?>"><?php echo $pre->name; ?> </option>
-                            <?php } ?>
-                        </select><br/>
-                    </div>
-                    <label for="successors[]" class="col-sm-2 control-label text-center">Successor Tasks</label>
-                    <div class="col-sm-4">
-                        <select name = "successors[]" class="form-control" multiple>
-                            <?php foreach(Task::getAll() as $client){ ?>
-                                <option value = "<?php echo $client->id; ?>"><?php echo $client->name . " - " . $client->contactName; ?> </option>
-                            <?php } ?>
-                        </select><br/>
+                    <label for="phase" class="col-sm-2 control-label text-center">Project Phase</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="phase" placeholder="1"/> <br/>
                     </div>
             </div>
             <div class="form-group">
@@ -205,17 +192,7 @@ function showTaskPreviews(){
     foreach(Task::getAll() as $task){
         echo '<div class="project"><a href="./project-view.php?id='.$task->id.'" >';
         echo '<h1 class="project-title">'.$task->name.'</span></h1>';
-        echo '<p class="project-creator">Predecessor Tasks: ';
-        foreach($task->predecessorTasks as $preId){
-            $preTask = Task::getTaskById($preId);
-            echo '<a href="./task.php?id='.$preTask->id.'">'.$preTask->name.'</a>';
-        }
-        echo '</p>';
-        echo '<p class="project-creator">Successor Tasks: ';
-        foreach($task->successorTasks as $sucId){
-            $sucTask = Task::getTaskById($sucId);
-            echo '<a href="./task.php?id='.$sucTask->id.'">'.$sucTask->name.'</a>';
-        }
+        echo '<p class="project-creator">Project Phase: '.$task->phase;
         echo '</p>';
         echo '</a></div>';
     }
