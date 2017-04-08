@@ -4,21 +4,16 @@ require_once 'connection.php';
 date_default_timezone_set("America/Montreal");
 $startDate = DateTime::createFromFormat('Y-m-d', $project->startDate);
 $currentDate = DateTime::createFromFormat('Y-m-d', date("Y-m-d"));
-$estimatedTime = Task::estimatedTimeOfComplete();
+$estimatedTime = $project->estimatedTimeOfCompleteTasks();
 $actualTime = $currentDate->diff($startDate)->days;
-$timeRatio = $estimatedTime / $actualTime;
+$timeRatio = $actualTime == 0 ? INF : $estimatedTime / $actualTime;
 
-$estimatedCost = Task::estimatedCostOfComplete();
-$actualCost = Task::actualCostOfComplete();
-$costRatio = $estimatedCost / ($actualCost + 0.0001);
+$estimatedCost = $project->estimatedCostOfCompleteTasks();
+$actualCost = $project->actualCostOfCompleteTasks();
+$costRatio = $actualCost == 0 ? INF : $estimatedCost / $actualCost;
 
-echo $startDate->format("y-m-d") . "<br>";
-echo $currentDate->format("y-m-d") . "<br>";
-echo $actualTime . "<br>";
-echo $estimatedTime . "<br>";
-
-$completeTaskCount = Task::completeCount();
-$completeTasks = Task::getAllComplete();
+$completeTasks = $project->completeTasks();
+$completeTaskCount = count($completeTasks);
 
 $taskCount = count($tasks);
 echo $project->name . "<br>";

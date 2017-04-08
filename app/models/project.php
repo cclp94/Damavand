@@ -97,7 +97,34 @@ require_once 'client.php';
             $row = $result->fetch_assoc();
             return $row['COUNT(*)'];
         }
+
+        function completeTasks() {
+            $conn = connect();
+            $sql = "Select * from Task order by phase where endDate is not null and projectID = $projectID;";
+            $result = $conn->query($sql);
+            $tasks = [];
+            while ($result && $row = $result->fetch_assoc()) {
+                $tasks[] = Task::fromRow($row);
+            }
+            return $tasks;
+        }
+
+        function estimatedTimeOfCompleteTasks() {
+            $conn = connect();
+            $sql = "Select sum(estimatedTime) from Task having endDate is not null and projectID = $projectID;";
+            return (int) $conn->query($sql);
+        }
+
+        function estimatedCostOfCompleteTasks() {
+            $conn = connect();
+            $sql = "Select sum(estimatedCost) from Task having endDate is not null and projectID = $projectID;";
+            return (float) $conn->query($sql);
+        }
+
+        function actualCostOfCompleteTasks() {
+            $conn = connect();
+            $sql = "Select sum(actualCost) from Task having endDate is not null and projectID = $projectID;";
+            return (float) $conn->query($sql);
+        }
     }
-
-
 ?>
