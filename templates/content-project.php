@@ -13,6 +13,7 @@
         $supervisorId = $_POST['supervisor'];
         (new Project($id, $name, $supervisorId, $startDate, null, $deadline, $budget, $clientId))->update();
     }elseif(isset($_POST["add"])){
+        var_dump($_POST);
         $projectId = $_POST['projectId'];
         $name = $_POST['name'];
         $startDate = $_POST['startDate'];
@@ -20,6 +21,7 @@
         $estimatedTime = $_POST['estimatedTime'];
         $estimatedCost = $_POST['estimatedCost'];
         $phase = $_POST['phase'];
+        var_dump($phase);
         $description = $_POST['description'];
         (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $phase))->put();
     }
@@ -109,7 +111,7 @@
             <div class="form-group">
                     <label for="phase" class="col-sm-2 control-label text-center">Project Phase</label>
                     <div class="col-sm-10">
-                        <input type="number" name="phase" placeholder="1"/> <br/>
+                        <input class="form-control" type="number" name="phase" placeholder="1" required/> <br/>
                     </div>
             </div>
             <div class="form-group">
