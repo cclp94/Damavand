@@ -62,17 +62,9 @@
 
         function put(){
             $conn = connect();
-            $sql = "INSERT INTO Task(name, startDate, endDate, estimatedTime, estimatedCost, description, projectId, isActive, phase) VALUE('"
-                   . $this->name . "', "
-                   . ($this->startDate ? "'".$this->startDate."', " : "NULL, ")
-                   . ($this->endDate ? "'".$this->endDate."', ": "NULL, ")
-                   . $this->estTime . ", "
-                   . $this->estCost . ", '"
-                   . $this->description . "', "
-                   . $this->projectId . ", "
-                   . "1, "
-                   . $this->phase
-                   . ");";
+            $sql = "INSERT INTO Task(name, startDate, endDate, estimatedTime, estimatedCost, description, projectId, isActive, phase) " .
+                   "VALUE('$this->name', '$this->startDate', '$this->endDate', $this->estTime, $this->estCost, '$this->description', " .
+                   "$this->projectId, 1, $this->phase);";
             if ($conn->query($sql) == TRUE) {
                 echo "New Task created!";
             } else {
@@ -116,6 +108,4 @@
             $conn->query($sql);
         }
     }
-
-
 ?>
