@@ -3,27 +3,29 @@ require_once 'connection.php';
 
 date_default_timezone_set("America/Montreal");
 $startDate = DateTime::createFromFormat('Y-m-d', $project->startDate);
+$deadline = DateTime::createFromFormat('Y-m-d', $project->deadline);
 $currentDate = DateTime::createFromFormat('Y-m-d', date("Y-m-d"));
-$estimatedTime = Task::estimatedTimeOfComplete();
+$estimatedTime = $project->estimatedTimeOfCompleteTasks();
 $actualTime = $currentDate->diff($startDate)->days;
-$timeRatio = $estimatedTime / $actualTime;
+$timeRatio = $actualTime == 0 ? INF : $estimatedTime / $actualTime;
 
-$estimatedCost = Task::estimatedCostOfComplete();
-$actualCost = Task::actualCostOfComplete();
-$costRatio = $estimatedCost / ($actualCost + 0.0001);
+$phase = $project->latestPhase();
 
-echo $startDate->format("y-m-d") . "<br>";
-echo $currentDate->format("y-m-d") . "<br>";
-echo $actualTime . "<br>";
-echo $estimatedTime . "<br>";
+$timeRemaining = $deadline->diff($currentDate)->days;
 
-$completeTaskCount = Task::completeCount();
-$completeTasks = Task::getAllComplete();
+$estimatedCost = $project->estimatedCostOfCompleteTasks();
+$actualCost = $project->actualCostOfCompleteTasks();
+$costRatio = $actualCost == 0 ? INF : $estimatedCost / $actualCost;
+
+$completeTasks = $project->completeTasks();
+$completeTaskCount = count($completeTasks);
 
 $taskCount = count($tasks);
-echo $project->name . "<br>";
+//echo $project->name . "<br>";
+echo "Phase: $phase <br>";
 echo "Tasks Complete: $completeTaskCount / $taskCount <br>";
-echo "Project Duration (Estimated / Actual): $estimatedTime / $actualTime (" . percentString($timeRatio) . ") " . progressColourString($timeRatio) . "<br>";
+echo "Project Progress Ratio (Estimated / Actual): $estimatedTime / $actualTime (" . percentString($timeRatio) . ") " . progressColourString($timeRatio) . "<br>";
+echo "Time Remaining Before Deadline ". $deadline->format('Y-m-d') . ": $timeRemaining <br>";
 echo "Project Cost (Estimated / Actual): $estimatedCost / $actualCost (" . percentString($costRatio) . ") " . costColourString($costRatio) . "<br>";
 ?>
 
@@ -74,13 +76,13 @@ function costColour($ratio) {
 function costColourString($ratio) {
     $msg = costMsg($ratio);
     $colour = costColour($ratio);
-    return "<div style=\"color:$colour;\">$msg</div>";
+    return "<span style=\"color:$colour;\">$msg</span>";
 }
 
 function progressColourString($ratio) {
     $msg = progressMsg($ratio);
     $colour = progressColour($ratio);
-    return "<div style=\"color:$colour;\">$msg</div>";
+    return "<span style=\"color:$colour;\">$msg</span>";
 }
 
 function percentString($x) {

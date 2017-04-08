@@ -108,7 +108,7 @@
 <?php
 
 function showProjectPreviews($user){
-    foreach(Project::getProjectForUser($user) as $project){
+    foreach(Project::getProjectsForUser($user) as $project){
         echo '<div class="project"><a href="./project-view.php?id='.$project->projectId.'" >';
         echo '<h1 class="project-title">'.$project->name.'<span class="badge pull-right">'.$project->getNumberOfTasks().'</h1>';
         echo '<span class="project-creator"><strong>Supervisor: </strong>'.$project->supervisor->name.' </span>';
