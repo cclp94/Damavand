@@ -106,19 +106,6 @@
                         <input class="form-control" type="number" name="estimatedCost" placeholder="100,000" required/></br>
                     </div>
             </div>
-            <!--
-            <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label text-center">Assigned Employees (Can select multiple)</label>
-                    <div class="col-sm-10">
-                        <select name = "supervisor[]" class="form-control" multiple>
-                            <option value="none" selected>None</option>
-                            <?php foreach(Employee::getAll() as $employee){ ?>
-                                <option value = "<?php echo $employee->SIN; ?>"><?php echo $employee->name . " - " . $employee->title; ?> </option>
-                            <?php } ?>
-                        </select><br/>
-                    </div>
-            </div>
-            -->
             <div class="form-group">
                     <label for="phase" class="col-sm-2 control-label text-center">Project Phase</label>
                     <div class="col-sm-10">
@@ -189,21 +176,10 @@
                 <input  class="btn btn-primary btn-lg center-block" type="submit" name="add" value="Create"/>
             </form>
         </div>
-        <div role="tabpanel" class="tab-pane fade in active" id="report">
+        <div role="tabpanel" class="tab-pane fade in" id="report">
             <?php include './app/report.php'; ?>
         </div>
     </div>
-    <div role="tabpanel" class="tab-pane fade in active" id="task-list">
-            <?php
-                if(isset($tasks) && count($tasks) > 0){
-                    showTaskPreviews();
-                }elseif($user->isAdmin()){
-                    echo '<a class="add-task" href="#">Add your first Task!</a>';
-                }else{
-                    echo '<strong>You don\'t have any projects yet</strong>';
-                }
-            ?>
-        </div>
 </div>
 
 <?php
@@ -217,5 +193,4 @@ function showTaskPreviews(){
         echo '</a></div>';
     }
 }
-
 ?>
