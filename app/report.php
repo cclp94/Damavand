@@ -121,6 +121,10 @@ $taskCount = count($tasks);
                     <td> <?php echo percentString($costRatio) ?> </td>
                     <td> <?php echo costColourString($costRatio) ?> </td>
                 </tr>
+                <tr>
+                    <td> Total Owed </td>
+                    <td colspan="2"> $<?php echo number_format($project->totalOwed(), 2) ?> </td>
+                </tr>
             </table>
         </td>
     </tr>
@@ -146,7 +150,7 @@ function progressColour($ratio) {
     if ($ratio < 0.9)
         return "#ff0000";
     if ($ratio < 1.1)
-        return "#0000cc";
+        return "#000066";
     return "#00cc00";
 }
 
@@ -166,7 +170,7 @@ function costColour($ratio) {
     if ($ratio < 0.9)
         return "#00cc00";
     if ($ratio < 1.1)
-        return "#0000cc";
+        return "#000066";
     return "#ff0000";
 }
 

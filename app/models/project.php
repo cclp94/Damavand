@@ -103,6 +103,45 @@ class Project {
         }
     }
 
+    function tasks() {
+        $conn = connect();
+        $sql = "Select * from Task where projectID = $this->projectId order by phase;";
+        $result = $conn->query($sql);
+        if (!$result) {
+            echo "Error " . $sql . ": ". $conn->error;
+        }
+        $tasks = [];
+        while ($result && $row = $result->fetch_assoc()) {
+            $tasks[] = Task::fromRow($row);
+        }
+        return $tasks;
+    }
+
+    function purchases() {
+        $purchases = [];
+        foreach ($this->tasks() as $task) {
+            foreach ($task->purchases() as $purchase) {
+                $purchases[] = $purchase;
+            }
+        }
+        return $purchases;
+    }
+
+    function totalOwed() {
+        $conn = connect();
+        $sql = "SELECT SUM(amountOwed)
+                FROM Purchase, Project, Task
+                WHERE Task.projectId = Project.projectId
+                AND Purchase.taskId = Task.taskId
+                AND Project.projectId = $this->projectId;";
+        $result = $conn->query($sql);
+        if (!$result) {
+            echo "Error " . $sql . ": ". $conn->error;
+        }
+        $row = $result->fetch_assoc();
+        return (float) $row['SUM(amountOwed)'];
+    }
+
     function getNumberOfTasks() {
         $conn = connect();
         $sql = "Select COUNT(*) from Task where projectId = ".$this->projectId.";";
