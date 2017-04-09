@@ -52,5 +52,22 @@
                 echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
+
+        function update(){
+            $conn = connect();
+            $sql = "UPDATE Purchase SET item = '$this->item', quantity = $this->quantity, unitType = '$this->unitType', purchaseDate =' $this->purchaseDate', deliveryDate = ".($this->deliveryDate ? "'".$this->deliveryDate."'" : "NULL").", supplierName = '$this->supplierName', price = $this->price WHERE purchaseId = $this->id;";
+            if ($conn->query($sql) == TRUE) {
+                echo '<div class="alert alert-success" role="alert">Purchase updated!</div>';
+            } else {
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
+            }
+        }
+
+        public static function get($id){
+            $conn = connect();
+            $sql = "SELECT * FROM Purchase WHERE purchaseId = $id";
+            $result = $conn->query($sql);
+            return Purchase::fromRow($result->fetch_assoc());
+        }
     }
 ?>
