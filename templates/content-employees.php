@@ -13,9 +13,8 @@
         $SIN = $_POST['SIN'];
         $name = $_POST['name'];
         $title = $_POST['title'];
-        $wage = $_POST['wage'];
         
-        $employee = new Employee($SIN, $name, $title, $wage);
+        $employee = new Employee($SIN, $name, $title);
 
         if ($_POST['add']) {
             $employee->put();
@@ -80,12 +79,6 @@
                         <input class="form-control" type="text" name="title" placeholder="Title" required/></br>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="number" name="wage" placeholder="0.00" required/></br>
-                    </div>
-                </div>
                 <input class="btn btn-primary btn-lg center-block" type="submit" name = "add" value="Add Employee"/>
             </form>
         </div>
@@ -100,14 +93,12 @@ function displayEmployeeTable(){
            <th>SIN</th>
            <th>Name</th>
            <th>Title</th>
-           <th>Wage ($/hr)</th>
     </tr><?php
     foreach($employees as $employee){
         echo '<tr>';
         echo sinLink($employee, $employee->SIN);
         echo sinLink($employee, $employee->name);
         echo sinLink($employee, $employee->title);
-        echo sinLink($employee, number_format($employee->wage, 2));
         echo '</tr>';
     }
     echo '</table>';

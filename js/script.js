@@ -34,10 +34,12 @@ $(document).ready(function(){
         if($(that).is(":checked")) {
             $(that).parent().parent().removeClass($(that).parent().parent().attr("class"));
             $(that).parent().parent().addClass("info")
+            $(that).parent().parent().children().children("input[type=number]").attr('disabled',false);
         }else{
             var lastClass = $(that).parent().parent().attr('class').split(' ').pop();   
             $(that).parent().parent().removeClass(lastClass);         
-            $(that).parent().parent().addClass($(that).parent().parent().attr('default'))
+            $(that).parent().parent().addClass($(that).parent().parent().attr('default'));
+            $(that).parent().parent().children().children("input[type=number]").attr('disabled',true);
         }
         $('#textbox1').val($(that).is(':checked'));    
     }

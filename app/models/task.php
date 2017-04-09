@@ -91,15 +91,15 @@
 
         }
 
-        function assignEmployee($SIN, $hours){
+        function assignEmployee($SIN, $hours, $wage){
             $conn = connect();
-            $sql = "INSERT INTO Assigned VALUE(".$this->id.", ".$SIN.", ".$hours.");";
+            $sql = "INSERT INTO Assigned VALUE(".$this->id.", ".$SIN.", ".$hours.", ".$wage.");";
             $conn->query($sql);
         }
 
-        function updateEmployeeAssignment($SIN, $hours){
+        function updateEmployeeAssignment($SIN, $hours, $wage){
             $conn = connect();
-            $sql = "UPDATE Assigned SET hours = $hours WHERE taskId = $this->id AND employeeSin = $SIN;";
+            $sql = "UPDATE Assigned SET hours = $hours, wage = $wage WHERE taskId = $this->id AND employeeSin = $SIN;";
             $conn->query($sql);
         }
 

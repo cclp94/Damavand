@@ -7,11 +7,12 @@
     }
     if(isset($_POST['assign'])){
         $hours = $_POST['hours'];
+        $wages = $_POST['wage'];
         foreach($_POST['sins'] as $index => $sin){
             if(Employee::get($sin)->isAssignedToTask($task->id)){
-                $task->updateEmployeeAssignment($sin, $hours[$index]);
+                $task->updateEmployeeAssignment($sin, $hours[$index], $wages[$index]);
             }
-            $task->assignEmployee($sin, $hours[$index]);
+            $task->assignEmployee($sin, $hours[$index], $wages[$index]);
         }
     }elseif(isset($_POST['deassign'])){
         foreach($_POST['sins'] as $sin){
@@ -262,24 +263,33 @@
         <div role="tabpanel" class="tab-pane fade" id="assign-employee">
            <table class="table table-striped" style="width:100%">
                 <tr>
-                    <th><input id="assignbox-master" type="checkbox"></th>
+                    <?php if($user->isAdmin()){ ?><th><input id="assignbox-master" type="checkbox"></th><?php } ?>
                     <th>SIN</th>
                     <th>Name</th>
                     <th>Hours</th>
+                    <th>Wage</th>
                 </tr>
             <?php foreach(Employee::getAll() as $employee){ 
-                $hours = $employee->isAssignedToTask($id);
+                $assigned = $employee->isAssignedToTask($id);
             ?>
-                <tr class="<?php echo ($hours ? "success" : "danger"); ?>" default="<?php echo ($hours ? "success" : "danger"); ?>">
-                    <td><input form="employee-assign-form" name="sins[]" value = "<?php echo $employee->SIN; ?>" class = "assignbox" type="checkbox"></td>
+                <tr class="<?php echo ($assigned ? "success" : "danger"); ?>" default="<?php echo ($assigned ? "success" : "danger"); ?>">
+                    <?php if($user->isAdmin()){ ?>
+                        <td><input form="employee-assign-form" name="sins[]" value = "<?php echo $employee->SIN; ?>" class = "assignbox" type="checkbox"></td>
+                    <?php } ?>
                     <td><?php echo $employee->SIN; ?></td>
                     <td class="col-md-4"><?php echo $employee->name; ?></td>
                     <td><input form="employee-assign-form" name="hours[]" type="number" value="<?php 
-                        if($hours)
-                            echo $hours;
+                        if($assigned)
+                            echo $assigned->hours;
                         else
                             echo "0";
-                     ?>" <?php if(!$user->isAdmin()) echo 'disabled';?>></td>
+                     ?>" disabled></td>
+                    <td><input form="employee-assign-form" name="wage[]" type="number" value="<?php 
+                        if($assigned)
+                            echo $assigned->wage;
+                        else
+                            echo "0.00";
+                     ?>" disabled></td>
                 </tr>
             <?php } ?>
            </table>
