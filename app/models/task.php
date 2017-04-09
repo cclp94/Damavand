@@ -2,18 +2,10 @@
 
 require_once 'employee.php';
 require_once 'purchase.php';
-
-<<<<<<< HEAD
 class Task{
     var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost;
 
     function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost){
-=======
-class Task {
-    var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase;
-
-    function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase) {
->>>>>>> 2f6029fd1539546d62636163507e8de1f9d0e3c9
         $this->id = $id; 
         $this->name = $name; 
         $this->estTime = $estTime; 
@@ -24,10 +16,7 @@ class Task {
         $this->projectId = $projectId; 
         $this->employees = $employees;
         $this->phase = $phase;
-<<<<<<< HEAD
         $this->actualCost = $actualCost;
-=======
->>>>>>> 2f6029fd1539546d62636163507e8de1f9d0e3c9
     }
 
     public static function getAll($projectId) {
@@ -54,13 +43,8 @@ class Task {
         $projectId = $row['projectId'];
         $employees = Task::getEmployeesForTask($id); 
         $phase = $row['phase'];
-<<<<<<< HEAD
         $actualCost = $row['actualCost'];
         return new Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost);
-=======
-
-        return new Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase);
->>>>>>> 2f6029fd1539546d62636163507e8de1f9d0e3c9
     }
 
     public static function getEmployeesForTask($id) {
