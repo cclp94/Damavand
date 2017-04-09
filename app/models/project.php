@@ -106,6 +106,16 @@ class Project {
         return Task::getAll($this->projectId);
     }
 
+    function completeTasks() {
+        $tasks = [];
+        foreach($this->tasks() as $task) {
+            if ($task->isComplete()) {
+                $tasks[] = $task;
+            }
+        }
+        return $tasks;
+    }
+
     function purchases() {
         $purchases = [];
         foreach ($this->tasks() as $task) {
@@ -128,25 +138,12 @@ class Project {
         return count($this->tasks());
     }
 
-    function completeTasks() {
-        $tasks = [];
-        foreach($this->tasks() as $task) {
-            if ($task->isComplete()) {
-                $tasks[] = $task;
-            }
-        }
-        return $tasks;
-    }
-
     function estimatedTimeOfCompleteTasks() {
-        $conn = connect();
-        $sql = "Select SUM(estimatedTime) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
-        $result = $conn->query($sql);
-        if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
+        $total = 0;
+        foreach ($this->completeTasks() as $task) {
+            $total += $task->estTime;
         }
-        $row = $result->fetch_assoc();
-        return (int) $row['SUM(estimatedTime)'];
+        return $total;
     }
 
     function estimatedTimeRemaining() {

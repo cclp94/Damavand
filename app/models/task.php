@@ -118,7 +118,7 @@ class Task {
     }
     
     function isComplete() {
-        return $endDate != NULL;
+        return $this->endDate != NULL;
     }
 
     function purchases() {
