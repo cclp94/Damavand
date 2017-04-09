@@ -1,8 +1,9 @@
 <footer class="row">
     <div class="col-md-3 text-pad">
         <p>
-        Duis aliquet augue diam, vel rhoncus lectus feugiat vitae. Cras ut mattis sem, eu vulputate dui.
-            Aliquam id vehicula elit. Sed consectetur nulla vitae sem maximus molestie.
+            <h4>Contact</h4>
+            <strong>Address</strong>: 353 Avenue Concordia, Suite H-927 - Montreal, QC - Canada - C3O 5M3</br>
+            <strong>Tel</strong>: (514) 353-3533</br>
             </p>
     </div>
     <div class="col-md-4 col-md-push-1 copyright-container">
