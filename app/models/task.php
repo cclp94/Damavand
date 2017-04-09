@@ -73,7 +73,7 @@ class Task{
                 VALUE('$this->name', $startDate, $endDate, $this->estTime, $this->estCost, '$this->description', $this->projectId, $this->phase);";
         $result = query($sql);
         if ($result == TRUE) {
-            echo "New Task created!";
+            echo '<div class="alert alert-success" role="alert">New Task created!</div>';
         }
     }
 
@@ -91,7 +91,7 @@ class Task{
                 WHERE taskId = $this->id;";
         $result = query($sql);
         if ($result == TRUE) {
-            echo "Task updated!";
+            echo '<div class="alert alert-success" role="alert">Task updated!</div>';
         }
     }
 

@@ -14,9 +14,9 @@
             $conn = connect();
             $sql = "INSERT INTO Employee VALUE($this->SIN, '$this->name', '$this->title');";
             if ($conn->query($sql) == TRUE) {
-                echo "New employee created!";
+                echo '<div class="alert alert-success" role="alert">New employee created!</div>';
             } else {
-                echo "Error " . $sql . ": ". $conn->error;
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
 
@@ -27,9 +27,9 @@
                         title='$this->title' 
                     WHERE sin=$this->SIN;";
             if ($conn->query($sql) == TRUE) {
-                echo "Employee updated!";
+                echo '<div class="alert alert-success" role="alert">Employee updated!</div>';
             } else {
-                echo "Error " . $sql . ": ". $conn->error;
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
 
@@ -38,9 +38,9 @@
             $sql = "DELETE FROM Employee
                     WHERE sin=$SIN;";
             if ($conn->query($sql) == TRUE) {
-                echo "Employee deleted!";
+                echo '<div class="alert alert-success" role="alert">Employee deleted!</div>';
             } else {
-                echo "Error " . $sql . ": ". $conn->error;
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
 

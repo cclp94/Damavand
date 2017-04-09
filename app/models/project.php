@@ -81,7 +81,7 @@ class Project {
                 VALUE('$this->name', '$this->startDate', '$this->deadline', $this->budget, $client, $supervisor);";
         $result = query($sql);
         if ($result == TRUE) {
-            echo "New Project created!";
+            echo '<div class="alert alert-success" role="alert">New Project created!</div>';
         }
     }
 
@@ -98,7 +98,7 @@ class Project {
                 WHERE projectId = $this->projectId;";
         $result = query($sql);
         if ($result == TRUE) {
-            echo "Project updated!";
+            echo '<div class="alert alert-success" role="alert">Project updated!</div>';
         }
     }
 
@@ -151,7 +151,7 @@ class Project {
         $sql = "Select SUM(estimatedTime) from Task group by endDate, projectID having endDate is null and projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
+           echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
         }
         $row = $result->fetch_assoc();
         return (int) $row['SUM(estimatedTime)'];
@@ -162,7 +162,7 @@ class Project {
         $sql = "Select SUM(estimatedCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
+            echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
         }
         $row = $result->fetch_assoc();
         return (int) $row['SUM(estimatedCost)'];
@@ -173,7 +173,7 @@ class Project {
         $sql = "Select SUM(actualCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
+            echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
         }
         $row = $result->fetch_assoc();
         return (float) $row['SUM(actualCost)'];
@@ -188,7 +188,7 @@ class Project {
             "AND endDate IS NOT NULL;";
         $result = $conn->query($sql);
         if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
+            echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
         }
         $row = $result->fetch_assoc();
         return (int) $row['MAX(phase)'];
@@ -202,7 +202,7 @@ class Project {
             "HAVING projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
+            echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
         }
         $row = $result->fetch_assoc();
         return (int) $row['MAX(phase)'];

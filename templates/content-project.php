@@ -13,7 +13,7 @@
         $supervisorId = $_POST['supervisor'];
         (new Project($id, $name, $supervisorId, $startDate, null, $deadline, $budget, $clientId))->update();
     }elseif(isset($_POST["add"])){
-        var_dump($_POST);
+        //var_dump($_POST);
         $projectId = $_POST['projectId'];
         $name = $_POST['name'];
         $startDate = $_POST['startDate'];

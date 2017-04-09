@@ -138,9 +138,9 @@
                    . $this->contactNumber . "', "
                    . $contactAddressId . ", ".($this->userName ? "'".$this->userName."'" : "NULL").");";
             if ($conn->query($sql) == TRUE) {
-                echo "New Client created!";
+                echo '<div class="alert alert-success" role="alert">New Client created!</div>';
             } else {
-                echo "Error " . $sql . ": ". $conn->error;
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
 
@@ -162,9 +162,9 @@
             ." WHERE clientId = ".$this->id.";";
 
             if ($conn->query($sql) == TRUE) {
-                echo "Client updated!";
+                echo '<div class="alert alert-success" role="alert">Client updated!</div>';
             } else {
-                echo "Error " . $sql . ": ". $conn->error;
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
     }

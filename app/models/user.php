@@ -25,9 +25,9 @@
             $permission = $this->permission == 0 ? 'client': 'manager';
             $sql = "INSERT INTO Users VALUE('$this->userName', '$hash', '$permission');";
             if ($conn->query($sql) == TRUE) {
-                echo "New user created!";
+                echo '<div class="alert alert-success" role="alert">New user created!</div>';
             } else {
-                echo "Error " . $sql . ": ". $conn->error;
+                echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
             }
         }
 
