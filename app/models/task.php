@@ -3,6 +3,7 @@
 require_once 'employee.php';
 require_once 'purchase.php';
 require_once 'assigned.php';
+require_once 'permit.php';
 
 class Task {
     var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost;
@@ -137,6 +138,26 @@ class Task {
 
     function purchases() {
         return Purchase::getAll($this->id);
+    }
+
+    function totalPurchases() {
+        $total = 0;
+        foreach ($this->purchases() as $purchase) {
+            $total += $purchase->price;
+        }
+        return $total;
+    }
+
+    function permits() {
+        return Permit::getAllForTask($this->id);
+    }
+
+    function totalPermits() {
+        $total = 0;
+        foreach ($this->permits() as $permit) {
+            $total += $permit->cost;
+        }
+        return $total;
     }
 }
 

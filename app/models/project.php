@@ -155,6 +155,22 @@ class Project {
         return $total;
     }
 
+    function totalPurchases() {
+        $total = 0;
+        foreach ($this->completeTasks() as $task) {
+            $total += $task->totalPurchases();
+        }
+        return $total;
+    }
+
+    function totalPermits() {
+        $total = 0;
+        foreach ($this->completeTasks() as $task) {
+            $total += $task->totalPermits();
+        }
+        return $total;
+    }
+
     function estimatedTimeRemaining() {
         $conn = connect();
         $sql = "Select SUM(estimatedTime) from Task group by endDate, projectID having endDate is null and projectID = $this->projectId;";

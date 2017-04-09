@@ -122,8 +122,16 @@ $taskCount = count($tasks);
                                 <td colspan="2"> $<?php echo number_format($actualCost, 2); ?> </td>
                             </tr>
                             <tr>
-                                <td> From Wages </td>
+                                <td> Purchases </td>
+                                <td> $<?php echo number_format($project->totalPurchases(), 2); ?> </td>
+                            </tr>
+                            <tr>
+                                <td> Wages </td>
                                 <td> $<?php echo number_format($project->totalWages(), 2); ?> </td>
+                            </tr>
+                            <tr>
+                                <td> Permits </td>
+                                <td> $<?php echo number_format($project->totalPermits(), 2); ?> </td>
                             </tr>
                         </table>
                     </td>
