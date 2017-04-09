@@ -119,6 +119,12 @@ footer{
     
 }
 
+.summary-4{
+    background-color: #9874B3;
+    color: white;
+    
+}
+
 .summary-number{
     display: block;
     font-size: 30px;

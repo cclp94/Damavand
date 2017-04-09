@@ -28,7 +28,7 @@
         $estimatedCost = $_POST['estimatedCost'];
         $phase = $_POST['phase'];
         $description = $_POST['description'];
-        (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $phase))->update();
+        (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $phase, null))->update();
     }
     if(isset($_POST['add-purchase'])){
         $taskId = $id;
@@ -51,6 +51,9 @@
 
         (new Permit($taskId, $type, $dateValidStart, $dateValidEnd, $cost))->put();
     }
+    $task = Task::getTaskById($id);
+    $purchases = Purchase::getAll($task->id);
+    $permits = Permit::getAllForTask($task->id);
 ?>
 <input type="hidden" id="taskId" value="<?php echo $task->id; ?>"/>
 <ol class="breadcrumb">
@@ -95,7 +98,7 @@
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="purchase-list">
             <?php
-                if(count(Purchase::getAll($task->id)) > 0){
+                if(count($purchases) > 0){
                     showPurchasePreviews($task->id);
                 }elseif($user->isAdmin()){
                     echo '<a class="add-task" href="#">Add your first Purchase!</a>';
@@ -157,7 +160,7 @@
         <!--======================List Permits===============-->
         <div role="tabpanel" class="tab-pane fade in" id="permit-list">
             <?php
-                if(count(Permit::getAllForTask($task->id)) > 0){
+                if(count($permits) > 0){
                     showPermitPreviews($task->id);
                 }elseif($user->isAdmin()){
                     echo '<a class="add-task" href="#">Add your first Permit!</a>';
@@ -257,8 +260,10 @@
                     <th>Hours</th>
                     <th>Wage</th>
                 </tr>
-            <?php foreach(Employee::getAll() as $employee){ 
+            <?php $nEmployeesAssigned = 0;
+                foreach(Employee::getAll() as $employee){ 
                 $assigned = $employee->isAssignedToTask($id);
+                if($assigned) $nEmployeesAssigned++;
             ?>
                 <tr class="<?php echo ($assigned ? "success" : "danger"); ?>" default="<?php echo ($assigned ? "success" : "danger"); ?>">
                     <?php if($user->isAdmin()){ ?>
@@ -295,12 +300,33 @@
     </div>
     <div class="col-md-3">
     <!-- Number of tasks -->
-        <div class="n-Tasks">
-            <span class="n-tasks-number"><?php echo count($tasks); ?></span>
-            <strong>Task<?php if(count($tasks) == 1)
+        <div class="n-Projects summary summary-1">
+            <span class="summary-number"><?php echo count($purchases); ?></span>
+            <strong>Purchase<?php if(count($purchases) == 1)
                                      echo '';
                                   else
                                      echo 's'; ?>
+             </strong>
+        </div>
+        <div class="n-Projects summary summary-2">
+            <span class="summary-number"><?php echo count($permits);?></span>
+            <strong>Permit<?php if(count($permits) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
+        <div class="n-Projects summary summary-3">
+            <span class="summary-number"><?php echo count($task->employees); ?></span>
+            <strong>Employee<?php if($nEmployeesAssigned== 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?> Assigned
+             </strong>
+        </div>
+        <div class="n-Projects summary summary-4">
+            <span class="summary-number"><?php echo money_format('%i ',$task->actualCost); ?></span>
+            <strong>Total Cost So Far
              </strong>
         </div>
     <!-- total costs with projects -->

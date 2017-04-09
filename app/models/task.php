@@ -3,9 +3,9 @@
 require_once 'employee.php';
 
 class Task{
-    var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase;
+    var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost;
 
-    function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase){
+    function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost){
         $this->id = $id; 
         $this->name = $name; 
         $this->estTime = $estTime; 
@@ -16,7 +16,7 @@ class Task{
         $this->projectId = $projectId; 
         $this->employees = $employees;
         $this->phase = $phase;
-        
+        $this->actualCost = $actualCost;
     }
 
     public static function getAll($projectId) {
@@ -43,7 +43,8 @@ class Task{
         $projectId = $row['projectId'];
         $employees = Task::getEmployeesForTask($id); 
         $phase = $row['phase'];
-        return new Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase);
+        $actualCost = $row['actualCost'];
+        return new Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost);
     }
 
     public static function getEmployeesForTask($id) {
