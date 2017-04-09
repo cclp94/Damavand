@@ -1,16 +1,42 @@
 INSERT INTO Address (civicNumber, street, city, province, country, postalCode)
 VALUES (855, 'Rocky Cape', 'Rockland', 'Prince Edward Island', 'Canada', 'C2C-7M5'), (6231, 'Easy Meadow', 'Seascape', 'Prince Edward Island', 'Canada', 'C3V-5V9'), (874, 'Harvest Apple Vista', 'Winter Beach', 'Saskatchewan', 'Canada', 'S8X-2S9'
 	), (3720, 'Burning Hollow', 'Neely', 'Alberta', 'Canada', 'T8G-3K8'), (7674, 'Hidden Robin Route', 'Mott', 'Prince Edward Island', 'Canada', 'C9T-3A4'), (2245, 'Gentle Timber Mount', 'Cocalico House', 'Saskatchewan', 'Canada', 'S4M-2R9'
-	), (1152, 'Dusty Path', 'Bramblewood', 'Yukon', 'Y0N-0H3', 'Canada', 'CA'), (5863, 'Cotton Nectar Farms', 'Catchall', 'Quebec', 'Canada', 'J7I-3H3'), (960, 'Sunny Terrace', 'Piper', 'Quebec', 'Canada', 'G8Q-4K4'
+	), (1152, 'Dusty Path', 'Bramblewood', 'Yukon', 'Canada', 'Y0N-0H3'), (5863, 'Cotton Nectar Farms', 'Catchall', 'Quebec', 'Canada', 'J7I-3H3'), (960, 'Sunny Terrace', 'Piper', 'Quebec', 'Canada', 'G8Q-4K4'
 	), (8768, 'Misty View', 'Thornbrook', 'Britsh Columbia', 'Canada', 'V7Q-5A6'), (3692, 'Noble Point', 'Pennsville', 'Nunavut', 'Canada', 'X7X-9U7'), (8158, 'Jagged Pines', 'Calvary', 'Manitoba', 'Canada', 'R9K-9M8'
 	), (3722, 'Lazy Green', 'Mcnary', 'Ontario', 'Canada', 'M8D-9H3'), (7534, 'Umber Turnabout', 'New Sharon', 'Manitoba', 'Canada', 'R7V-4W7'), (6546, 'Lost Brook Avenue', 'Bruner Crossing', 'New Brunswick', 'Canada', 'E9W-0B1'
 	), (937, 'Pleasant Cloud Glen', 'Bondsville', 'Quebec', 'Canada', 'G2R-6J2'), (1753, 'Middle Abbey', 'Rosemont', 'Nova Scotia', 'Canada', 'B2W-6K6'), (5159, 'Iron Horse Circle', 'Glen', 'Nova Scotia', 'Canada', 'B9Q-1R5'
 	), (2187, 'Silent Dale Manor', 'Big Pine', 'Quebec', 'Canada', 'G4Y-0X2'), (532, 'Round Hickory End', 'Smithfield', 'New Brunswick', 'Canada', 'E2Q-0L3');
 
-INSERT INTO Assigned (taskId, employeeSin, hours)
-VALUES (1, 789172194, 45), (2, 731111008, 59), (3, 816246358, 28), (4, 719071995, 44), (5, 238418911, 57), (6, 537611024, 51), (7, 520323339, 64), (8, 212023980, 12), (9, 212724661, 19
-	), (10, 278466928, 32), (11, 717753201, 23), (12, 610583414, 16), (13, 202605296, 68), (14, 445337145, 65), (15, 522975110, 73), (16, 629076619, 68), (17, 795119915, 56), (19, 412569594, 75
-	), (20, 597248715, 39), (21, 697086514, 62);
+INSERT INTO Users (userName, password, permission)
+VALUES
+('abugg','e10adc3949ba59abbe56e057f20f883e','manager'),
+('mcahn','e10adc3949ba59abbe56e057f20f883e','client'),
+('rcolon','e10adc3949ba59abbe56e057f20f883e','client'),
+('dhanneman','e10adc3949ba59abbe56e057f20f883e','client'),
+('lschuck','e10adc3949ba59abbe56e057f20f883e','manager'),
+('cmork','e10adc3949ba59abbe56e057f20f883e','client'),
+('eshankles','e10adc3949ba59abbe56e057f20f883e','client'),
+('areinbold','e10adc3949ba59abbe56e057f20f883e','client'),
+('tboland','e10adc3949ba59abbe56e057f20f883e','client'),
+('rsmiddy','e10adc3949ba59abbe56e057f20f883e','manager'),
+('ytatro','e10adc3949ba59abbe56e057f20f883e','client'),
+('ztheroux','e10adc3949ba59abbe56e057f20f883e','client'),
+('ddepasquale','e10adc3949ba59abbe56e057f20f883e','manager'),
+('glozoya','e10adc3949ba59abbe56e057f20f883e','client'),
+('esale','e10adc3949ba59abbe56e057f20f883e','client'),
+('thenrich','e10adc3949ba59abbe56e057f20f883e','manager'),
+('calbanese','e10adc3949ba59abbe56e057f20f883e','client'),
+('mbirkland','e10adc3949ba59abbe56e057f20f883e','manager'),
+('ndunagan','e10adc3949ba59abbe56e057f20f883e','client'),
+('wvalencia','e10adc3949ba59abbe56e057f20f883e','client'),
+('etea','e10adc3949ba59abbe56e057f20f883e','manager'),
+('d','8fa14cdd754f91cc6554c9e71929cce7','client'),
+('doop','0421008445828ceb46f496700a5fa65e','manager'),
+('manager001','63a9f0ea7bb98050796b649e85481845','manager'),
+('Morbd','f6122c971aeb03476bf01623b09ddfd4','client'),
+('m_scarn','fb1592ab779892c75f3cced71f723599','client'),
+('poop','bf363ce8083469f99ec5e028e25ecee0','client'),
+('USER','7a95bf926a0333f57705aeac07a362a2','client');
 
 INSERT INTO Client (name, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName)
 VALUES
@@ -34,31 +60,129 @@ VALUES
 ('autogen','(950) 204-4549',18,'Modesta Birkland','(317) 349-9023',18,'mbirkland'),
 ('plazio','(262) 136-1265',19,'Nathalie Dunagan','(549) 272-0422',19,'ndunagan'),
 ('tavu','(697) 289-4376',20,'Williams Valencia','(449) 171-1053',20,'wvalencia'),
-('octonoodle','(708) 490-0358',20,'Ema Tea','(915) 222-6281',20,'etea');
+('octonoodle','(708) 490-0358',20,'Ema Tea','(915) 222-6281',20,'etea'),
+('Dunder Mifflin','(555) 555-5555',9,'Michael Scott','(123) 456-7890',9,'m_scarn');
 
-INSERT INTO Employee (sin, name, title, wage)
+INSERT INTO Employee (sin, name, title)
 VALUES
-(769350193,'Kristy Willis','Product Optimization Coordinator',16.5),
-(579673803,'Mario Logan','Senior Paradigm Specialist',67.40),
-(709838588,'Lucille Owen','Investor Data Technician',24.60),
-(270784917,'Erica Sherman','Principal Functionality Officer',45.20),
-(577895133,'Carmen Vega','Corporate Accountability Developer',33.10),
-(588952503,'Vera Goodman','Global Paradigm Orchestrator',44.60),
-(417912161,'Israel Davis','Product Usability Analyst',42.80),
-(386878327,'Krystal Bass','Product Quality Producer',51.90),
-(628290323,'Lorena Harvey','Legacy Directives Orchestrator',45.00),
-(345488155,'Kathleen Hill','Customer Response Agent',17.00),
-(487085417,'Melissa Bryant','Direct Accountability Manager',43.00),
-(638754355,'Frederick Ballard','Human Data Executive',48.00),
-(401046938,'Sheila Tucker','Product Metrics Coordinator',46.40),
-(433537996,'Francis Martinez','Dynamic Metrics Assistant',42.50),
-(241366385,'Woodrow Jensen','National Paradigm Director',30.60),
-(591526192,'Ignacio Dixon','National Research Manager',56.80),
-(479888573,'Darren Fitzgerald','Direct Marketing Designer',20.70),
-(338501523,'Forrest Bush','Chief Markets Associate',53.40),
-(280638262,'Susan Thornton','District Accountability Engineer',22.30),
-(224334295,'Lydia Hicks','Internal Brand Officer',29.40),
-(544383505,'Annie Burke','Chief Applications Planner',22.50);
+(789172194,'Kristy Willis','Product Optimization Coordinator'),
+(731111008,'Mario Logan','Senior Paradigm Specialist'),
+(816246358,'Lucille Owen','Investor Data Technician'),
+(719071995,'Erica Sherman','Principal Functionality Officer'),
+(238418911,'Carmen Vega','Corporate Accountability Developer'),
+(537611024,'Vera Goodman','Global Paradigm Orchestrator'),
+(520323339,'Israel Davis','Product Usability Analyst'),
+(212023980,'Krystal Bass','Product Quality Producer'),
+(212724661,'Lorena Harvey','Legacy Directives Orchestrator'),
+(278466928,'Kathleen Hill','Customer Response Agent'),
+(717753201,'Melissa Bryant','Direct Accountability Manager'),
+(610583414,'Frederick Ballard','Human Data Executive'),
+(202605296,'Sheila Tucker','Product Metrics Coordinator'),
+(445337145,'Francis Martinez','Dynamic Metrics Assistant'),
+(522975110,'Woodrow Jensen','National Paradigm Director'),
+(629076619,'Ignacio Dixon','National Research Manager'),
+(795119915,'Darren Fitzgerald','Direct Marketing Designer'),
+(412569594,'Forrest Bush','Chief Markets Associate'),
+(597248715,'Susan Thornton','District Accountability Engineer'),
+(697086514,'Lydia Hicks','Internal Brand Officer'),
+(123123123,'Annie Burke','Chief Applications Planner'),
+(9999999999,'Dwight Schrute','Assistant to the Regional Manager');
+
+INSERT INTO Project (name,startDate,endDate,deadLine,budget,clientId,supervisorSin)
+VALUES
+('Project-1','2007-06-08','2017-04-04','2020-09-11',10000,1,789172194),
+('Project-2','2007-06-08',null,'2019-05-11',10000,2,731111008),
+('Project-3','2007-06-08','2017-04-04','2018-01-11',10000,3,816246358),
+('Project-4','2007-06-08',null,'2020-03-11',10000,4,719071995),
+('Project-5','2007-06-08','2017-04-04','2021-12-11',10000,5,238418911),
+('Project-6','2007-06-08',null,'2021-01-11',10000,6,9999999999),
+('Project-7','2007-06-08',null,'2022-02-11',10000,7,520323339),
+('Project-8','2007-06-08','2017-04-04','2023-03-11',10000,8,9999999999),
+('Project-9','2007-06-08',null,'2024-04-11',10000,9,212724661),
+('Project-10','2007-06-08',null,'2021-12-11',10000,10,9999999999),
+('Project-11','2007-06-08',null,'2023-06-11',10000,11,717753201),
+('Project-12','2007-06-08','2017-04-04','2024-04-11',10000,12,610583414),
+('Project-13','2007-06-08',null,'2029-09-11',10000,13,9999999999),
+('Project-14','2007-06-08',null,'2021-10-11',10000,14,445337145),
+('Project-15','2007-06-08','2017-04-04','2025-04-11',10000,15,9999999999),
+('Project-16','2007-06-08',null,'2026-06-11',10000,16,629076619),
+('Project-17','2007-06-08','2017-04-04','2024-03-11',10000,17,795119915),
+('Project-18','2007-06-08',null,'2021-01-11',10000,18,412569594),
+('Project-19','2007-06-08',null,'2023-05-11',10000,19,597248715),
+('Project-20','2007-06-08',null,'2024-04-11',10000,20,697086514),
+('Project-21','2007-06-08','2017-04-04','2026-06-11',10000,21,9999999999);
+
+
+INSERT INTO Task (name,phase, estimatedTime, estimatedCost, startDate, endDate, description, projectId)
+VALUES
+('build',1,20,1000,'2007-08-08','2010-01-12','building',1),
+('repair',1,10,1500,'2007-08-08','2010-01-12','building',2),
+('modify',2,40,200,'2007-08-08','2010-01-12','building',3),
+('build',4,200,900,'2007-08-08','2010-01-12','building',4),
+('repair',1,10,1000,'2007-08-08','2010-01-12','building',5),
+('build',1,30,1500,'2007-08-08','2010-01-12','building',6),
+('modify',1,200,100,'2007-08-08','2010-01-12','building',7),
+('build',2,25,160,'2007-08-08','2010-01-12','building',8),
+('build',1,20,160,'2007-08-08','2010-01-12','building',9),
+('modify',1,90,260,'2007-08-08','2010-01-12','building',10),
+('build',1,20,2100,'2007-08-08','2010-01-12','building',11),
+('repair',1,20,2260,'2007-08-08','2010-01-12','building',12),
+('build',3,75,1230,'2007-08-08','2010-01-12','building',13),
+('build',1,20,1492,'2007-08-08','2010-01-12','building',14),
+('modify',1,36,3050,'2007-08-08','2010-01-12','building',15),
+('build',1,20,1200,'2007-08-08','2010-01-12','building',16),
+('build',4,14,1350,'2007-08-08','2010-01-12','building',17),
+('modify',1,20,2600,'2007-08-08','2010-01-12','building',18),
+('build',1,16,450,'2007-08-08','2010-01-12','building',19),
+('repair',2,20,921,'2007-08-08','2010-01-12','building',20),
+('modify',1,175,1100,'2007-08-08','2010-01-12','building',21);
+
+INSERT INTO Assigned (taskId, employeeSin, hours, wage)
+VALUES 
+(1, 789172194, 45, 20), 
+(2, 731111008, 59, 20), 
+(3, 816246358, 28, 20), 
+(4, 719071995, 44, 20), 
+(5, 238418911, 57, 20), 
+(6, 537611024, 51, 20), 
+(7, 520323339, 64, 20), 
+(8, 212023980, 12, 20), 
+(9, 212724661, 19, 20), 
+(10, 278466928, 32, 50), 
+(11, 717753201, 23, 50), 
+(12, 610583414, 16, 50), 
+(13, 202605296, 68, 50), 
+(14, 445337145, 65, 50), 
+(15, 522975110, 73, 50), 
+(16, 629076619, 68, 50), 
+(17, 795119915, 56, 50), 
+(19, 412569594, 75, 50), 
+(20, 597248715, 39, 50), 
+(21, 697086514, 62, 50);
+
+INSERT INTO Purchase (taskId,item, quantity, unitType, purchaseDate, deliveryDate, supplierName, price, amountOwed)
+VALUES
+(1,'wood',150,'unit','2007-06-08','2008-08-08','ACME',10000,price),
+(2,'wood',250,'unit','2007-10-08','2008-08-08','KL',10000,price),
+(3,'concrete',350,'unit','2007-12-08','2008-08-08','LMO',10000,price),
+(4,'steel',450,'unit','2007-11-08','2009-08-08','AC',10000,price),
+(5,'steel',50,'unit','2007-10-08','2009-08-08','ACDC',10000,price),
+(6,'wood',150,'unit','2007-12-08','2009-08-08','Rolling',10000,price),
+(7,'wood',50,'unit','2007-06-08','2009-08-08','WHAT',10000,price),
+(8,'wood',150,'unit','2007-06-08','2009-08-08','Company',10000,price),
+(9,'steel',650,'unit','2008-01-08','2009-08-08','Big Biz',10000,price),
+(10,'wood',450,'unit','2008-04-08','2009-08-08','Supp',10000,price),
+(11,'concrete',650,'unit','2008-03-08','2009-08-08','Sup It',10000,price),
+(12,'wood',250,'unit','2008-02-08','2009-08-08','Yes!',10000,price),
+(13,'steel',10,'unit','2008-05-08','2009-08-08','More Money',15000,price),
+(14,'wood',50,'unit','2008-06-08','2009-08-08','Do it!',15000,price),
+(15,'wood',10,'unit','2008-08-08','2009-08-08','Buy Now!',15000,price),
+(16,'steel',20,'unit','2008-09-08','2009-08-08','Concord',15000,price),
+(17,'concrete',530,'unit','2008-03-08','2009-08-08','Macgillian',15000,price),
+(18,'steel',30,'unit','2008-06-08','2009-08-08','Norum',15000,price),
+(19,'wood',40,'unit','2008-01-08','2009-08-08','NBO',15000,price),
+(20,'steel',6,'unit','2008-03-08','2009-08-08','SAQ',15000,price),
+(21,'wires',1000,'unit','2008-04-08','2009-08-08','Hydro',15000,price);
 
 INSERT INTO Payments (purchaseId, date, amount)
 VALUES
@@ -84,7 +208,6 @@ VALUES
 (20,'2016-10-16',1737),
 (21,'2016-10-11',1727);
 
-
 INSERT INTO Permits (taskId,type, dateValidStart, dateValidEnd,cost)
 VALUES
 (1,'building','2007-06-08','2018-04-20',1500.00),
@@ -107,105 +230,4 @@ VALUES
 (18,'building','2010-04-29','2018-12-04',1560.00),
 (19,'building','2010-06-03','2018-12-18',1740.00),
 (20,'building','2010-08-19','2018-12-24',1600.00),
-(221,'building','2010-12-22','2018-09-05',2400.00);
-
-INSERT INTO Project (name,startDate,endDate,deadLine,budget,clientId,supervisorSin)
-VALUES
-('Project-1','2007-06-08','2017-04-04','2020-09-11',10000,1,789172194),
-('Project-2','2007-06-08','','2019-05-11',10000,2,731111008),
-('Project-3','2007-06-08','2017-04-04','2018-01-11',10000,3,816246358),
-('Project-4','2007-06-08','','2020-03-11',10000,4,719071995),
-('Project-5','2007-06-08','2017-04-04','2021-12-11',10000,5,238418911),
-('Project-6','2007-06-08','','2021-01-11',10000,6,537611024),
-('Project-7','2007-06-08','','2022-02-11',10000,7,520323339),
-('Project-8','2007-06-08','2017-04-04','2023-03-11',10000,8,212023980),
-('Project-9','2007-06-08','','2024-04-11',10000,9,212724661),
-('Project-10','2007-06-08','','2021-12-11',10000,10,278466928),
-('Project-11','2007-06-08','','2023-06-11',10000,11,717753201),
-('Project-12','2007-06-08','2017-04-04','2024-04-11',10000,12,610583414),
-('Project-13','2007-06-08','','2029-09-11',10000,13,202605296),
-('Project-14','2007-06-08','','2021-10-11',10000,14,445337145),
-('Project-15','2007-06-08','2017-04-04','2025-04-11',10000,15,522975110),
-('Project-16','2007-06-08','','2026-06-11',10000,16,629076619),
-('Project-17','2007-06-08','2017-04-04','2024-03-11',10000,17,795119915),
-('Project-18','2007-06-08','','2021-01-11',10000,18,412569594),
-('Project-19','2007-06-08','','2023-05-11',10000,19,597248715),
-('Project-20','2007-06-08','','2024-04-11',10000,20,697086514),
-('Project-21','2007-06-08','2017-04-04','2026-06-11',10000,21,697086514);
-
-
-INSERT INTO Purchase (taskId,item, quantity, unitType, purchaseDate, deliveryDate, supplierName, price, amountOwed)
-VALUES
-(1,'wood',150,'2007-06-08','2008-08-08','ACME',10000,9221),
-(2,'wood',250,'2007-10-08','2008-08-08','KL',10000,8611),
-(3,'concrete',350,'2007-12-08','2008-08-08','LMO',10000,8488),
-(4,'steel',450,'2007-11-08','2009-08-08','AC',10000,9527),
-(5,'steel',50,'2007-10-08','2009-08-08','ACDC',10000,8204),
-(6,'wood',150,'2007-12-08','2009-08-08','Rolling',10000,8000),
-(7,'wood',50,'2007-06-08','2009-08-08','WHAT',10000,8167),
-(8,'wood',150,'2007-06-08','2009-08-08','Company',10000,9121),
-(9,'steel',650,'2008-01-08','2009-08-08','Big Biz',10000,9501),
-(10,'wood',450,'2008-04-08','2009-08-08','Supp',10000,9752),
-(11,'concrete',650,'2008-03-08','2009-08-08','Sup It',10000,8861),
-(12,'wood',250,'2008-02-08','2009-08-08','Yes!',10000,9611),
-(13,'steel',10,'2008-05-08','2009-08-08','More Money',15000,14413),
-(14,'wood',50,'2008-06-08','2009-08-08','Do it!',15000,14093),
-(15,'wood',10,'2008-08-08','2009-08-08','Buy Now!',15000,14739),
-(16,'steel',20,'2008-09-08','2009-08-08','Concord',15000,14216),
-(17,'concrete',530,'2008-03-08','2009-08-08','Macgillian',15000,14790),
-(18,'steel',30,'2008-06-08','2009-08-08','Norum',15000,14618),
-(19,'wood',40,'2008-01-08','2009-08-08','NBO',15000,14613),
-(20,'steel',6,'2008-03-08','2009-08-08','SAQ',15000,13263),
-(21,'wires',1000,'2008-04-08','2009-08-08','Hydro',15000,13273);
-
-
-
-INSERT INTO Task (name,phase, estimateTime, estimatedCost, actualCost, startDate, endDate, description, projectId)
-VALUES
-('build',1,20,1000,1200,'2007-08-08','2010-01-12','building',1),
-('repair',1,10,1500,1200,'2007-08-08','2010-01-12','building',2),
-('modify',2,40,200,400,'2007-08-08','2010-01-12','building',3),
-('build',4,200,900,1200,'2007-08-08','2010-01-12','building',4),
-('repair',1,10,1000,1200,'2007-08-08','2010-01-12','building',5),
-('build',1,30,1500,1200,'2007-08-08','2010-01-12','building',6),
-('modify',1,200,100,75,'2007-08-08','2010-01-12','building',7),
-('build',2,25,160,300,'2007-08-08','2010-01-12','building',8),
-('build',1,20,160,80,'2007-08-08','2010-01-12','building',9),
-('modify',1,90,260,300,'2007-08-08','2010-01-12','building',10),
-('build',1,20,2100,1900,'2007-08-08','2010-01-12','building',11),
-('repair',1,20,2260,2000,'2007-08-08','2010-01-12','building',12),
-('build',3,75,1230,1000,'2007-08-08','2010-01-12','building',13),
-('build',1,20,1492,1700,'2007-08-08','2010-01-12','building',14),
-('modify',1,36,3050,3200,'2007-08-08','2010-01-12','building',15),
-('build',1,20,1200,1130,'2007-08-08','2010-01-12','building',16),
-('build',4,14,1350,1400,'2007-08-08','2010-01-12','building',17),
-('modify',1,20,2600,2700'2007-08-08','2010-01-12','building',18),
-('build',1,16,450,200,'2007-08-08','2010-01-12','building',19),
-('repair',2,20,921,750,'2007-08-08','2010-01-12','building',20),
-('modify',1,175,1100,900,'2007-08-08','2010-01-12','building',21);
-
-
-INSERT INTO Users (userName, password, permission)
-VALUES
-('abugg','e10adc3949ba59abbe56e057f20f883e','manager'),
-('mcahn','e10adc3949ba59abbe56e057f20f883e','client'),
-('rcolon','e10adc3949ba59abbe56e057f20f883e','client'),
-('dhanneman','e10adc3949ba59abbe56e057f20f883e','client'),
-('lschuck','e10adc3949ba59abbe56e057f20f883e','manager'),
-('cmork','e10adc3949ba59abbe56e057f20f883e','client'),
-('eshankles','e10adc3949ba59abbe56e057f20f883e','client'),
-('areinbold','e10adc3949ba59abbe56e057f20f883e','client'),
-('tboland','e10adc3949ba59abbe56e057f20f883e','client'),
-('rsmiddy','e10adc3949ba59abbe56e057f20f883e','manager'),
-('ytatro','e10adc3949ba59abbe56e057f20f883e','client'),
-('ztheroux','e10adc3949ba59abbe56e057f20f883e','client'),
-('ddepasquale','e10adc3949ba59abbe56e057f20f883e','manager'),
-('glozoya','e10adc3949ba59abbe56e057f20f883e','client'),
-('esale','e10adc3949ba59abbe56e057f20f883e','client'),
-('thenrich','e10adc3949ba59abbe56e057f20f883e','manager'),
-('calbanese','e10adc3949ba59abbe56e057f20f883e','client'),
-('mbirkland','e10adc3949ba59abbe56e057f20f883e','manager'),
-('ndunagan','e10adc3949ba59abbe56e057f20f883e','client'),
-('wvalencia','e10adc3949ba59abbe56e057f20f883e','client'),
-('etea','e10adc3949ba59abbe56e057f20f883e','manager');
-
+(21,'building','2010-12-22','2018-09-05',2400.00);
