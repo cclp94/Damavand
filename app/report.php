@@ -5,12 +5,15 @@ require_once 'connection.php';
 date_default_timezone_set("America/Montreal");
 $startDate = DateTime::createFromFormat('Y-m-d', $project->startDate);
 $deadline = DateTime::createFromFormat('Y-m-d', $project->deadline);
+$endDate = DateTime::createFromFormat('Y-m-d', $project->endDate);
 $currentDate = DateTime::createFromFormat('Y-m-d', date("Y-m-d"));
+$earliest = ($endDate != NULL && $endDate->format('Y-m-d') < $currentDate->format('Y-m-d')) ? $endDate : $currentDate;
+$actualTimeElapsed = $earliest->diff($startDate)->days;
 $estimatedTimeElapsed = $project->estimatedTimeOfCompleteTasks();
-$actualTimeElapsed = $currentDate->diff($startDate)->days;
 $timeRatio = safeDivide($estimatedTimeElapsed, $actualTimeElapsed);
 $phase = $project->latestPhase();
-$timeRemaining = $deadline->diff($currentDate)->days;
+$actualTimeRemaining = $project->complete() ? 0 : $deadline->diff($currentDate)->days;
+$estimatedTimeRemaining = $project->estimatedTimeRemaining();
 $estimatedCost = $project->estimatedCostOfCompleteTasks();
 $actualCost = $project->actualCostOfCompleteTasks();
 $costRatio = safeDivide($estimatedCost, $actualCost);
@@ -19,10 +22,43 @@ $completeTaskCount = count($completeTasks);
 $taskCount = count($tasks);
 ?>
 
-<table class="table" style="width:50%">
+<table class="table" style="width:100%"
     <tr>
         <td colspan="3" align="center"> <h1> <?php echo $project->name ?> </h1> </td>
     </tr>
+    <tr>
+        <td colspan="3" align="center"> <?php echo $project->complete() ? "Complete" : "In Progress"; ?> </td>
+    </tr>>
+<tr>
+<td>
+<table class="table" style="width:100%">
+    <tr>
+        <td> Start Date </td>
+        <td colspan="2"> <?php echo $startDate->format('Y-m-d') ?> </td>
+    </tr>
+
+<?php
+if ($project->complete()) {
+?>
+
+    <tr>
+        <td> End Date </td>
+        <td colspan="2"> <?php echo $endDate->format('Y-m-d'); ?> </td>
+    </tr>
+
+<?php
+} else {
+?>
+
+    <tr>
+        <td> Deadline </td>
+        <td colspan="2"> <?php echo $deadline->format('Y-m-d'); ?> </td>
+    </tr>
+
+<?php
+}
+?>
+
     <tr>
         <td>Phase</td>
         <td colspan="2"> <?php echo $phase ?> </td>
@@ -34,33 +70,48 @@ $taskCount = count($tasks);
     </tr>
     <tr>
         <td>Actual Time Elapsed</td>
-        <td colspan="2"> <?php echo $actualTimeElapsed ?> days</td>
+        <td colspan="2"> <?php echo $actualTimeElapsed . " day" . ($actualTimeElapsed == 1 ? "" : "s"); ?> </td>
     </tr>
     <tr>
-        <td>Estimated Time To This Point</td>
-        <td colspan="2"> <?php echo $estimatedTimeElapsed ?> days</td>
+        <td>Estimated Time Elapsed</td>
+        <td colspan="2"> <?php echo $estimatedTimeElapsed . " day" . ($estimatedTimeElapsed == 1 ? "" : "s"); ?> </td>
     </tr>
     <tr>
         <td>Progress Ratio</td>
         <td> <?php echo percentString($timeRatio) ?> </td>
         <td> <?php echo progressColourString($timeRatio) ?> </td>
     </tr>
+
+<?php
+if (!$project->complete()) {
+?>
+
     <tr>
-        <td>Days Remaining To Deadline</td>
-        <td> <?php echo $deadline->format('Y-m-d') ?> </td>
-        <td> <?php echo $timeRemaining ?> </td>
+        <td> Actual Days Remaining </td>
+        <td colspan="2"> <?php echo $actualTimeRemaining ?> </td>
     </tr>
     <tr>
-        <td>Estimated Time For Completion</td>
-        <td></td>
-        <td></td>
+        <td> Estimated Days to Completion </td>
+        <td colspan="2"> <?php echo $estimatedTimeRemaining ?> </td>
     </tr>
+
+<?php
+}
+?>
+
+</table>
+</td>
+<td>
+<table class="table" style="width:100%">
     <tr>
         <td>Project Cost <br> (Estimated / Actual)</td>
         <td> <?php echo $estimatedCost ?> / <?php echo $actualCost ?> </td>
         <td> <?php echo percentString($costRatio) ?> </td>
         <td> <?php echo costColourString($costRatio) ?> </td>
     </tr>
+</table>
+</td>
+</tr>
 </table>
 
 <?php

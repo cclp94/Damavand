@@ -44,7 +44,7 @@ require_once 'client.php';
                 return Project::getAll();
 
             $conn = connect();
-            $sql = "SELECT Project.* "
+            $sql = "SELECT Project "
                   ."FROM Project, Employee, Client, (SELECT clientId FROM Client, Users WHERE Client.userName = '$user->userName' AND Client.userName = Users.userName) as userClient "
                   ."WHERE (userClient.clientId = Project.clientId) AND (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
                   ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
@@ -111,7 +111,7 @@ require_once 'client.php';
 
         function completeTasks() {
             $conn = connect();
-            $sql = "Select * from Task order by phase where endDate is not null and projectID = $this->projectId;";
+            $sql = "Select * from Task where endDate is not null and projectID = $this->projectId order by phase;";
             $result = $conn->query($sql);
             if (!$result) {
                 echo "Error " . $sql . ": ". $conn->error;
@@ -126,6 +126,16 @@ require_once 'client.php';
         function estimatedTimeOfCompleteTasks() {
             $conn = connect();
             $sql = "Select sum(estimatedTime) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+            $result = $conn->query($sql);
+            if (!$result) {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+            return (int) $result;
+        }
+
+        function estimatedTimeRemaining() {
+            $conn = connect();
+            $sql = "Select sum(estimatedTime) from Task group by endDate, projectID having endDate is null and projectID = $this->projectId;";
             $result = $conn->query($sql);
             if (!$result) {
                 echo "Error " . $sql . ": ". $conn->error;
@@ -165,6 +175,10 @@ require_once 'client.php';
                 echo "Error " . $sql . ": ". $conn->error;
             }
             return (int) $result;
+        }
+
+        function complete() {
+            return $this->endDate != NULL;
         }
     }
 ?>
