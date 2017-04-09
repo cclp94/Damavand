@@ -30,6 +30,8 @@
         $task = Task::getTaskById($purchase->taskId);
         $project = Project::getProject($task->projectId);
     }
+
+    $hasPermission = $user->isAdmin();
 ?>
 
 <ol class="breadcrumb">
@@ -47,9 +49,11 @@
             <li role="presentation">
                 <a href="#payments" aria-controls="task-list" role="tab" data-toggle="tab">Payments</a>
             </li>
-            <li role="presentation">
-                <a href="#make-payment" aria-controls="task-list" role="tab" data-toggle="tab">Make Payment</a>
-            </li>
+            <?php if($hasPermission){ ?>
+                <li role="presentation">
+                    <a href="#make-payment" aria-controls="task-list" role="tab" data-toggle="tab">Make Payment</a>
+                </li>
+            <?php } ?>
         </ul>
         <!-- Tab panes -->
     <div class="tab-content">
@@ -59,46 +63,48 @@
                 <div class="form-group">
                     <label for="item" class="col-sm-2 control-label text-center">Item</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="item" placeholder="Item" value="<?php echo $purchase->item; ?>" required/></br>
+                        <input class="form-control" type="text" name="item" placeholder="Item" value="<?php echo $purchase->item; ?>" required <?php if(!$hasPermission) echo "readonly"; ?>/></br>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="quantity" class="col-sm-2 control-label text-center">Quantity</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="number" name="quantity" placeholder="1" value="<?php echo $purchase->quantity; ?>" required/></br>
+                        <input class="form-control" type="number" name="quantity" placeholder="1" value="<?php echo $purchase->quantity; ?>" required <?php if(!$hasPermission) echo "readonly"; ?>/></br>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="unitType" class="col-sm-2 control-label text-center">Unit Type</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="unitType" placeholder="Unit Type" value="<?php echo $purchase->unitType; ?>" required/></br>
+                        <input class="form-control" type="text" name="unitType" placeholder="Unit Type" value="<?php echo $purchase->unitType; ?>" required <?php if(!$hasPermission) echo "readonly"; ?>/></br>
                     </div>
                 </div>
             <div class="form-group">
                     <label for="purchaseDate" class="col-sm-2 control-label text-center">Purchase Date</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="date" name="purchaseDate"  placeholder="" value="<?php echo $purchase->purchaseDate; ?>" required/></br>
+                        <input class="form-control" type="date" name="purchaseDate"  placeholder="" value="<?php echo $purchase->purchaseDate; ?>" required <?php if(!$hasPermission) echo "readonly"; ?>/></br>
                     </div>
             </div>
             <div class="form-group">
                     <label for="deliveryDate" class="col-sm-2 control-label text-center">Delivery Date</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="date" name="deliveryDate" value="<?php echo $purchase->deliveryDate; ?>" /></br>
+                        <input class="form-control" type="date" name="deliveryDate" value="<?php echo $purchase->deliveryDate; ?>" <?php if(!$hasPermission) echo "readonly"; ?>/></br>
                     </div>
             </div>
             <div class="form-group">
                     <label for="supplierName" class="col-sm-2 control-label text-center">Supplier Name</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="supplierName" placeholder="Supplier Name" value="<?php echo $purchase->supplierName; ?>" required/></br>
+                        <input class="form-control" type="text" name="supplierName" placeholder="Supplier Name" value="<?php echo $purchase->supplierName; ?>" required <?php if(!$hasPermission) echo "readonly"; ?>/></br>
                     </div>
             </div>
             <div class="form-group">
                     <label for="email" class="col-sm-2 control-label text-center">Price</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="number" name="price" placeholder="100,000" value="<?php echo $purchase->price; ?>" required/></br>
+                        <input class="form-control" type="number" name="price" placeholder="100,000" value="<?php echo $purchase->price; ?>" required <?php if(!$hasPermission) echo "readonly"; ?>/></br>
                     </div>
             </div>
-                <input  class="btn btn-primary btn-lg center-block" type="submit" name="edit-purchase" value="Edit"/>
+                <?php if($hasPermission){?>
+                    <input  class="btn btn-primary btn-lg center-block" type="submit" name="edit-purchase" value="Edit"/>
+                <?php } ?>
             </form>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="payments">
