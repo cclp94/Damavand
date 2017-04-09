@@ -3,9 +3,9 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/app/connection.php';
 require_once 'employee.php';
 require_once 'client.php';
     class Project{
-        var $projectID, $name, $supervisor, $startDate, $endDate,$deadline, $budget, $client;
+        var $projectId, $name, $supervisor, $startDate, $endDate,$deadline, $budget, $client;
 
-        function Project($id, $name, $supervisor, $startDate, $endDate, $deadline, $budget, $client){
+        function Project($id, $name, $supervisor, $startDate, $endDate, $deadline, $budget, $client) {
             $this->projectId = $id;
             $this->name = $name;
             $this->supervisor = $supervisor;
@@ -16,8 +16,8 @@ require_once 'client.php';
             $this->client = $client;
         }
 
-        public static function fromRow($row){
-            $id = $row['projectId'];
+        public static function fromRow($row) {
+            $id = (int) $row['projectId'];
             $name = $row['name'];
             $startDate = $row['startDate'];
             $endDate = $row['endDate'];
@@ -71,7 +71,7 @@ require_once 'client.php';
             return new Project($id, "Mock Project", new Employee(), "2017-01-01", null, "2017-10-04", 100000, new Client());
         }
 
-        function put(){
+        function put() {
             $conn = connect();
             $sql = "INSERT INTO Project(name, startDate, deadline, budget, clientId, supervisorSin) VALUE('"
                    . $this->name . "', '"
@@ -111,8 +111,11 @@ require_once 'client.php';
 
         function completeTasks() {
             $conn = connect();
-            $sql = "Select * from Task order by phase where endDate is not null and projectID = $projectID;";
+            $sql = "Select * from Task order by phase where endDate is not null and projectID = $this->projectId;";
             $result = $conn->query($sql);
+            if (!$result) {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
             $tasks = [];
             while ($result && $row = $result->fetch_assoc()) {
                 $tasks[] = Task::fromRow($row);
@@ -122,30 +125,46 @@ require_once 'client.php';
 
         function estimatedTimeOfCompleteTasks() {
             $conn = connect();
-            $sql = "Select sum(estimatedTime) from Task having endDate is not null and projectID = $projectID;";
-            return (int) $conn->query($sql);
+            $sql = "Select sum(estimatedTime) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+            $result = $conn->query($sql);
+            if (!$result) {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+            return (int) $result;
         }
 
         function estimatedCostOfCompleteTasks() {
             $conn = connect();
-            $sql = "Select sum(estimatedCost) from Task having endDate is not null and projectID = $projectID;";
-            return (float) $conn->query($sql);
+            $sql = "Select sum(estimatedCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+            $result = $conn->query($sql);
+            if (!$result) {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+            return (float) $result;
         }
 
         function actualCostOfCompleteTasks() {
             $conn = connect();
-            $sql = "Select sum(actualCost) from Task having endDate is not null and projectID = $projectID;";
-            return (float) $conn->query($sql);
+            $sql = "Select sum(actualCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+            $result = $conn->query($sql);
+            if (!$result) {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+            return (float) $result;
         }
 
         function latestPhase() {
-        $conn = connect();
-        $sql = "SELECT MAX(phase) ".
-               "FROM Task ".
-               "GROUP BY projectID, endDate ".
-               "HAVING projectID = $projectID ".
-               "AND endDate IS NOT NULL;";
-        return (int) $conn->query($sql);
+            $conn = connect();
+            $sql = "SELECT MAX(phase) ".
+                "FROM Task ".
+                "GROUP BY projectID, endDate ".
+                "HAVING projectID = $this->projectId ".
+                "AND endDate IS NOT NULL;";
+            $result = $conn->query($sql);
+            if (!$result) {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+            return (int) $result;
         }
     }
 ?>

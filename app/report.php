@@ -1,33 +1,67 @@
 <?php
 require_once 'connection.php';
 
+// Data collection
 date_default_timezone_set("America/Montreal");
 $startDate = DateTime::createFromFormat('Y-m-d', $project->startDate);
 $deadline = DateTime::createFromFormat('Y-m-d', $project->deadline);
 $currentDate = DateTime::createFromFormat('Y-m-d', date("Y-m-d"));
-$estimatedTime = $project->estimatedTimeOfCompleteTasks();
-$actualTime = $currentDate->diff($startDate)->days;
-$timeRatio = $actualTime == 0 ? INF : $estimatedTime / $actualTime;
-
+$estimatedTimeElapsed = $project->estimatedTimeOfCompleteTasks();
+$actualTimeElapsed = $currentDate->diff($startDate)->days;
+$timeRatio = safeDivide($estimatedTimeElapsed, $actualTimeElapsed);
 $phase = $project->latestPhase();
-
 $timeRemaining = $deadline->diff($currentDate)->days;
-
 $estimatedCost = $project->estimatedCostOfCompleteTasks();
 $actualCost = $project->actualCostOfCompleteTasks();
-$costRatio = $actualCost == 0 ? INF : $estimatedCost / $actualCost;
-
+$costRatio = safeDivide($estimatedCost, $actualCost);
 $completeTasks = $project->completeTasks();
 $completeTaskCount = count($completeTasks);
-
 $taskCount = count($tasks);
-//echo $project->name . "<br>";
-echo "Phase: $phase <br>";
-echo "Tasks Complete: $completeTaskCount / $taskCount <br>";
-echo "Project Progress Ratio (Estimated / Actual): $estimatedTime / $actualTime (" . percentString($timeRatio) . ") " . progressColourString($timeRatio) . "<br>";
-echo "Time Remaining Before Deadline ". $deadline->format('Y-m-d') . ": $timeRemaining <br>";
-echo "Project Cost (Estimated / Actual): $estimatedCost / $actualCost (" . percentString($costRatio) . ") " . costColourString($costRatio) . "<br>";
 ?>
+
+<table class="table" style="width:50%">
+    <tr>
+        <td colspan="3" align="center"> <h1> <?php echo $project->name ?> </h1> </td>
+    </tr>
+    <tr>
+        <td>Phase</td>
+        <td colspan="2"> <?php echo $phase ?> </td>
+    </tr>
+    <tr>
+        <td>Tasks Complete</td>
+        <td> <?php echo $completeTaskCount ?> / <?php echo $taskCount ?> </td>
+        <td> <?php echo percentString(safeDivide($completeTaskCount, $taskCount)) ?> </td>
+    </tr>
+    <tr>
+        <td>Actual Time Elapsed</td>
+        <td colspan="2"> <?php echo $actualTimeElapsed ?> days</td>
+    </tr>
+    <tr>
+        <td>Estimated Time To This Point</td>
+        <td colspan="2"> <?php echo $estimatedTimeElapsed ?> days</td>
+    </tr>
+    <tr>
+        <td>Progress Ratio</td>
+        <td> <?php echo percentString($timeRatio) ?> </td>
+        <td> <?php echo progressColourString($timeRatio) ?> </td>
+    </tr>
+    <tr>
+        <td>Days Remaining To Deadline</td>
+        <td> <?php echo $deadline->format('Y-m-d') ?> </td>
+        <td> <?php echo $timeRemaining ?> </td>
+    </tr>
+    <tr>
+        <td>Estimated Time For Completion</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Project Cost <br> (Estimated / Actual)</td>
+        <td> <?php echo $estimatedCost ?> / <?php echo $actualCost ?> </td>
+        <td> <?php echo percentString($costRatio) ?> </td>
+        <td> <?php echo costColourString($costRatio) ?> </td>
+    </tr>
+</table>
 
 <?php
 
@@ -87,6 +121,10 @@ function progressColourString($ratio) {
 
 function percentString($x) {
     return round($x * 100).'%';
+}
+
+function safeDivide($x, $y) {
+    return $y == 0 ? INF : $x / $y;
 }
 
 ?>
