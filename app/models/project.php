@@ -227,7 +227,7 @@ class Project {
         if($user->isAdmin())
             $sql = "SELECT SUM(budget) FROM Project;";
         else
-            $sql = "SELECT SUM(budget) FROM Project WHERE clientId = ".Client::getClientFromUser($user->userName)->clientId.";";
+            $sql = "SELECT SUM(budget) FROM Project WHERE clientId = ".Client::getClientFromUser($user->userName)->id.";";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         return (float) $row['SUM(budget)'];
