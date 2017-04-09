@@ -46,7 +46,7 @@ class Project {
             return Project::getAll();
 
         $conn = connect();
-        $sql = "SELECT Project "
+        $sql = "SELECT Project.* "
                 ."FROM Project, Employee, Client, (SELECT clientId FROM Client, Users WHERE Client.userName = '$user->userName' AND Client.userName = Users.userName) as userClient "
                 ."WHERE (userClient.clientId = Project.clientId) AND (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
                 ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
@@ -186,7 +186,7 @@ class Project {
 
     function estimatedCostOfCompleteTasks() {
         $conn = connect();
-        $sql = "Select sum(estimatedCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+        $sql = "Select SUM(estimatedCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
             echo "Error " . $sql . ": ". $conn->error;
@@ -196,12 +196,13 @@ class Project {
 
     function actualCostOfCompleteTasks() {
         $conn = connect();
-        $sql = "Select sum(actualCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+        $sql = "Select SUM(actualCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
             echo "Error " . $sql . ": ". $conn->error;
         }
-        return (float) $result;
+        $row = $result->fetch_assoc();
+        return (float) $row['SUM(actualCost)'];
     }
 
     function latestPhase() {
