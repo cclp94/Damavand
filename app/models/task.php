@@ -12,8 +12,9 @@
             $this->startDate = $startDate; 
             $this->endDate = $endDate; 
             $this->projectId = $projectId; 
-            $this->employees = $employees; 
+            $this->employees = $employees;
             $this->phase = $phase;
+            
         }
 
         public static function getAll($projectId){
