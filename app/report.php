@@ -22,96 +22,103 @@ $completeTaskCount = count($completeTasks);
 $taskCount = count($tasks);
 ?>
 
-<table class="table" style="width:100%"
+<table class="table" style="width:100%">
     <tr>
         <td colspan="3" align="center"> <h1> <?php echo $project->name ?> </h1> </td>
     </tr>
     <tr>
         <td colspan="3" align="center"> <?php echo $project->complete() ? "Complete" : "In Progress"; ?> </td>
-    </tr>>
-<tr>
-<td>
-<table class="table" style="width:100%">
-    <tr>
-        <td> Start Date </td>
-        <td colspan="2"> <?php echo $startDate->format('Y-m-d') ?> </td>
     </tr>
+    <tr>
+        <td>
+            <table class="table" style="width:100%">
+                <tr>
+                    <td> Start Date </td>
+                    <td colspan="2"> <?php echo $startDate->format('Y-m-d') ?> </td>
+                </tr>
 
-<?php
-if ($project->complete()) {
-?>
+                <?php
+                if ($project->complete()) {
+                ?>
 
-    <tr>
-        <td> End Date </td>
-        <td colspan="2"> <?php echo $endDate->format('Y-m-d'); ?> </td>
-    </tr>
+                <tr>
+                    <td> End Date </td>
+                    <td colspan="2"> <?php echo $endDate->format('Y-m-d'); ?> </td>
+                </tr>
 
-<?php
-} else {
-?>
+                <?php
+                } else {
+                ?>
 
-    <tr>
-        <td> Deadline </td>
-        <td colspan="2"> <?php echo $deadline->format('Y-m-d'); ?> </td>
-    </tr>
+                <tr>
+                    <td> Deadline </td>
+                    <td colspan="2"> <?php echo $deadline->format('Y-m-d'); ?> </td>
+                </tr>
 
-<?php
-}
-?>
+                <?php
+                }
+                ?>
 
-    <tr>
-        <td>Phase</td>
-        <td colspan="2"> <?php echo $phase ?> </td>
-    </tr>
-    <tr>
-        <td>Tasks Complete</td>
-        <td> <?php echo $completeTaskCount ?> / <?php echo $taskCount ?> </td>
-        <td> <?php echo percentString(safeDivide($completeTaskCount, $taskCount)) ?> </td>
-    </tr>
-    <tr>
-        <td>Actual Time Elapsed</td>
-        <td colspan="2"> <?php echo $actualTimeElapsed . " day" . ($actualTimeElapsed == 1 ? "" : "s"); ?> </td>
-    </tr>
-    <tr>
-        <td>Estimated Time Elapsed</td>
-        <td colspan="2"> <?php echo $estimatedTimeElapsed . " day" . ($estimatedTimeElapsed == 1 ? "" : "s"); ?> </td>
-    </tr>
-    <tr>
-        <td>Progress Ratio</td>
-        <td> <?php echo percentString($timeRatio) ?> </td>
-        <td> <?php echo progressColourString($timeRatio) ?> </td>
-    </tr>
+                <tr>
+                    <td>Phase</td>
+                    <td colspan="2"> <?php echo $phase ?> </td>
+                </tr>
+                <tr>
+                    <td>Tasks Complete</td>
+                    <td> <?php echo $completeTaskCount ?> / <?php echo $taskCount ?> </td>
+                    <td> <?php echo percentString(safeDivide($completeTaskCount, $taskCount)) ?> </td>
+                </tr>
+                <tr>
+                    <td>Actual Time Elapsed</td>
+                    <td colspan="2"> <?php echo $actualTimeElapsed . " day" . ($actualTimeElapsed == 1 ? "" : "s"); ?> </td>
+                </tr>
+                <tr>
+                    <td>Estimated Time Elapsed</td>
+                    <td colspan="2"> <?php echo $estimatedTimeElapsed . " day" . ($estimatedTimeElapsed == 1 ? "" : "s"); ?> </td>
+                </tr>
+                <tr>
+                    <td>Progress Ratio</td>
+                    <td> <?php echo percentString($timeRatio) ?> </td>
+                    <td> <?php echo progressColourString($timeRatio) ?> </td>
+                </tr>
 
-<?php
-if (!$project->complete()) {
-?>
+                <?php
+                if (!$project->complete()) {
+                ?>
 
-    <tr>
-        <td> Actual Days Remaining </td>
-        <td colspan="2"> <?php echo $actualTimeRemaining ?> </td>
-    </tr>
-    <tr>
-        <td> Estimated Days to Completion </td>
-        <td colspan="2"> <?php echo $estimatedTimeRemaining ?> </td>
-    </tr>
+                <tr>
+                    <td> Actual Days Remaining </td>
+                    <td colspan="2"> <?php echo $actualTimeRemaining ?> </td>
+                </tr>
+                <tr>
+                    <td> Estimated Days to Completion </td>
+                    <td colspan="2"> <?php echo $estimatedTimeRemaining ?> </td>
+                </tr>
 
-<?php
-}
-?>
+                <?php
+                }
+                ?>
 
-</table>
-</td>
-<td>
-<table class="table" style="width:100%">
-    <tr>
-        <td>Project Cost <br> (Estimated / Actual)</td>
-        <td> <?php echo $estimatedCost ?> / <?php echo $actualCost ?> </td>
-        <td> <?php echo percentString($costRatio) ?> </td>
-        <td> <?php echo costColourString($costRatio) ?> </td>
+            </table>
+        </td>
+        <td>
+            <table class="table" style="width:100%">
+                <tr>
+                    <td> Actual Cost </td>
+                    <td colspan="2"> $<?php echo number_format($actualCost, 2); ?> </td>
+                </tr>
+                <tr>
+                    <td> Estimated Cost </td>
+                    <td colspan="2"> $<?php echo number_format($estimatedCost, 2); ?> </td>
+                </tr>
+                <tr>
+                    <td> Cost Ratio </td>
+                    <td> <?php echo percentString($costRatio) ?> </td>
+                    <td> <?php echo costColourString($costRatio) ?> </td>
+                </tr>
+            </table>
+        </td>
     </tr>
-</table>
-</td>
-</tr>
 </table>
 
 <?php
