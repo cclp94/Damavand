@@ -1,33 +1,130 @@
 <?php
 require_once 'connection.php';
 
+// Data collection
 date_default_timezone_set("America/Montreal");
 $startDate = DateTime::createFromFormat('Y-m-d', $project->startDate);
 $deadline = DateTime::createFromFormat('Y-m-d', $project->deadline);
+$endDate = DateTime::createFromFormat('Y-m-d', $project->endDate);
 $currentDate = DateTime::createFromFormat('Y-m-d', date("Y-m-d"));
-$estimatedTime = $project->estimatedTimeOfCompleteTasks();
-$actualTime = $currentDate->diff($startDate)->days;
-$timeRatio = $actualTime == 0 ? INF : $estimatedTime / $actualTime;
-
+$earliest = ($endDate != NULL && $endDate->format('Y-m-d') < $currentDate->format('Y-m-d')) ? $endDate : $currentDate;
+$actualTimeElapsed = $earliest->diff($startDate)->days;
+$estimatedTimeElapsed = $project->estimatedTimeOfCompleteTasks();
+$timeRatio = safeDivide($estimatedTimeElapsed, $actualTimeElapsed);
 $phase = $project->latestPhase();
-
-$timeRemaining = $deadline->diff($currentDate)->days;
-
+$finalPhase = $project->finalPhase();
+$actualTimeRemaining = $project->complete() ? 0 : $deadline->diff($currentDate)->days;
+$estimatedTimeRemaining = $project->estimatedTimeRemaining();
 $estimatedCost = $project->estimatedCostOfCompleteTasks();
 $actualCost = $project->actualCostOfCompleteTasks();
-$costRatio = $actualCost == 0 ? INF : $estimatedCost / $actualCost;
-
+$costRatio = safeDivide($estimatedCost, $actualCost);
 $completeTasks = $project->completeTasks();
 $completeTaskCount = count($completeTasks);
-
 $taskCount = count($tasks);
-//echo $project->name . "<br>";
-echo "Phase: $phase <br>";
-echo "Tasks Complete: $completeTaskCount / $taskCount <br>";
-echo "Project Progress Ratio (Estimated / Actual): $estimatedTime / $actualTime (" . percentString($timeRatio) . ") " . progressColourString($timeRatio) . "<br>";
-echo "Time Remaining Before Deadline ". $deadline->format('Y-m-d') . ": $timeRemaining <br>";
-echo "Project Cost (Estimated / Actual): $estimatedCost / $actualCost (" . percentString($costRatio) . ") " . costColourString($costRatio) . "<br>";
 ?>
+
+<table class="table" style="width:100%">
+    <tr>
+        <td colspan = "2" align="center"> <h1> <?php echo $project->name ?> </h1> </td>
+    </tr>
+    <tr>
+        <td colspan = "2" align="center"> <?php echo $project->complete() ? "Complete" : "In Progress"; ?> </td>
+    </tr>
+    <tr>
+        <td align="center"> Client - <a href="clients.php?id=<?php echo $project->client->id ?>"> <?php echo $project->client->name ?> </a> </td>
+        <td align="center"> Supervisor - <a href="employees.php?SIN=<?php echo $project->supervisor->SIN ?>"> <?php echo $project->supervisor->name ?> </a> </td>
+    </tr>
+    <tr>
+        <td>
+            <table class="table" style="width:100%">
+                <tr>
+                    <td> Start Date </td>
+                    <td colspan="2"> <?php echo $startDate->format('Y-m-d') ?> </td>
+                </tr>
+
+                <?php
+                if ($project->complete()) {
+                ?>
+
+                <tr>
+                    <td> End Date </td>
+                    <td colspan="2"> <?php echo $endDate->format('Y-m-d'); ?> </td>
+                </tr>
+
+                <?php
+                } else {
+                ?>
+
+                <tr>
+                    <td> Deadline </td>
+                    <td colspan="2"> <?php echo $deadline->format('Y-m-d'); ?> </td>
+                </tr>
+
+                <?php
+                }
+                ?>
+
+                <tr>
+                    <td>Phase</td>
+                    <td colspan="2"> <?php echo $phase ?> / <?php echo $finalPhase ?> </td>
+                </tr>
+                <tr>
+                    <td>Tasks Complete</td>
+                    <td> <?php echo $completeTaskCount ?> / <?php echo $taskCount ?> </td>
+                    <td> <?php echo percentString(safeDivide($completeTaskCount, $taskCount)) ?> </td>
+                </tr>
+                <tr>
+                    <td>Actual Time Elapsed</td>
+                    <td colspan="2"> <?php echo $actualTimeElapsed . " day" . ($actualTimeElapsed == 1 ? "" : "s"); ?> </td>
+                </tr>
+                <tr>
+                    <td>Estimated Time Elapsed</td>
+                    <td colspan="2"> <?php echo $estimatedTimeElapsed . " day" . ($estimatedTimeElapsed == 1 ? "" : "s"); ?> </td>
+                </tr>
+                <tr>
+                    <td> Time Ratio </td>
+                    <td> <?php echo percentString($timeRatio) ?> </td>
+                    <td> <?php echo progressColourString($timeRatio) ?> </td>
+                </tr>
+
+                <?php
+                if (!$project->complete()) {
+                ?>
+
+                <tr>
+                    <td> Actual Days Remaining </td>
+                    <td colspan="2"> <?php echo $actualTimeRemaining ?> </td>
+                </tr>
+                <tr>
+                    <td> Estimated Days to Completion </td>
+                    <td colspan="2"> <?php echo $estimatedTimeRemaining ?> </td>
+                </tr>
+
+                <?php
+                }
+                ?>
+
+            </table>
+        </td>
+        <td>
+            <table class="table" style="width:100%">
+                <tr>
+                    <td> Actual Cost </td>
+                    <td colspan="2"> $<?php echo number_format($actualCost, 2); ?> </td>
+                </tr>
+                <tr>
+                    <td> Estimated Cost </td>
+                    <td colspan="2"> $<?php echo number_format($estimatedCost, 2); ?> </td>
+                </tr>
+                <tr>
+                    <td> Cost Ratio </td>
+                    <td> <?php echo percentString($costRatio) ?> </td>
+                    <td> <?php echo costColourString($costRatio) ?> </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
 <?php
 
@@ -87,6 +184,10 @@ function progressColourString($ratio) {
 
 function percentString($x) {
     return round($x * 100).'%';
+}
+
+function safeDivide($x, $y) {
+    return $y == 0 ? INF : $x / $y;
 }
 
 ?>
