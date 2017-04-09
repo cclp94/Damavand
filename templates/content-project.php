@@ -23,7 +23,7 @@
         $phase = $_POST['phase'];
         var_dump($phase);
         $description = $_POST['description'];
-        (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $phase))->put();
+        (new Task($id, $name, $estimatedTime, $estimatedCost, $description, $startDate, $endDate, $projectId, null, $phase, null))->put();
     }
 ?>
 <ol class="breadcrumb">
@@ -172,12 +172,22 @@
     </div>
     <div class="col-md-3">
     <!-- Number of projects -->
-        <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($tasks); ?></span>
-            <strong>Project<?php if(count($tasks) == 1)
+        <div class="n-Projects summary summary-1">
+            <span class="summary-number"><?php echo count($tasks); ?></span>
+            <strong>Task<?php if(count($tasks) == 1)
                                      echo '';
                                   else
                                      echo 's'; ?>
+             </strong>
+        </div>
+        <div class="n-Projects summary summary-2">
+            <span class="summary-number"><?php echo money_format('%i ',$project->totalOwed()); ?></span>
+            <strong>Total Owed
+             </strong>
+        </div>
+        <div class="n-Projects summary summary-3">
+            <span class="summary-number"><?php echo $project->latestPhase(); ?></span>
+            <strong>Current Phase
              </strong>
         </div>
     <!-- total costs with projects -->

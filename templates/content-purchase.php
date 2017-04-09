@@ -3,9 +3,6 @@
     $task = null;
     if(isset($_GET['id'])){
         $id = $_GET['id'];
-        $purchase = Purchase::get($id);
-        $task = Task::getTaskById($purchase->taskId);
-        $project = Project::getProject($task->projectId);
     }
 
     if(isset($_POST['edit-purchase'])){
@@ -25,7 +22,13 @@
     if(isset($_POST['pay'])){
         $date = $_POST['paymentDate'];
         $amount = $_POST['amount'];
-        (new Payment(null, $purchase->id, $date, $amount))->put();
+        (new Payment(null, $id, $date, $amount))->put();
+    }
+
+    if(isset($id)){
+        $purchase = Purchase::get($id);
+        $task = Task::getTaskById($purchase->taskId);
+        $project = Project::getProject($task->projectId);
     }
 ?>
 
@@ -133,12 +136,9 @@
     </div>
     <div class="col-md-3">
     <!-- Number of projects -->
-        <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($tasks); ?></span>
-            <strong>Project<?php if(count($tasks) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
+        <div class="n-Projects summary summary-1">
+            <span class="summary-number"><?php echo money_format('%i ',$purchase->amountOwed); ?></span>
+            <strong>Amount Owed
              </strong>
         </div>
     <!-- total costs with projects -->

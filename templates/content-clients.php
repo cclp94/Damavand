@@ -262,9 +262,9 @@
     </div>
     <div class="col-md-3">
     <!-- Number of employees -->
-        <div class="n-Employees">
-            <span class="n-employeess-number"><?php echo count($employees); ?></span>
-            <strong>Employee<?php if(count($employees) == 1)
+        <div class="n-Projects summary-1 summary">
+            <span class="summary-number"><?php echo count($clients); ?></span>
+            <strong>Client<?php if(count($clients) == 1)
                                      echo '';
                                   else
                                      echo 's'; ?>
