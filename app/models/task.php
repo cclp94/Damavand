@@ -1,11 +1,12 @@
 <?php
 
 require_once 'employee.php';
+require_once 'purchase.php';
 
-class Task{
+class Task {
     var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase;
 
-    function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase){
+    function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase) {
         $this->id = $id; 
         $this->name = $name; 
         $this->estTime = $estTime; 
@@ -16,7 +17,6 @@ class Task{
         $this->projectId = $projectId; 
         $this->employees = $employees;
         $this->phase = $phase;
-        
     }
 
     public static function getAll($projectId) {
@@ -32,7 +32,7 @@ class Task{
         return $tasks;
     }
 
-    public static function fromRow($row){
+    public static function fromRow($row) {
         $id = $row['taskId'];
         $name = $row['name']; 
         $estTime = $row['estimatedTime'];
@@ -43,6 +43,7 @@ class Task{
         $projectId = $row['projectId'];
         $employees = Task::getEmployeesForTask($id); 
         $phase = $row['phase'];
+
         return new Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase);
     }
 
@@ -76,7 +77,7 @@ class Task{
         }
     }
 
-    function update(){
+    function update() {
         $startDate = $this->startDate ? "'$this->startDate'" : "NULL";
         $endDate = $this->endDate ? "'$this->endDate'" : "NULL";
         $sql = "UPDATE Task

@@ -117,18 +117,11 @@ class Project {
     }
 
     function totalOwed() {
-        $conn = connect();
-        $sql = "SELECT SUM(amountOwed)
-                FROM Purchase, Project, Task
-                WHERE Task.projectId = Project.projectId
-                AND Purchase.taskId = Task.taskId
-                AND Project.projectId = $this->projectId;";
-        $result = $conn->query($sql);
-        if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
-        }
-        $row = $result->fetch_assoc();
-        return (float) $row['SUM(amountOwed)'];
+        $total = 0;
+       foreach($this->purchases() as $purchase) {
+            $total += $purchase->amountOwed;
+       }
+       return $total;
     }
 
     function getNumberOfTasks() {
