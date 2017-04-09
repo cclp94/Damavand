@@ -19,12 +19,6 @@
                 <input class="form-control" type="text" name="title" value="<?php echo $employee->title ?>" required/></br>
             </div>
     </div>
-    <div class="form-group">
-            <label for="wage" class="col-sm-2 control-label text-center">Wage</label>
-            <div class="col-sm-10">
-                <input class="form-control" type="number" name="wage" value="<?php echo number_format($employee->wage, 2) ?>" required/></br>
-            </div>
-    </div>
     <div class = "text-center">
         <input class="btn btn-primary btn-lg" type="submit" name="update" value="Update Employee"/>
         <input class="btn btn-primary btn-lg" type="submit" name="delete" value="Delete Employee"/>
