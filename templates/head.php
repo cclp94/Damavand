@@ -14,3 +14,4 @@
 <link rel="icon" 
       type="image/png" 
       href="img/icon.png">
+<?php setlocale(LC_MONETARY, 'en_CA'); ?>
