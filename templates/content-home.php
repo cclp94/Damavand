@@ -103,20 +103,14 @@
         </div>
     <!-- total costs with projects -->
     <div class="n-Projects summary-2 summary">
-            <span class="summary-number"><?php echo count($projects); ?></span>
-            <strong>Project<?php if(count($projects) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
+            <span class="summary-number"><?php echo money_format('%i ',Project::totalBudgetedCost($user)); ?></span>
+            <strong>Total Budgeted Cost
              </strong>
         </div>
 
         <div class="n-Projects summary-3 summary">
-            <span class="summary-number"><?php echo count($projects); ?></span>
-            <strong>Project<?php if(count($projects) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
+            <span class="summary-number"><?php echo money_format('%i ',array_reduce(array_map("getTotalActualCost", $projects), "sum")); ?></span>
+            <strong>Total Actual Cost So Far
              </strong>
         </div>
     </div>
@@ -133,6 +127,16 @@ function showProjectPreviews($user){
         if($project->client) echo '<span class="project-creator"><strong>Client: </strong>'.$project->client->name.'</span>';
         echo '</a></div>';
     }
+}
+
+function sum($carry, $item)
+{
+    $carry += $item;
+    return $carry;
+}
+
+function getTotalActualCost($project){
+    return $project->actualCostOfCompleteTasks();
 }
 
 ?>
