@@ -11,8 +11,8 @@
         foreach($_POST['sins'] as $index => $sin){
             if(Employee::get($sin)->isAssignedToTask($task->id)){
                 $task->updateEmployeeAssignment($sin, $hours[$index], $wages[$index]);
-            }
-            $task->assignEmployee($sin, $hours[$index], $wages[$index]);
+            }else
+                $task->assignEmployee($sin, $hours[$index], $wages[$index]);
         }
     }elseif(isset($_POST['deassign'])){
         foreach($_POST['sins'] as $sin){
