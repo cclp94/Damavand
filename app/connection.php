@@ -12,4 +12,13 @@
 
         return $conn;
     }
+
+    function query($sql) {
+        $conn = connect();
+        $result = $conn->query($sql);
+                if (!$result) {
+            echo "Error " . $sql . ":<br>". $conn->error;
+        }
+        return $result;
+    }
 ?>
