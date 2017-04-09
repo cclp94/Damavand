@@ -17,7 +17,7 @@
         $conn = connect();
         $result = $conn->query($sql);
                 if (!$result) {
-            echo "Error " . $sql . ":<br>". $conn->error;
+            echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
         }
         return $result;
     }
