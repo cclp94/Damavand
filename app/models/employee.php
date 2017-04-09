@@ -2,18 +2,17 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/app/connection.php';
 
     class Employee{
-        var $SIN, $name, $title, $wage;
+        var $SIN, $name, $title;
 
-        function Employee($SIN, $name, $title, $wage){
+        function Employee($SIN, $name, $title){
             $this->SIN = $SIN;
             $this->name = $name;
             $this->title = $title;
-            $this->wage = $wage;
         }
 
         function put() {
             $conn = connect();
-            $sql = "INSERT INTO Employee VALUE($this->SIN, '$this->name', '$this->title', $this->wage);";
+            $sql = "INSERT INTO Employee VALUE($this->SIN, '$this->name', '$this->title');";
             if ($conn->query($sql) == TRUE) {
                 echo "New employee created!";
             } else {
@@ -25,8 +24,7 @@
             $conn = connect();
             $sql = "UPDATE Employee
                     SET name='$this->name',
-                        title='$this->title',
-                        wage=$this->wage 
+                        title='$this->title' 
                     WHERE sin=$this->SIN;";
             if ($conn->query($sql) == TRUE) {
                 echo "Employee updated!";
@@ -82,9 +80,8 @@
             $SIN = $row["sin"];
             $name = $row["name"];
             $title = $row["title"];
-            $wage = $row["wage"];
 
-            return new Employee($SIN, $name, $title, $wage);
+            return new Employee($SIN, $name, $title);
         }
 
         public static function getAllMock() {
@@ -104,7 +101,7 @@
         }
 
         public static function mock() {
-            return new Employee(123456789, "Bort", "Janitor", 15.00);
+            return new Employee(123456789, "Bort", "Janitor");
         }
 
         function isAssignedToTask($taskId){
@@ -112,9 +109,25 @@
             $sql = "SELECT * FROM Assigned WHERE employeeSin = $this->SIN AND taskId = $taskId;";
             $result = $conn->query($sql);
             if($result && $row = $result->fetch_assoc()){
-                return $row['hours'];
+                return Assigned::fromRow($row);
             }
             return null;
+        }
+    }
+
+    class Assigned{
+        var $hours, $wage;
+
+        function Assigned($hours, $wage){
+            $this->hours = $hours;
+            $this->wage = $wage;
+        }
+
+        public static function fromRow($row){
+            $hours = $row['hours'];
+            $wage = $row['wage'];
+
+            return new Assigned($hours, $wage);
         }
     }
 ?>
