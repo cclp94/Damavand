@@ -1,5 +1,7 @@
 <?php
+
 require_once 'connection.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/app/models/assigned.php';
 
 // Data collection
 date_default_timezone_set("America/Montreal");
@@ -114,7 +116,17 @@ $taskCount = count($tasks);
                 </tr>
                 <tr>
                     <td> Actual Cost </td>
-                    <td colspan="2"> $<?php echo number_format($actualCost, 2); ?> </td>
+                    <td colspan="2">
+                        <table class="table" style="width:100%">
+                            <tr>
+                                <td colspan="2"> $<?php echo number_format($actualCost, 2); ?> </td>
+                            </tr>
+                            <tr>
+                                <td> From Wages </td>
+                                <td> $<?php echo number_format($project->totalWage(), 2); ?> </td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
                 <tr>
                     <td> Estimated Cost </td>

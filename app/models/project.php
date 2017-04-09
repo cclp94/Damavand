@@ -4,6 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/app/connection.php';
 require_once 'employee.php';
 require_once 'client.php';
 require_once 'task.php';
+require_once 'assigned.php';
 
 class Project {
     var $projectId, $name, $supervisor, $startDate, $endDate, $deadline, $budget, $client;
@@ -142,6 +143,14 @@ class Project {
         $total = 0;
         foreach ($this->completeTasks() as $task) {
             $total += $task->estTime;
+        }
+        return $total;
+    }
+
+    function totalWage() {
+        $total = 0;
+        foreach ($this->completeTasks() as $task) {
+            $total += $task->totalWage();
         }
         return $total;
     }

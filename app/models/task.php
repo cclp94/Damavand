@@ -2,7 +2,8 @@
 
 require_once 'employee.php';
 require_once 'purchase.php';
-class Task{
+
+class Task {
     var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost;
 
     function Task($id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost){
@@ -115,6 +116,18 @@ class Task{
                 WHERE taskId = $this->id
                 AND employeeSin = $SIN;";
         query($sql);
+    }
+
+    function assigned() {
+        return Assigned::getAllByTask($this->id);
+    }
+
+    function totalWages() {
+        $total = 0;
+        foreach($this->assigned as $assigned) {
+            $total += $assigned->value();
+        }
+        return $total;
     }
     
     function isComplete() {

@@ -3,6 +3,7 @@
     require_once './app/models/user.php';
     require_once "./app/models/project.php";
     require_once "./app/models/task.php";
+
     if(!isset($_SESSION) || !isset($_SESSION['user'])){
         session_unset();
         session_destroy();
