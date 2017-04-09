@@ -93,8 +93,8 @@
     </div>
     <div class="col-md-3">
     <!-- Number of projects -->
-        <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($projects); ?></span>
+        <div class="n-Projects summary-1 summary">
+            <span class="summary-number"><?php echo count($projects); ?></span>
             <strong>Project<?php if(count($projects) == 1)
                                      echo '';
                                   else
@@ -102,6 +102,23 @@
              </strong>
         </div>
     <!-- total costs with projects -->
+    <div class="n-Projects summary-2 summary">
+            <span class="summary-number"><?php echo count($projects); ?></span>
+            <strong>Project<?php if(count($projects) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
+
+        <div class="n-Projects summary-3 summary">
+            <span class="summary-number"><?php echo count($projects); ?></span>
+            <strong>Project<?php if(count($projects) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
     </div>
     
 </div>
