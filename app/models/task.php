@@ -19,10 +19,12 @@ class Task{
         
     }
 
-    public static function getAll($projectId){
-        $conn = connect();
-        $sql = "Select * from Task where projectId = $projectId order by phase;";
-        $result = $conn->query($sql);
+    public static function getAll($projectId) {
+        $sql = "SELECT *
+                FROM Task
+                WHERE projectID = $projectId
+                ORDER BY phase;";
+        $result = query($sql);
         $tasks = [];
         while ($result && $row = $result->fetch_assoc()) {
             $tasks[] = Task::fromRow($row);

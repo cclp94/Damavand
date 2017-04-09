@@ -3,6 +3,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/app/connection.php';
 require_once 'employee.php';
 require_once 'client.php';
+require_once 'task.php';
 
 class Project {
     var $projectId, $name, $supervisor, $startDate, $endDate, $deadline, $budget, $client;
@@ -74,47 +75,35 @@ class Project {
     }
 
     function put() {
-        $conn = connect();
-        $sql = "INSERT INTO Project(name, startDate, deadline, budget, clientId, supervisorSin) VALUE('"
-                . $this->name . "', '"
-                . $this->startDate . "', '"
-                . $this->deadline . "', "
-                . $this->budget
-                . ($this->client != 'none' ? ", ". $this->client  : ", NULL")
-                . ($this->supervisor != 'none'? ", ".$this->supervisor : ", NULL")
-                . ");";
-        if ($conn->query($sql) == TRUE) {
+        $client = $this->client != 'none' ? $this->client : "NULL";
+        $supervisor = $this->supervisor != 'none' ? $this->supervisor : "NULL";
+        $sql = "INSERT INTO Project(name, startDate, deadline, budget, clientId, supervisorSin)
+                VALUE('$this->name', '$this->startDate', '$this->deadline', $this->budget, $client, $supervisor);";
+        $result = query($sql);
+        if ($result == TRUE) {
             echo "New Project created!";
-        } else {
-            echo "Error " . $sql . ": ". $conn->error;
         }
     }
 
     function update() {
-        $conn = connect();
-        $sql = "UPDATE Project"
-        ." SET name = '".$this->name."', startDate = '". $this->startDate . "', deadLine = '". $this->deadline . "', budget = " . $this->budget . ", clientId = " . ($this->client == 'none' ? "NULL" :  $this->client) . ", supervisorSin = ".($this->supervisor == 'none' ? "NULL" :   $this->supervisor). " "
-        ." WHERE projectId = ".$this->projectId.";";
-
-        if ($conn->query($sql) == TRUE) {
+        $client = $this->client == 'none' ? "NULL" : $this->client;
+        $supervisor = $this->supervisor == 'none' ? "NULL" : $this->supervisor;
+        $sql = "UPDATE Project
+                SET name = '$this->name',
+                    startDate = '$this->startDate',
+                    deadLine = '$this->deadline',
+                    budget = $this->budget,
+                    clientId = $client,
+                    supervisorSin = $supervisor
+                WHERE projectId = $this->projectId;";
+        $result = query($sql);
+        if ($result == TRUE) {
             echo "Project updated!";
-        } else {
-            echo "Error " . $sql . ": ". $conn->error;
         }
     }
 
     function tasks() {
-        $conn = connect();
-        $sql = "Select * from Task where projectID = $this->projectId order by phase;";
-        $result = $conn->query($sql);
-        if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
-        }
-        $tasks = [];
-        while ($result && $row = $result->fetch_assoc()) {
-            $tasks[] = Task::fromRow($row);
-        }
-        return $tasks;
+        return Task::getAll($this->projectId);
     }
 
     function purchases() {
@@ -143,11 +132,12 @@ class Project {
     }
 
     function getNumberOfTasks() {
-        $conn = connect();
-        $sql = "Select COUNT(*) from Task where projectId = ".$this->projectId.";";
-        $result = $conn->query($sql);
-        $row = $result->fetch_assoc();
-        return $row['COUNT(*)'];
+        return count($this->tasks());
+        // $conn = connect();
+        // $sql = "Select COUNT(*) from Task where projectId = ".$this->projectId.";";
+        // $result = $conn->query($sql);
+        // $row = $result->fetch_assoc();
+        // return $row['COUNT(*)'];
     }
 
     function completeTasks() {
