@@ -147,10 +147,10 @@ class Project {
         return $total;
     }
 
-    function totalWage() {
+    function totalWages() {
         $total = 0;
         foreach ($this->completeTasks() as $task) {
-            $total += $task->totalWage();
+            $total += $task->totalWages();
         }
         return $total;
     }

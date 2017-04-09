@@ -123,7 +123,7 @@ $taskCount = count($tasks);
                             </tr>
                             <tr>
                                 <td> From Wages </td>
-                                <td> $<?php echo number_format($project->totalWage(), 2); ?> </td>
+                                <td> $<?php echo number_format($project->totalWages(), 2); ?> </td>
                             </tr>
                         </table>
                     </td>

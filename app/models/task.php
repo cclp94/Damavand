@@ -2,6 +2,7 @@
 
 require_once 'employee.php';
 require_once 'purchase.php';
+require_once 'assigned.php';
 
 class Task {
     var $id, $name, $estTime, $estCost, $description, $startDate, $endDate, $projectId, $employees, $phase, $actualCost;
@@ -119,12 +120,12 @@ class Task {
     }
 
     function assigned() {
-        return Assigned::getAllByTask($this->id);
+        return Assignment::getAllByTask($this->id);
     }
 
     function totalWages() {
         $total = 0;
-        foreach($this->assigned as $assigned) {
+        foreach($this->assigned() as $assigned) {
             $total += $assigned->value();
         }
         return $total;
