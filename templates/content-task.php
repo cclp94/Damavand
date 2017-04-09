@@ -89,22 +89,10 @@
                 </li>
             <?php }?>
         </ul>
-    </div>
-    <div class="col-md-3">
-    <!-- Number of tasks -->
-        <div class="n-Tasks">
-            <span class="n-tasks-number"><?php echo count($tasks); ?></span>
-            <strong>Task<?php if(count($tasks) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
-             </strong>
-        </div>
-    <!-- total costs with projects -->
-    </div>
-    <!-- Tab panes -->
+
+        <!-- Tab panes -->
     <!--======================List Purchases===============-->
-    <div class="tab-content col-md-9">
+    <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="purchase-list">
             <?php
                 if(count(Purchase::getAll($task->id)) > 0){
@@ -304,6 +292,20 @@
            <? } ?>
         </div>
     </div>
+    </div>
+    <div class="col-md-3">
+    <!-- Number of tasks -->
+        <div class="n-Tasks">
+            <span class="n-tasks-number"><?php echo count($tasks); ?></span>
+            <strong>Task<?php if(count($tasks) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
+    <!-- total costs with projects -->
+    </div>
+    
 </div>
 
 <?php

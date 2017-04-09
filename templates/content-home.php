@@ -23,21 +23,8 @@
                 </li>
             <?php }?>
         </ul>
-    </div>
-    <div class="col-md-3">
-    <!-- Number of projects -->
-        <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($projects); ?></span>
-            <strong>Project<?php if(count($projects) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
-             </strong>
-        </div>
-    <!-- total costs with projects -->
-    </div>
-    <!-- Tab panes -->
-    <div class="tab-content col-md-9">
+        <!-- Tab panes -->
+    <div class="tab-content col-md-12">
         <div role="tabpanel" class="tab-pane fade in active" id="project-list">
             <?php
                 if(count($projects) > 0){
@@ -103,6 +90,20 @@
             </form>
         </div>
     </div>
+    </div>
+    <div class="col-md-3">
+    <!-- Number of projects -->
+        <div class="n-Projects">
+            <span class="n-projects-number"><?php echo count($projects); ?></span>
+            <strong>Project<?php if(count($projects) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
+    <!-- total costs with projects -->
+    </div>
+    
 </div>
 
 <?php

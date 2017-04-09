@@ -36,20 +36,8 @@
                 <a href="#employee-add" aria-controls="employee-add" role="tab" data-toggle="tab">Add Employee</a>
             </li>
         </ul>
-    </div>
-    <div class="col-md-3">
-    <!-- Number of employees -->
-        <div class="n-Employees">
-            <span class="n-employeess-number"><?php echo count($employees); ?></span>
-            <strong>Employee<?php if(count($employees) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
-             </strong>
-        </div>
-    </div>
-    <!-- Tab panes -->
-    <div class="tab-content col-md-9">
+        <!-- Tab panes -->
+    <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="employee-list">
             <?php
                 if (isset($employee)) {
@@ -83,6 +71,19 @@
             </form>
         </div>
     </div>
+    </div>
+    <div class="col-md-3">
+    <!-- Number of employees -->
+        <div class="n-Employees">
+            <span class="n-employeess-number"><?php echo count($employees); ?></span>
+            <strong>Employee<?php if(count($employees) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
+    </div>
+    
 </div>
 
 <?php
