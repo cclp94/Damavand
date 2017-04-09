@@ -133,23 +133,14 @@ class Project {
 
     function getNumberOfTasks() {
         return count($this->tasks());
-        // $conn = connect();
-        // $sql = "Select COUNT(*) from Task where projectId = ".$this->projectId.";";
-        // $result = $conn->query($sql);
-        // $row = $result->fetch_assoc();
-        // return $row['COUNT(*)'];
     }
 
     function completeTasks() {
-        $conn = connect();
-        $sql = "Select * from Task where endDate is not null and projectID = $this->projectId order by phase;";
-        $result = $conn->query($sql);
-        if (!$result) {
-            echo "Error " . $sql . ": ". $conn->error;
-        }
         $tasks = [];
-        while ($result && $row = $result->fetch_assoc()) {
-            $tasks[] = Task::fromRow($row);
+        foreach($this->tasks() as $task) {
+            if ($task->isComplete()) {
+                $tasks[] = $task;
+            }
         }
         return $tasks;
     }
