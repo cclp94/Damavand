@@ -32,22 +32,26 @@
         $contactPostal = $_POST['contactPostal'];
         $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactProvince, $contactPostal);
 
-        $username = $_POST['username'];
+        if(isset($_POST['newusername']))
+            $username = $_POST['newusername'];
+        else
+            $username = $_POST['username'];
         $password = $_POST['password'];
         
         $newUser = new User($username, $password, 'client');
         
         $newClient= new Client($id, $name, $address, $phoneNumber, $contactNumber, $contactName, $contactAddress, $username);
-        
+
         if ($_POST['add']) {
             if($username && $password)
                 $newUser->put();
             $newClient->put();
         }elseif($_POST['update']){
-            if(!$client->userName && $username && $password)
+            if(isset($_POST['newusername']) && $username && $password)
                 $newUser->put();
-            elseif($client->userName && $password)
-                User::updatePassword($client->userName, $password);
+            elseif($newClient->userName && $password){
+                User::updatePassword($newClient->userName, $password);
+            }
             $newClient->update($client);
         }
     }
@@ -132,7 +136,7 @@
     <label class="col-sm-12 control-label">User Name</label><br/>
                 <div class="form-group">
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="username" placeholder="<?php echo $client->userName; ?>" value = "<?php echo $client->userName; ?>"/><br/>
+                        <input class="form-control" type="text" name="<?php echo ($client->userName ? "" : "new") ?>username" placeholder="<?php echo $client->userName; ?>" value = "<?php echo $client->userName; ?>"<?php echo ($client->userName ? "readonly" : "") ?>/><br/>
                     </div>
                 </div>
     <label class="col-sm-12 control-label">Change Password</label><br/>
