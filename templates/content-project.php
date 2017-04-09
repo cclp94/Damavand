@@ -48,21 +48,8 @@
                 <a href="#report" aria-controls="report" role="tab" data-toggle="tab">Report</a>
             </li>
         </ul>
-    </div>
-    <div class="col-md-3">
-    <!-- Number of projects -->
-        <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($tasks); ?></span>
-            <strong>Project<?php if(count($tasks) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
-             </strong>
-        </div>
-    <!-- total costs with projects -->
-    </div>
-    <!-- Tab panes -->
-    <div class="tab-content col-md-9">
+        <!-- Tab panes -->
+    <div class="tab-content col-md-12">
         <div role="tabpanel" class="tab-pane fade in active" id="task-list">
             <?php
                 if(isset($tasks) && count($tasks) > 0){
@@ -182,6 +169,20 @@
             <?php include './app/report.php'; ?>
         </div>
     </div>
+    </div>
+    <div class="col-md-3">
+    <!-- Number of projects -->
+        <div class="n-Projects">
+            <span class="n-projects-number"><?php echo count($tasks); ?></span>
+            <strong>Project<?php if(count($tasks) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
+    <!-- total costs with projects -->
+    </div>
+    
 </div>
 
 <?php

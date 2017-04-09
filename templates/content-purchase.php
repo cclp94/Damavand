@@ -48,21 +48,8 @@
                 <a href="#make-payment" aria-controls="task-list" role="tab" data-toggle="tab">Make Payment</a>
             </li>
         </ul>
-    </div>
-    <div class="col-md-3">
-    <!-- Number of projects -->
-        <div class="n-Projects">
-            <span class="n-projects-number"><?php echo count($tasks); ?></span>
-            <strong>Project<?php if(count($tasks) == 1)
-                                     echo '';
-                                  else
-                                     echo 's'; ?>
-             </strong>
-        </div>
-    <!-- total costs with projects -->
-    </div>
-    <!-- Tab panes -->
-    <div class="tab-content col-md-9">
+        <!-- Tab panes -->
+    <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="info">
             <form method="post" action="./purchase-view.php?id=<?php echo $purchase->id;?>">
                 <input type="hidden" name = "taskId" value="<?php echo $task->id; ?>" />
@@ -143,6 +130,20 @@
             </form>
         </div>
     </div>
+    </div>
+    <div class="col-md-3">
+    <!-- Number of projects -->
+        <div class="n-Projects">
+            <span class="n-projects-number"><?php echo count($tasks); ?></span>
+            <strong>Project<?php if(count($tasks) == 1)
+                                     echo '';
+                                  else
+                                     echo 's'; ?>
+             </strong>
+        </div>
+    <!-- total costs with projects -->
+    </div>
+    
 </div>
 
 <?php
