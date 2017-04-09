@@ -44,7 +44,7 @@ require_once 'client.php';
                 return Project::getAll();
 
             $conn = connect();
-            $sql = "SELECT Project "
+            $sql = "SELECT Project.* "
                   ."FROM Project, Employee, Client, (SELECT clientId FROM Client, Users WHERE Client.userName = '$user->userName' AND Client.userName = Users.userName) as userClient "
                   ."WHERE (userClient.clientId = Project.clientId) AND (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
                   ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
