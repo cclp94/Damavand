@@ -41,4 +41,10 @@ $(document).ready(function(){
         }
         $('#textbox1').val($(that).is(':checked'));    
     }
+
+
+    $('#create-user').change(function() {
+        $('#username').attr('disabled',!this.checked)
+        $('#userPass').attr('disabled',!this.checked)
+    });
 });

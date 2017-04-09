@@ -33,12 +33,21 @@
         $contactAddress = new Address($contactId, $contactCivic, $contactStreet, $contactCity, $contactCountry, $contactProvince, $contactPostal);
 
         $username = $_POST['username'];
-
+        $password = $_POST['password'];
+        
+        $newUser = new User($username, $password, 'client');
+        
         $newClient= new Client($id, $name, $address, $phoneNumber, $contactNumber, $contactName, $contactAddress, $username);
         
         if ($_POST['add']) {
+            if($username && $password)
+                $newUser->put();
             $newClient->put();
         }elseif($_POST['update']){
+            if(!$client->userName && $username && $password)
+                $newUser->put();
+            elseif($client->userName && $password)
+                User::updatePassword($client->userName, $password);
             $newClient->update($client);
         }
     }
@@ -126,6 +135,12 @@
                         <input class="form-control" type="text" name="username" placeholder="<?php echo $client->userName; ?>" value = "<?php echo $client->userName; ?>"/><br/>
                     </div>
                 </div>
+    <label class="col-sm-12 control-label">Change Password</label><br/>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <input class="form-control" type="password" name="password"/><br/>
+            </div>
+        </div>
     <input  class="btn btn-primary btn-lg center-block" type="submit" name="update" value="Update Client"/>
 </form>
 
@@ -234,10 +249,18 @@
                             <input class="form-control" type="text" name="contactPostal" placeholder="Postal Code" required/></br>
                         </div>
                 </div>
-                <label class="col-sm-12 control-label">User Name</label><br/>
+                <h2>System Portal User</h2>
+                <input type="checkbox" id="create-user"/> Create user for client.</br>
                 <div class="form-group">
+                <label class="col-sm-2 control-label">User Name</label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="username" placeholder="User Name"/><br/>
+                        <input class="form-control" type="text" id="username" name="username" placeholder="User Name" disabled/><br/>
+                    </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-2 control-label">Password</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="password" id="userPass" name="password" placeholder="Password" disabled/><br/>
                     </div>
                 </div>
                 <input  class="btn btn-primary btn-lg center-block" name="add" type="submit" value="Save"/>
@@ -260,6 +283,7 @@ function displayClientTable(){
            <th>Business Address</th>
            <th>Contact Phone</th>
            <th>Contact Address</th>
+           <th></th>
     </tr><?php
     foreach(Client::getAll() as $client){
         echo '<tr>';
@@ -268,6 +292,7 @@ function displayClientTable(){
             echo tableCell($client->address->toString());
             echo tableCell($client->phoneNumber);
             echo tableCell($client->contactAddress->toString());
+            echo tableCell('<a href="#" ><i class="fa fa-times" aria-hidden="true"></i></a>');
         echo '</tr>';
     }
     echo '</table>';

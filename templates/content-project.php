@@ -122,7 +122,7 @@
             </form>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="project-edit">
-            <form method="post" action="./project-view.php">
+            <form method="post" action="./project-view.php?id=<?php echo $project->projectId;?>">
                 <input type="hidden" name="edit" />
                 <input type="hidden" name = "projectId" value="<?php echo $project->projectId; ?>" />
                 <div class="form-group">

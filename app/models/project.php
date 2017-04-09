@@ -18,24 +18,19 @@ require_once 'client.php';
 
         public static function fromRow($row){
             $id = $row['projectId'];
-            $name = $row['projectName'];
+            $name = $row['name'];
             $startDate = $row['startDate'];
             $endDate = $row['endDate'];
             $deadline = $row['deadLine'];
             $budget = $row['budget'];
-            $row['name'] = $row['clientName'];
-            $client = Client::fromRow($row);
-            $row['name'] = $row['supervisorName'];
-            $supervisor = Employee::fromRow($row);
+            $client = ($row['clientId'] ? Client::getClient($row['clientId']) : null);
+            $supervisor = ($row['supervisorSin'] ? Employee::get($row['supervisorSin']) : null);
             return new Project($id, $name, $supervisor, $startDate, $endDate, $deadline, $budget, $client);
         }
 
         public static function getAll(){
             $conn = connect();
-            $sql = "SELECT projectId, Project.name as projectName, startDate, endDate, deadLine, budget, sin, Employee.name as supervisorName, title, wage, Client.clientId, Client.name as clientName, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName "
-                  ."FROM Project, Employee, Client "
-                  ."WHERE (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
-                  ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
+            $sql = "SELECT * from Project;";
             $result = $conn->query($sql);
             $projects = [];
             while ($result && $row = $result->fetch_assoc()) {
@@ -49,7 +44,7 @@ require_once 'client.php';
                 return Project::getAll();
 
             $conn = connect();
-            $sql = "SELECT projectId, Project.name as projectName, startDate, endDate, deadLine, budget, sin, Employee.name as supervisorName, title, wage, Client.clientId, Client.name as clientName, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName "
+            $sql = "SELECT Project "
                   ."FROM Project, Employee, Client, (SELECT clientId FROM Client, Users WHERE Client.userName = '$user->userName' AND Client.userName = Users.userName) as userClient "
                   ."WHERE (userClient.clientId = Project.clientId) AND (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
                   ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
@@ -63,10 +58,9 @@ require_once 'client.php';
 
         public static function getProject($id){
             $conn = connect();
-            $sql = "SELECT projectId, Project.name as projectName, startDate, endDate, deadLine, budget, sin, Employee.name as supervisorName, title, wage, Client.clientId, Client.name as clientName, businessPhoneNumber, businessAddressId, contactName, contactPhoneNumber, contactAddressId, userName "
-                  ."FROM Project, Employee, Client "
-                  ."WHERE Project.projectId = ". $id ." AND (Project.clientId = Client.clientId OR Project.clientId is NULL) AND "
-                  ."(Project.supervisorSin = Employee.sin OR Project.supervisorSin is NULL);";
+            $sql = "SELECT * "
+                  ."FROM Project "
+                  ."WHERE Project.projectId = ". $id .";";
             $result = $conn->query($sql);
             $row = $result->fetch_assoc();
             return Project::fromRow($row);
@@ -97,7 +91,7 @@ require_once 'client.php';
         function update(){
             $conn = connect();
             $sql = "UPDATE Project"
-            ." SET name = '".$this->name."', startDate = '". $this->startDate . "', deadLine = '". $this->deadline . "', budget = " . $this->budget . ", clientId = " . $this->client . ", supervisorSin = ". $this->supervisor . " "
+            ." SET name = '".$this->name."', startDate = '". $this->startDate . "', deadLine = '". $this->deadline . "', budget = " . $this->budget . ", clientId = " . ($this->client == 'none' ? "NULL" :  $this->client) . ", supervisorSin = ".($this->supervisor == 'none' ? "NULL" :   $this->supervisor). " "
             ." WHERE projectId = ".$this->projectId.";";
 
             if ($conn->query($sql) == TRUE) {

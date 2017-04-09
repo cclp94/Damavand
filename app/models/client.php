@@ -34,6 +34,26 @@
             return Client::fromRow($row);
         }
 
+        public static function getClientFromUser($username){
+            $conn = connect();
+            $sql = "SELECT clientId, name, businessPhoneNumber, Address1.addressId as businessAId,"
+                  ." Address1.civicNumber as businessCivic, Address1.street as businessStreet,"
+                  ." Address1.city as businessCity, Address1.country as businessCountry,"
+                  ." Address1.province as businessProvince, Address1.postalCode as businessPostal,"
+                  ."contactName, contactPhoneNumber, Address2.addressId as contactId,"
+                  ." Address2.civicNumber as contactCivic, Address2.street as contactStreet,"
+                  ." Address2.city as contactCity, Address2.country as contactCountry,"
+                  ." Address2.province as contactProvince, Address2.postalCode as contactPostal, userName "
+                  ."FROM Client, Address as Address1, Address as Address2 "
+                  ."WHERE Client.userName = '$username' AND Client.businessAddressId = Address1.addressId AND "
+                  ."Client.contactAddressId = Address2.addressId ;";
+
+            $result = $conn->query($sql);
+
+            $row = $result->fetch_assoc();
+            return Client::fromRow($row);
+        }
+
         public static function fromRow($row){
             $clientId = $row["clientId"];
             $name = $row["name"];
@@ -116,7 +136,7 @@
                    . $addressId . "', '"
                    . $this->contactName . "', '"
                    . $this->contactNumber . "', "
-                   . $contactAddressId . ", '$this->userName');";
+                   . $contactAddressId . ", ".($this->userName ? "'".$this->userName."'" : "NULL").");";
             if ($conn->query($sql) == TRUE) {
                 echo "New Client created!";
             } else {
@@ -138,7 +158,7 @@
             $conn->query($sql);
 
             $sql = "UPDATE Client"
-            ." SET name = '".$this->name."', businessPhoneNumber = '". $this->phoneNumber . "', contactName = '". $this->contactName . "', contactPhoneNumber = '" . $this->contactNumber . "', userName = '" . $this->userName . "'"
+            ." SET name = '".$this->name."', businessPhoneNumber = '". $this->phoneNumber . "', contactName = '". $this->contactName . "', contactPhoneNumber = '" . $this->contactNumber . ($this->userName ? "', userName = '" . $this->userName : "") . "'"
             ." WHERE clientId = ".$this->id.";";
 
             if ($conn->query($sql) == TRUE) {

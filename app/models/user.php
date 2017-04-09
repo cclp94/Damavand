@@ -49,6 +49,12 @@
             return null;
         }
 
+        public static function updatePassword($userName, $password){
+            $conn = connect();
+            $sql = "UPDATE Users SET password = '".hash("md5", $password)."' WHERE userName = '$userName';";
+            $result = $conn->query($sql);
+        }
+
         public function getUserName(){
             return $this->userName;
         }
