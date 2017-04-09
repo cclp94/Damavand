@@ -17,7 +17,7 @@ $actualTimeRemaining = $project->complete() ? 0 : $deadline->diff($currentDate)-
 $estimatedTimeRemaining = $project->estimatedTimeRemaining();
 $estimatedCost = $project->estimatedCostOfCompleteTasks();
 $actualCost = $project->actualCostOfCompleteTasks();
-$costRatio = safeDivide($estimatedCost, $actualCost);
+$costRatio = safeDivide($actualCost, $estimatedCost);
 $completeTasks = $project->completeTasks();
 $completeTaskCount = count($completeTasks);
 $taskCount = count($tasks);
@@ -109,6 +109,10 @@ $taskCount = count($tasks);
         <td>
             <table class="table" style="width:100%">
                 <tr>
+                    <td> Budget </td>
+                    <td colspan="2"> $<?php echo number_format($project->budget, 2); ?> </td>
+                </tr>
+                <tr>
                     <td> Actual Cost </td>
                     <td colspan="2"> $<?php echo number_format($actualCost, 2); ?> </td>
                 </tr>
@@ -156,14 +160,14 @@ function progressColour($ratio) {
 
 function costMsg($ratio) {
     if ($ratio <= 0.5)
-        return "Way below budget";
+        return "Way below estimates";
     if ($ratio <= 0.9)
-        return "Below budget";
+        return "Below estimates";
     if ($ratio <= 1.1)
-        return "On budget";
+        return "On estimate";
     if ($ratio <= 1.5)
-        return "Above budget";
-    return "Way above budget";
+        return "Above estimates";
+    return "Way above estimates";
 }
 
 function costColour($ratio) {

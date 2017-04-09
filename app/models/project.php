@@ -166,22 +166,24 @@ class Project {
 
     function estimatedTimeOfCompleteTasks() {
         $conn = connect();
-        $sql = "Select sum(estimatedTime) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+        $sql = "Select SUM(estimatedTime) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
             echo "Error " . $sql . ": ". $conn->error;
         }
-        return (int) $result;
+        $row = $result->fetch_assoc();
+        return (int) $row['SUM(estimatedTime)'];
     }
 
     function estimatedTimeRemaining() {
         $conn = connect();
-        $sql = "Select sum(estimatedTime) from Task group by endDate, projectID having endDate is null and projectID = $this->projectId;";
+        $sql = "Select SUM(estimatedTime) from Task group by endDate, projectID having endDate is null and projectID = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
             echo "Error " . $sql . ": ". $conn->error;
         }
-        return (int) $result;
+        $row = $result->fetch_assoc();
+        return (int) $row['SUM(estimatedTime)'];
     }
 
     function estimatedCostOfCompleteTasks() {
@@ -191,7 +193,8 @@ class Project {
         if (!$result) {
             echo "Error " . $sql . ": ". $conn->error;
         }
-        return (float) $result;
+        $row = $result->fetch_assoc();
+        return (int) $row['SUM(estimatedCost)'];
     }
 
     function actualCostOfCompleteTasks() {
@@ -216,7 +219,8 @@ class Project {
         if (!$result) {
             echo "Error " . $sql . ": ". $conn->error;
         }
-        return (int) $result;
+        $row = $result->fetch_assoc();
+        return (int) $row['MAX(phase)'];
     }
 
     function finalPhase() {
@@ -229,7 +233,8 @@ class Project {
         if (!$result) {
             echo "Error " . $sql . ": ". $conn->error;
         }
-        return (int) $result;
+        $row = $result->fetch_assoc();
+        return (int) $row['MAX(phase)'];
     }
 
     function complete() {
