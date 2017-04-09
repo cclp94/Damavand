@@ -177,6 +177,19 @@ require_once 'client.php';
             return (int) $result;
         }
 
+        function finalPhase() {
+            $conn = connect();
+            $sql = "SELECT MAX(phase) ".
+                "FROM Task ".
+                "GROUP BY projectID, endDate ".
+                "HAVING projectID = $this->projectId;";
+            $result = $conn->query($sql);
+            if (!$result) {
+                echo "Error " . $sql . ": ". $conn->error;
+            }
+            return (int) $result;
+        }
+
         function complete() {
             return $this->endDate != NULL;
         }

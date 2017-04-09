@@ -12,6 +12,7 @@ $actualTimeElapsed = $earliest->diff($startDate)->days;
 $estimatedTimeElapsed = $project->estimatedTimeOfCompleteTasks();
 $timeRatio = safeDivide($estimatedTimeElapsed, $actualTimeElapsed);
 $phase = $project->latestPhase();
+$finalPhase = $project->finalPhase();
 $actualTimeRemaining = $project->complete() ? 0 : $deadline->diff($currentDate)->days;
 $estimatedTimeRemaining = $project->estimatedTimeRemaining();
 $estimatedCost = $project->estimatedCostOfCompleteTasks();
@@ -24,10 +25,14 @@ $taskCount = count($tasks);
 
 <table class="table" style="width:100%">
     <tr>
-        <td colspan="3" align="center"> <h1> <?php echo $project->name ?> </h1> </td>
+        <td colspan = "2" align="center"> <h1> <?php echo $project->name ?> </h1> </td>
     </tr>
     <tr>
-        <td colspan="3" align="center"> <?php echo $project->complete() ? "Complete" : "In Progress"; ?> </td>
+        <td colspan = "2" align="center"> <?php echo $project->complete() ? "Complete" : "In Progress"; ?> </td>
+    </tr>
+    <tr>
+        <td align="center"> Client - <a href="clients.php?id=<?php echo $project->client->id ?>"> <?php echo $project->client->name ?> </a> </td>
+        <td align="center"> Supervisor - <a href="employees.php?SIN=<?php echo $project->supervisor->SIN ?>"> <?php echo $project->supervisor->name ?> </a> </td>
     </tr>
     <tr>
         <td>
@@ -61,7 +66,7 @@ $taskCount = count($tasks);
 
                 <tr>
                     <td>Phase</td>
-                    <td colspan="2"> <?php echo $phase ?> </td>
+                    <td colspan="2"> <?php echo $phase ?> / <?php echo $finalPhase ?> </td>
                 </tr>
                 <tr>
                     <td>Tasks Complete</td>
@@ -77,7 +82,7 @@ $taskCount = count($tasks);
                     <td colspan="2"> <?php echo $estimatedTimeElapsed . " day" . ($estimatedTimeElapsed == 1 ? "" : "s"); ?> </td>
                 </tr>
                 <tr>
-                    <td>Progress Ratio</td>
+                    <td> Time Ratio </td>
                     <td> <?php echo percentString($timeRatio) ?> </td>
                     <td> <?php echo progressColourString($timeRatio) ?> </td>
                 </tr>
