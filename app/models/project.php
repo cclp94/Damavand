@@ -184,13 +184,13 @@ class Project {
 
     function estimatedCostOfCompleteTasks() {
         $conn = connect();
-        $sql = "Select SUM(estimatedCost) from Task group by endDate, projectID having endDate is not null and projectID = $this->projectId;";
+        $sql = "select SUM(estimatedCost) from Task where endDate is not null group by projectId having projectId = $this->projectId;";
         $result = $conn->query($sql);
         if (!$result) {
             echo '<div class="alert alert-danger" role="alert">Error ' . $sql . ': '. $conn->error.'</div>';
         }
         $row = $result->fetch_assoc();
-        return (int) $row['SUM(estimatedCost)'];
+        return (float) $row['SUM(estimatedCost)'];
     }
 
     function actualCostOfCompleteTasks() {

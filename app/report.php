@@ -18,7 +18,7 @@ $finalPhase = $project->finalPhase();
 $actualTimeRemaining = $project->complete() ? 0 : $deadline->diff($currentDate)->days;
 $estimatedTimeRemaining = $project->estimatedTimeRemaining();
 $estimatedCost = $project->estimatedCostOfCompleteTasks();
-$actualCost = $project->actualCostOfCompleteTasks();
+$actualCost = $project->totalPurchases() + $project->totalWages() + $project->totalPermits();
 $costRatio = safeDivide($actualCost, $estimatedCost);
 $completeTasks = $project->completeTasks();
 $completeTaskCount = count($completeTasks);
@@ -119,7 +119,7 @@ $taskCount = count($tasks);
                     <td colspan="2">
                         <table class="table" style="width:100%">
                             <tr>
-                                <td colspan="2"> $<?php echo number_format($actualCost, 2); ?> </td>
+                                <td colspan="2"> $<?php echo number_format($project->totalPurchases() + $project->totalWages() + $project->totalPermits(), 2); ?> </td>
                             </tr>
                             <tr>
                                 <td> Purchases </td>
@@ -215,7 +215,7 @@ function percentString($x) {
 }
 
 function safeDivide($x, $y) {
-    return $y == 0 ? INF : $x / $y;
+    return $y == 0 ? INF : ((float) $x) / $y;
 }
 
 ?>
