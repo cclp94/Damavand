@@ -32,6 +32,19 @@
             <li role="presentation" class="active ">
                 <a href="#employee-list" aria-controls="employee-list" role="tab" data-toggle="tab">Employees</a>
             </li>
+            
+            <?php
+            if (isset($SIN)) {
+            ?>
+
+            <li role="presentation">
+                <a href="#employee-report" aria-controls="employee-report" role="tab" data-toggle="tab">Report</a>
+            </li>
+            
+            <?php
+            }
+            ?>
+            
             <li role="presentation">
                 <a href="#employee-add" aria-controls="employee-add" role="tab" data-toggle="tab">Add Employee</a>
             </li>
@@ -69,6 +82,9 @@
                 </div>
                 <input class="btn btn-primary btn-lg center-block" type="submit" name = "add" value="Add Employee"/>
             </form>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="employee-report">
+            <?php include './app/employee-report.php'; ?>
         </div>
     </div>
     </div>

@@ -1,5 +1,6 @@
 <?php
     require_once $_SERVER['DOCUMENT_ROOT'].'/app/connection.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/app/models/project.php';
 
     class Employee{
         var $SIN, $name, $title;
@@ -112,6 +113,55 @@
                 return Assigned::fromRow($row);
             }
             return null;
+        }
+
+        function assignedTasksInProject($projectId) {
+            $sql = "SELECT Task.*
+                    FROM Assigned, Employee, Task
+                    WHERE Assigned.employeeSin = Employee.sin
+                    AND Assigned.taskId = Task.taskId
+                    AND Task.projectId = $projectId
+                    AND Employee.sin = $this->SIN;";
+            $result = query($sql);
+            $tasks = [];
+            while ($result && $row = $result->fetch_assoc()) {
+                $tasks[] = Task::fromRow($row);
+            }
+            return $tasks;
+        }
+
+        function totalProjectHours($projectId) {
+            $sql = "SELECT SUM(hours)
+                    FROM Assigned, Task, Project
+                    WHERE Task.taskId = Assigned.taskId
+                    AND Task.projectId = Project.projectId
+                    AND Project.projectId = $projectId
+                    AND Assigned.employeeSin = $this->SIN;";
+            $result = query($sql)->fetch_assoc();
+            return (int) $result['SUM(hours)'];
+        }
+
+        function assignedProjects() {
+            $sql = "SELECT Project.*
+                    FROM Assigned, Employee, Task, Project
+                    WHERE Assigned.employeeSin = Employee.sin
+                    AND Assigned.taskId = Task.taskId
+                    AND Task.projectId = Project.projectId
+                    AND Employee.sin = $this->SIN;";
+            $result = query($sql);
+            $projects = [];
+            while ($result && $row = $result->fetch_assoc()) {
+                $projects[] = Project::fromRow($row);
+            }
+            return $projects;
+        }
+
+        function totalHours() {
+            $total = 0;
+            foreach($this->assignedProjects() as $project) {
+                $total += $this->totalProjectHours($project->projectId);
+            }
+            return $total;
         }
     }
 
