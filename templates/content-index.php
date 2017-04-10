@@ -5,24 +5,12 @@
         <div>
             <img src="./img/construction.jpg" class="fit"/>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quis magna massa.
-                Mauris justo erat, placerat eget fringilla eu, facilisis sed justo. Maecenas lobortis
-                est eget leo vestibulum facilisis. Donec in accumsan urna. In eu quam tincidunt, sodales
-                erat ut, pellentesque ex. Duis ac finibus velit, in gravida enim. Sed molestie elit vestibulum,
-                    luctus erat at, tristique nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-                    posuere cubilia Curae; Duis erat quam, efficitur at nisi in, mollis gravida lectus. Etiam vel
-                    libero in felis aliquam finibus. Aliquam ultrices, felis eu vulputate porta,
-                    lorem ipsum rutrum sem, et cursus odio eros ut ipsum. Nam finibus ac tellus in hendrerit.
-                        Sed rutrum dui id arcu bibendum hendrerit. Nullam ac egestas augue, nec efficitur ante.
-                        Donec erat quam, hendrerit eu mollis nec, ultricies id ex. Orci varius natoque penatibus
-                        et magnis dis parturient montes, nascetur ridiculus mus.
+                Damavand is a modern, forward-thinking construction company. We aim to provide the highest level of service through synergy, business sense,
+                and old-fashioned hard work. Customer satisfaction is own number-one priority. If you do busniness with us, we guarantee that you will
+                be second to none. Thirdly, we appreciate you.
             </p>
             <p>
-                Duis aliquet augue diam, vel rhoncus lectus feugiat vitae. Cras ut mattis sem,
-                eu vulputate dui. Aliquam id vehicula elit. Sed consectetur nulla vitae sem maximus
-                molestie. Vivamus eu nisl id turpis feugiat sollicitudin. Mauris vel turpis in felis
-                sodales interdum. Etiam erat tortor, congue non mauris nec, lobortis dignissim nibh.
-                    Curabitur at augue sem.
+                <b>Damavand</b> - come build with us.
             </p>
         </div>
     </div>

@@ -142,7 +142,7 @@
         }
 
         function assignedProjects() {
-            $sql = "SELECT Project.*
+            $sql = "SELECT DISTINCT Project.*
                     FROM Assigned, Employee, Task, Project
                     WHERE Assigned.employeeSin = Employee.sin
                     AND Assigned.taskId = Task.taskId
