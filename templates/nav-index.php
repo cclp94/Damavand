@@ -6,7 +6,7 @@
             <li><a href="./register.php">Register</a></li>
         </ul>
         <ul class="navbar-nav navbar-right">
-            <li><?php echo ($user ? 'Welcome, '.$user->userName . '<a href="#">Sign out</a>': '<a href="#">Login</a>');?></li>
+            <li><?php echo ($user ? 'Welcome, '.$user->userName . '<a href="#">Sign out</a>': '');?></li>
         </ul>
     </nav>
 </div>
