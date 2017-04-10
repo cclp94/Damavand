@@ -5,7 +5,7 @@
             <?php if($user->isAdmin()){?>
                 <li><a href="employees.php">Employees</a></li>
                 <li><a href="clients.php">Clients</a></li>
-                <li><a href="#">Managers</a></li>
+                <!--<li><a href="#">Managers</a></li>-->
             <?php }else{ ?>
                 <li><a href="info.php">My information</a></li>
             <?php } ?>
